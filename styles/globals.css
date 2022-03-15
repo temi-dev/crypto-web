@@ -2,7 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "CircularMedium";
+  font-family: "CircularBook";
 }
 
 @font-face {
@@ -13,6 +13,11 @@ body {
 @font-face {
   font-family: "CircularMedium";
   src: url("/fonts/circular-medium.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "CircularBook";
+  src: url("/fonts/circular-book.otf") format("truetype");
 }
 
 a {
@@ -50,6 +55,11 @@ a.grey {
   text-decoration: none;
 }
 
+.btn{
+padding: 10px 33px;
+border-radius: 4px;
+}
+
 .btn-primary {
   background: var(--primaryColor) !important;
 }
@@ -65,6 +75,20 @@ a.grey {
 .auth-form {
   width: 98%;
   margin: auto;
+}
+
+.form-control{
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.form-control::placeholder{
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 26px;
+  color: #000B33;
+  font-family: "CircularBook";
+  opacity: 0.5;
 }
 
 .auth-form .headline {
@@ -94,6 +118,7 @@ form label {
   font-family: "CircularMedium";
   font-size: 16px;
   color: #000b33;
+  font-weight: 600,Semi Bold;
   opacity: 0.8;
 }
 
@@ -109,6 +134,10 @@ form label {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
+}
+
+.auth-form form .form-content {
+  margin-top: 20px;
 }
 
 /* Small screens */

@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Image from 'next/image';
 import Link from 'next/link';
+import TextField from '@mui/material/TextField';
 
 export async function getStaticProps() {
     return { props: { blueBg: true } };
@@ -14,11 +15,11 @@ const Signin: NextPage = (props) => {
                     <form>
                         <div className='headline'>Sign in to Kochure</div>
                         <div className='form-content'>
-                            <div className='py-2'>
+                            <div className='mt-3'>
                                 <label className='mb-2'>Email address*</label>
                                 <input placeholder='Email address' type='text' className="form-control"></input>
                             </div>
-                            <div className='py-2'>
+                            <div className='mt-4'>
                                 <label className='mb-2'>Password*</label>
                                 <input placeholder='Password' type='text' className="form-control"></input>
                             </div>
