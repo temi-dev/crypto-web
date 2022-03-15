@@ -22,7 +22,7 @@ const ForgotPassword: NextPage = (props) => {
                                 <button className='btn btn-primary w-100'>Send Reset Link</button>
                             </div>
                             <div className='mt-4'>
-                                <span>Remember the password?</span> <Link href='/signin'>Sign in now</Link>
+                                <span>Remember the password?</span> <Link href='/signin'><a className='d-block d-md-inline-block ms-md-2'>Sign in now</a></Link>
                             </div>
 
                         </div>

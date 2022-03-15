@@ -33,7 +33,7 @@ const Signin: NextPage = (props) => {
                             <div className='mt-4'>
                                 <span>Dont have an account?</span>
                                 <Link href='/signup'>
-                                    <a className='d-inline-block ms-2'>Create an account</a>
+                                    <a className='d-block d-md-inline-block ms-md-2'>Create an account</a>
                                 </Link>
                             </div>
 

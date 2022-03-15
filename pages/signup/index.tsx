@@ -1,11 +1,19 @@
+import { MenuItem, Select, TextField, TextFieldProps } from '@mui/material';
 import type { NextPage } from 'next'
-import Image from 'next/image';
 import Link from 'next/link';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
+import React from 'react';
 
 export async function getStaticProps() {
-    return { props: { blueBg: true } };
+    return {
+        props: { blueBg: true }
+    };
 }
+
 const Signup: NextPage = (props) => {
+    const [value, setValue] = React.useState(null);
     return (
         <div className='auth-page'>
             <div className='container'>
@@ -15,14 +23,42 @@ const Signup: NextPage = (props) => {
                         <div className='headline'>Create your account</div>
                         <div className='form-content'>
                             <div className='mt-3'>
-                                <label className='mb-2'>Your name*</label>
-                                <input placeholder='Fullname' type='text' className="form-control"></input>
+                                <label className='mb-2'>First name*</label>
+                                <input placeholder='First name' type='text' className="form-control"></input>
+                            </div>
+                            <div className='mt-3'>
+                                <label className='mb-2'>Last name*</label>
+                                <input placeholder='First name' type='text' className="form-control"></input>
                             </div>
                             <div className='mt-4'>
-                                <label className='mb-2'>Email address*</label>
-                                <input placeholder='Email address' type='text' className="form-control"></input>
+                                <label className='mb-2'>Gender*</label>
+                                <Select disableUnderline
+                                    placeholder='Gender' displayEmpty
+                                    id="demo-simple-select" className='form-control' variant='standard'
+                                >
+                                    <MenuItem >
+                                        Select Gender
+                                    </MenuItem>
+                                    <MenuItem value='Male'>Male</MenuItem>
+                                    <MenuItem value='Female'>Female</MenuItem>
+                                </Select>
                             </div>
                             <div className='mt-4'>
+                                <label className='mb-2'>Date of Birth*</label>
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <DatePicker InputProps={{
+                                        disableUnderline: true,
+                                    }}
+                                        value={value}
+                                        onChange={(newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                        renderInput={(params) =>
+                                            <TextField variant='standard' className='form-control' fullWidth placeholder='Date of birth (DD/MM/YYY)' {...params} />}
+                                    />
+                                </LocalizationProvider>
+                            </div>
+                            {/* <div className='mt-4'>
                                 <label className='mb-2'>Confirm Email*</label>
                                 <input placeholder='Confirm Email' type='text' className="form-control"></input>
                             </div>
@@ -41,9 +77,9 @@ const Signup: NextPage = (props) => {
                             <div className='mt-4'>
                                 <h6>Terms & Conditions</h6>
                                 <div><input type='checkbox'></input> I agree with the terms & conditions</div>
-                            </div>
+                            </div> */}
                             <div className='mt-4'>
-                                <button className='btn btn-primary'>Create your Account</button>
+                                <button className='btn btn-primary'>Next</button>
                             </div>
                             <div className='mt-4'>
                                 <span>Already have an account?</span> <Link href='/signin'>Sign in now</Link>
