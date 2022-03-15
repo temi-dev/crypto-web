@@ -2,8 +2,17 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "CircularMedium";
+}
+
+@font-face {
+  font-family: "CircularBold";
+  src: url("/fonts/circular-bold.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "CircularMedium";
+  src: url("/fonts/circular-medium.otf") format("truetype");
 }
 
 a {
@@ -13,4 +22,130 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+:root {
+  --primaryColor: #1d38e4;
+  --secondaryColor: #fff;
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #112291 !important;
+  border-radius: 2px;
+}
+
+a {
+  color: var(--primaryColor);
+}
+
+a.grey {
+  color: #000b33;
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--primaryColor) !important;
+}
+
+.blue-bg {
+  background-color: var(--primaryColor);
+}
+
+.auth-page {
+  padding-top: 60px;
+}
+
+.auth-form {
+  width: 98%;
+  margin: auto;
+}
+
+.auth-form .headline {
+  font-family: "CircularBold";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 47px;
+  text-align: center;
+  letter-spacing: -0.5px;
+  color: #000b33;
+}
+
+.auth-form form {
+  background-color: var(--secondaryColor);
+  border-radius: 10px;
+  padding: 40px 20px;
+  margin-bottom: 80px;
+}
+
+.auth-form .logo {
+  margin: 0 auto 45px auto;
+  display: block;
+}
+
+form label {
+  font-family: "CircularMedium";
+  font-size: 16px;
+  color: #000b33;
+  opacity: 0.8;
+}
+
+.auth-form a {
+  text-decoration: underline;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.auth-form a.grey {
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* Small screens */
+
+@media (min-width: 576px) {
+}
+
+/* Medium screen */
+@media (min-width: 768px) {
+  .auth-form {
+    width: 500px;
+  }
+  .auth-page {
+    padding-top: 80px;
+  }
+
+  .auth-form .headline {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 58px;
+    text-align: center;
+    letter-spacing: -0.5px;
+    color: #000b33;
+  }
+}
+
+/* Large screens */
+@media (min-width: 992px) {
+  .auth-form {
+    width: 550px;
+  }
+  .auth-form form {
+    background-color: var(--secondaryColor);
+    padding: 70px 50px;
+  }
+  .auth-form form .form-content {
+    margin-top: 30px;
+  }
 }
