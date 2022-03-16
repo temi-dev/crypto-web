@@ -115,6 +115,7 @@ border-radius: 4px;
 
 .auth-form form {
   background-color: var(--secondaryColor);
+  border: 2px solid #E31ED6;
   border-radius: 10px;
   padding: 40px 20px;
   margin-bottom: 80px;
