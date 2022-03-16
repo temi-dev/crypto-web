@@ -5,6 +5,9 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import React from 'react';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import { RemoveRedEye } from '@mui/icons-material';
 
 export async function getStaticProps() {
     return {
@@ -27,11 +30,25 @@ const Signup: NextPage = (props) => {
                                 <>
                                     <div className='mt-3'>
                                         <label className='mb-2'>First name*</label>
-                                        <input placeholder='First name' type='text' className="form-control"></input>
+                                        <TextField
+                                            {...props} variant="standard"
+                                            placeholder='First name'
+                                            fullWidth
+                                            InputProps={{
+                                                disableUnderline: true
+                                            }}
+                                        />
                                     </div>
                                     <div className='mt-3'>
                                         <label className='mb-2'>Last name*</label>
-                                        <input placeholder='First name' type='text' className="form-control"></input>
+                                        <TextField
+                                            {...props} variant="standard"
+                                            placeholder='Last name'
+                                            fullWidth
+                                            InputProps={{
+                                                disableUnderline: true
+                                            }}
+                                        />
                                     </div>
                                     <div className='mt-4'>
                                         <label className='mb-2'>Gender*</label>
@@ -56,7 +73,7 @@ const Signup: NextPage = (props) => {
                                                 onChange={(newValue) => {
                                                     setValue(newValue);
                                                 }}
-                                                renderInput={(params) => <TextField variant='standard' className='form-control' fullWidth placeholder='Date of birth (DD/MM/YYY)' {...params} />} />
+                                                renderInput={(params) => <TextField variant='standard' fullWidth placeholder='Date of birth (DD/MM/YYY)' {...params} />} />
                                         </LocalizationProvider>
                                     </div>
                                     <div className='mt-4'>
@@ -69,23 +86,72 @@ const Signup: NextPage = (props) => {
                                 <>
                                     <div className='mt-4'>
                                         <label className='mb-2'>Email address*</label>
-                                        <input placeholder='Confirm Email' type='text' className="form-control"></input>
+                                        <TextField
+                                            {...props} variant="standard"
+                                            placeholder='Email address'
+                                            fullWidth
+                                            InputProps={{
+                                                disableUnderline: true
+                                            }}
+                                        />
                                     </div>
                                     <div className='mt-4'>
                                         <label className='mb-2'>Phone Number*</label>
-                                        <input placeholder='+234' type='text' className="form-control"></input>
+                                        <TextField
+                                            {...props} variant="standard"
+                                            placeholder='+234'
+                                            fullWidth
+                                            InputProps={{
+                                                disableUnderline: true
+                                            }}
+                                        />
                                     </div>
                                     <div className='mt-4'>
                                         <label className='mb-2'>Password*</label>
-                                        <input placeholder='Password' type='text' className="form-control"></input>
+                                        <TextField
+                                            {...props} variant="standard"
+                                            placeholder='Password'
+                                            fullWidth
+                                            InputProps={{
+                                                disableUnderline: true,
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton edge="end" >
+                                                            <RemoveRedEye className='grey-icon' />
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                        />
                                     </div>
                                     <div className='mt-4'>
                                         <label className='mb-2'>Confirm Password*</label>
-                                        <input placeholder='Confirm Password' type='text' className="form-control"></input>
+                                        <TextField
+                                            {...props} variant="standard"
+                                            placeholder='Confirm Password'
+                                            fullWidth
+                                            InputProps={{
+                                                disableUnderline: true,
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton edge="end" >
+                                                            <RemoveRedEye className='grey-icon' />
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                        />
                                     </div>
                                     <div className='mt-4'>
                                         <label className='mb-2'>Got referral code?</label>
-                                        <input placeholder='Enter referral code (optional)' type='text' className="form-control"></input>
+                                        <TextField
+                                            {...props} variant="standard"
+                                            placeholder='Enter referral code (optional)'
+                                            fullWidth
+                                            InputProps={{
+                                                disableUnderline: true
+                                            }}
+                                        />
                                     </div>
                                     <div className='mt-5'>
                                         <h6>Terms & Conditions</h6>
@@ -93,9 +159,9 @@ const Signup: NextPage = (props) => {
                                     </div>
                                     <div className='mt-4'>
                                         <Link href='/onboarding/set-pin'>
-                                        <button  className='btn btn-primary'>Sign Up</button>
+                                            <button className='btn btn-primary'>Sign Up</button>
                                         </Link>
-                                        
+
                                     </div>
                                 </>
                             }

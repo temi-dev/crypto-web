@@ -55,9 +55,9 @@ a.grey {
   text-decoration: none;
 }
 
-.btn{
-padding: 10px 33px;
-border-radius: 4px;
+.btn {
+  padding: 10px 33px;
+  border-radius: 4px;
 }
 
 .btn-primary {
@@ -77,28 +77,60 @@ border-radius: 4px;
   margin: auto;
 }
 
-.form-control{
+.form-control, .MuiInput-root  {
   padding: 14px !important;
   border: 1px solid #ced4da !important;
   border-radius: 10px;
 }
 
-.form-control:focus{
-  border-color: rgba(43, 89, 255, 0.8);
-  box-shadow: 0 0 0 0.2rem  rgba(43, 89, 255, 0.8);
+.form-control:focus, .Mui-focused{
+  border-color: rgba(43, 89, 255, 0.8) !important;
+  box-shadow: 0 0 0 0.2rem rgba(43, 89, 255, 0.8) !important;
 }
-.form-control::placeholder, .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input{
-  font-weight: 400;
+
+::-webkit-input-placeholder {
+  color:#000B33 !important;
+  font-weight: 400 !important;
   font-size: 15px;
   line-height: 26px;
-  color: #000B33;
-  font-family: "CircularBook";
-  opacity: 0.5;
+  opacity: 0.5 !important;
 }
-.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input, .css-1x51dt5-MuiInputBase-input-MuiInput-input{
+
+::-moz-placeholder {
+  color:#000B33 !important;
+  font-weight: 400 !important;
+  font-size: 15px;
+  line-height: 26px;
+  opacity: 0.5 !important;
+}
+
+::-ms-placeholder {
+  color:#000B33 !important;
+  font-weight: 400 !important;
+  font-size: 15px;
+  line-height: 26px;
+  opacity: 0.5 !important;
+}
+
+::placeholder {
+  color:#000B32 !important;
+  font-weight: 400 !important;
+  font-size: 15px;
+  line-height: 26px;
+  opacity: 0.5 !important;
+}
+
+
+.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input,
+.css-1x51dt5-MuiInputBase-input-MuiInput-input {
   padding: 0;
 }
-.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input:focus{
+
+.grey-icon {
+  color: #000b33;
+  opacity: 0.5;
+}
+.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input:focus {
   background: none;
 }
 
@@ -115,7 +147,7 @@ border-radius: 4px;
 
 .auth-form form {
   background-color: var(--secondaryColor);
-  border: 2px solid #E31ED6;
+  border: 2px solid #e31ed6;
   border-radius: 10px;
   padding: 40px 20px;
   margin-bottom: 80px;
@@ -130,7 +162,7 @@ form label {
   font-family: "CircularMedium";
   font-size: 16px;
   color: #000b33;
-  font-weight: 600,Semi Bold;
+  font-weight: 600, Semi Bold;
   opacity: 0.8;
 }
 
