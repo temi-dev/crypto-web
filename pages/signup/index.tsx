@@ -1,4 +1,4 @@
-import { MenuItem, Select, TextField, TextFieldProps } from '@mui/material';
+import { MenuItem, Select, TextField } from '@mui/material';
 import type { NextPage } from 'next'
 import Link from 'next/link';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -11,7 +11,7 @@ import { RemoveRedEye } from '@mui/icons-material';
 
 export async function getStaticProps() {
     return {
-        props: { blueBg: true }
+        props: { blue: "true" }
     };
 }
 

@@ -1,9 +1,7 @@
-import type { NextPage } from 'next'
-import Image from 'next/image';
-import Link from 'next/link';
+import type { NextPage } from 'next';
 
 export async function getStaticProps() {
-    return { props: { blueBg: true } };
+    return { props: { blue: "true" } };
 }
 const VerifyEmail: NextPage = (props) => {
     return (
@@ -14,15 +12,15 @@ const VerifyEmail: NextPage = (props) => {
                     <form>
                         <div className='headline'>Verify you Email</div>
                         <div className='form-content'>
-                          <img src='/icons/verify-email.svg' width='80' className="d-block mx-auto"></img>
+                            <img src='/icons/verify-email.svg' width='80' className="d-block mx-auto"></img>
 
-                          <div className='mt-4'>
-                          We sent a verification email to <b>akinolayemi100@gmail.com</b>. Click the link inside to get started!
-                          </div>
-                          <div className='text-center mt-4'>
-                              <button className='btn btn-primary d-inline-block'>Resend Email</button>
-                          </div>
-                      </div>
+                            <div className='mt-4'>
+                                We sent a verification email to <b>akinolayemi100@gmail.com</b>. Click the link inside to get started!
+                            </div>
+                            <div className='text-center mt-4'>
+                                <button className='btn btn-primary d-inline-block'>Resend Email</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

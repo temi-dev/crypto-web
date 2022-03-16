@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Image from 'next/image';
 import Link from 'next/link';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
@@ -7,7 +6,7 @@ import { RemoveRedEye } from '@mui/icons-material';
 import { TextField } from '@mui/material';
 
 export async function getStaticProps() {
-    return { props: { blueBg: true } };
+    return { props: { blue: "true" } };
 }
 const SetPin: NextPage = (props) => {
     return (

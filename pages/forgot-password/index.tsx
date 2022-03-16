@@ -1,9 +1,8 @@
-import type { NextPage } from 'next'
-import Image from 'next/image';
+import type { NextPage } from 'next';
 import Link from 'next/link';
 
 export async function getStaticProps() {
-    return { props: { blueBg: true } };
+    return { props: { blue: "true" } };
 }
 const ForgotPassword: NextPage = (props) => {
     return (

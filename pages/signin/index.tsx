@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Image from 'next/image';
 import Link from 'next/link';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -7,7 +6,9 @@ import IconButton from '@mui/material/IconButton';
 import { RemoveRedEye } from '@mui/icons-material';
 
 export async function getStaticProps() {
-    return { props: { blueBg: true } };
+    return {
+        props: { blue: "true" }
+    };
 }
 const Signin: NextPage = (props) => {
     return (
@@ -20,7 +21,7 @@ const Signin: NextPage = (props) => {
                         <div className='form-content'>
                             <div className='mt-3'>
                                 <label className='mb-2'>Email address*</label>
-                                <TextField 
+                                <TextField
                                     {...props} variant="standard"
                                     placeholder='Email address'
                                     fullWidth
@@ -31,7 +32,7 @@ const Signin: NextPage = (props) => {
                             </div>
                             <div className='mt-4'>
                                 <label className='mb-2'>Password*</label>
-                                <TextField 
+                                <TextField
                                     {...props} variant="standard"
                                     placeholder='Password'
                                     fullWidth
