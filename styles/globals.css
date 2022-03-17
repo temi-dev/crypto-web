@@ -65,6 +65,7 @@ a.grey {
 }
 
 .blue-bg {
+  background-color: var(--primaryColor) !important;
   background-image: url('/bg-desktop.png');
 }
 
