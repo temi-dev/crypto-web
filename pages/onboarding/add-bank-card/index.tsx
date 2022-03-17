@@ -10,9 +10,9 @@ export async function getStaticProps() {
 }
 const AddbankCard: NextPage = (props) => {
     return (
-        <div className='auth-page'>
+        <div className='page'>
             <div className='container'>
-                <div className='auth-form'>
+                <div className='page-content'>
                     <img className='logo' src={'/logo.svg'} width='195px' height='45px'></img>
                     <form>
                         <div className='headline'>Add your bank card</div>
@@ -70,9 +70,8 @@ const AddbankCard: NextPage = (props) => {
                             </div>
                             <div className='mt-5'>
                                     <button className='btn btn-primary'>Add Card</button>
-                                    <a className='d-inline-block ms-3   '>Skip</a>
+                                    <a className='d-inline-block ms-3'>Skip</a>
                             </div>
-
                         </div>
                     </form>
                 </div>

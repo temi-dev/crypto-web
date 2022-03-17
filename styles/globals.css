@@ -65,14 +65,14 @@ a.grey {
 }
 
 .blue-bg {
-  background-color: var(--primaryColor);
+  background-image: url('/bg-desktop.png');
 }
 
-.auth-page {
+.page {
   padding-top: 60px;
 }
 
-.auth-form {
+.page-content {
   width: 98%;
   margin: auto;
 }
@@ -134,7 +134,7 @@ a.grey {
   background: none;
 }
 
-.auth-form .headline {
+.page-content .headline {
   font-family: "CircularBold";
   font-style: normal;
   font-weight: 700;
@@ -145,7 +145,7 @@ a.grey {
   color: #000b33;
 }
 
-.auth-form form {
+.page-content form {
   background-color: var(--secondaryColor);
   border: 2px solid #e31ed6;
   border-radius: 10px;
@@ -153,7 +153,7 @@ a.grey {
   margin-bottom: 80px;
 }
 
-.auth-form .logo {
+.page-content .logo {
   margin: 0 auto 45px auto;
   display: block;
 }
@@ -166,22 +166,35 @@ form label {
   opacity: 0.8;
 }
 
-.auth-form a {
+.page-content a {
   text-decoration: underline;
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
 }
 
-.auth-form a.grey {
+.page-content a.grey {
   text-decoration: none;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
 }
 
-.auth-form form .form-content {
+.page-content form .form-content {
   margin-top: 20px;
+}
+
+.user-verfied, .user-verfied .headline{
+  color: #fff !important;
+}
+
+.user-verfied .headnote{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 150%;
+  text-align: center;
+  color: #FFFFFF;
 }
 
 /* Small screens */
@@ -191,14 +204,14 @@ form label {
 
 /* Medium screen */
 @media (min-width: 768px) {
-  .auth-form {
+  .page-content {
     width: 500px;
   }
-  .auth-page {
+  .page {
     padding-top: 80px;
   }
 
-  .auth-form .headline {
+  .page-content .headline {
     font-style: normal;
     font-weight: 700;
     font-size: 48px;
@@ -211,14 +224,14 @@ form label {
 
 /* Large screens */
 @media (min-width: 992px) {
-  .auth-form {
+  .page-content {
     width: 550px;
   }
-  .auth-form form {
+  .page-content form {
     background-color: var(--secondaryColor);
     padding: 70px 50px;
   }
-  .auth-form form .form-content {
+  .page-content form .form-content {
     margin-top: 30px;
   }
 }

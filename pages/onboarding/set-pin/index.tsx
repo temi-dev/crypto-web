@@ -10,9 +10,9 @@ export async function getStaticProps() {
 }
 const SetPin: NextPage = (props) => {
     return (
-        <div className='auth-page'>
+        <div className='page'>
             <div className='container'>
-                <div className='auth-form'>
+                <div className='page-content'>
                     <img className='logo' src={'/logo.svg'} width='195px' height='45px'></img>
                     <form>
                         <div className='headline'>Set your Pin</div>
