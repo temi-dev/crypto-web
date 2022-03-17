@@ -1,0 +1,237 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "CircularBook";
+}
+
+@font-face {
+  font-family: "CircularBold";
+  src: url("/fonts/circular-bold.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "CircularMedium";
+  src: url("/fonts/circular-medium.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "CircularBook";
+  src: url("/fonts/circular-book.otf") format("truetype");
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --primaryColor: #1d38e4;
+  --secondaryColor: #fff;
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #112291 !important;
+  border-radius: 2px;
+}
+
+a {
+  color: var(--primaryColor);
+}
+
+a.grey {
+  color: #000b33;
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+.btn {
+  padding: 10px 33px;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background: var(--primaryColor) !important;
+}
+
+.blue-bg {
+  background-image: url('/bg-desktop.png');
+}
+
+.page {
+  padding-top: 60px;
+}
+
+.page-content {
+  width: 98%;
+  margin: auto;
+}
+
+.form-control, .MuiInput-root  {
+  padding: 14px !important;
+  border: 1px solid #ced4da !important;
+  border-radius: 10px;
+}
+
+.form-control:focus, .Mui-focused{
+  border-color: rgba(43, 89, 255, 0.8) !important;
+  box-shadow: 0 0 0 0.2rem rgba(43, 89, 255, 0.8) !important;
+}
+
+::-webkit-input-placeholder {
+  color:#000B33 !important;
+  font-weight: 400 !important;
+  font-size: 15px;
+  line-height: 26px;
+  opacity: 0.5 !important;
+}
+
+::-moz-placeholder {
+  color:#000B33 !important;
+  font-weight: 400 !important;
+  font-size: 15px;
+  line-height: 26px;
+  opacity: 0.5 !important;
+}
+
+::-ms-placeholder {
+  color:#000B33 !important;
+  font-weight: 400 !important;
+  font-size: 15px;
+  line-height: 26px;
+  opacity: 0.5 !important;
+}
+
+::placeholder {
+  color:#000B32 !important;
+  font-weight: 400 !important;
+  font-size: 15px;
+  line-height: 26px;
+  opacity: 0.5 !important;
+}
+
+
+.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input,
+.css-1x51dt5-MuiInputBase-input-MuiInput-input {
+  padding: 0;
+}
+
+.grey-icon {
+  color: #000b33;
+  opacity: 0.5;
+}
+.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input:focus {
+  background: none;
+}
+
+.page-content .headline {
+  font-family: "CircularBold";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 47px;
+  text-align: center;
+  letter-spacing: -0.5px;
+  color: #000b33;
+}
+
+.page-content form {
+  background-color: var(--secondaryColor);
+  border: 2px solid #e31ed6;
+  border-radius: 10px;
+  padding: 40px 20px;
+  margin-bottom: 80px;
+}
+
+.page-content .logo {
+  margin: 0 auto 45px auto;
+  display: block;
+}
+
+form label {
+  font-family: "CircularMedium";
+  font-size: 16px;
+  color: #000b33;
+  font-weight: 600, Semi Bold;
+  opacity: 0.8;
+}
+
+.page-content a {
+  text-decoration: underline;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.page-content a.grey {
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.page-content form .form-content {
+  margin-top: 20px;
+}
+
+.user-verfied, .user-verfied .headline{
+  color: #fff !important;
+}
+
+.user-verfied .headnote{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 150%;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+/* Small screens */
+
+@media (min-width: 576px) {
+}
+
+/* Medium screen */
+@media (min-width: 768px) {
+  .page-content {
+    width: 500px;
+  }
+  .page {
+    padding-top: 80px;
+  }
+
+  .page-content .headline {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 58px;
+    text-align: center;
+    letter-spacing: -0.5px;
+    color: #000b33;
+  }
+}
+
+/* Large screens */
+@media (min-width: 992px) {
+  .page-content {
+    width: 550px;
+  }
+  .page-content form {
+    background-color: var(--secondaryColor);
+    padding: 70px 50px;
+  }
+  .page-content form .form-content {
+    margin-top: 30px;
+  }
+}
