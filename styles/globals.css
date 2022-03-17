@@ -64,6 +64,13 @@ a.grey {
   background: var(--primaryColor) !important;
 }
 
+.burst-in{
+  border: 1px solid var(--secondaryColor) !important  ;
+  border: 4px;
+  background: none;
+  color: var(--secondaryColor) !important;
+}
+
 .blue-bg {
   background-color: var(--primaryColor) !important;
   background-image: url('/bg-desktop.png');

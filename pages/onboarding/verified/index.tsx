@@ -12,6 +12,9 @@ const Verified: NextPage = (props) => {
                     <div className='text-center user-verfied'>
                         <div className='headline'>You're verified!</div>
                         <div className='headnote mt-4'>You have successfully registered on the Kochure . Please verify your identity to using Kochure.</div>
+                        <div className='my-4'>
+                            <button className='btn burst-in'>Burst In</button>
+                        </div>
                     </div>
                 </div>
             </div>
