@@ -96,6 +96,11 @@ a.grey {
   box-shadow: 0 0 0 0.2rem rgba(43, 89, 255, 0.8) !important;
 }
 
+.PhoneInputInput{
+  outline: none;
+  border: 0;
+  padding-left: 8px;
+}
 ::-webkit-input-placeholder {
   color:#000B33 !important;
   font-weight: 400 !important;

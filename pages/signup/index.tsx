@@ -8,6 +8,8 @@ import React from 'react';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { RemoveRedEye } from '@mui/icons-material';
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
 
 export async function getStaticProps() {
     return {
@@ -18,6 +20,8 @@ export async function getStaticProps() {
 const Signup: NextPage = (props) => {
     const [value, setValue] = React.useState(null);
     const [step, setStep] = React.useState(1);
+    const [phoneNumber, setPhonenumber] = React.useState('')
+
     return (
         <div className='page'>
             <div className='container'>
@@ -97,6 +101,15 @@ const Signup: NextPage = (props) => {
                                     </div>
                                     <div className='mt-4'>
                                         <label className='mb-2'>Phone Number*</label>
+                                        <PhoneInput className='form-control'
+                                            placeholder="Enter phone number"
+                                            value={phoneNumber}
+                                            defaultCountry='NG'
+                                            onChange={(value?: any) => {
+                                                setPhonenumber(value)
+                                            }}
+                                        />
+                                        {/* 
                                         <TextField
                                             {...props} variant="standard"
                                             placeholder='+234'
@@ -104,7 +117,7 @@ const Signup: NextPage = (props) => {
                                             InputProps={{
                                                 disableUnderline: true
                                             }}
-                                        />
+                                        /> */}
                                     </div>
                                     <div className='mt-4'>
                                         <label className='mb-2'>Password*</label>
