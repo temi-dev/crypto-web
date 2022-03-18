@@ -10,7 +10,7 @@ const Verified: NextPage = (props) => {
                 <div className='page-content'>
                     <img className='logo' src={'/logo.svg'} width='195px' height='45px'></img>
                     <div className='text-center user-verfied'>
-                        <div className='headline'>You're verified!</div>
+                        <div className='headline'>You&apos;re verified!</div>
                         <div className='headnote mt-4'>You have successfully registered on the Kochure . Please verify your identity to using Kochure.</div>
                         <div className='my-4'>
                             <button className='btn burst-in'>Burst In</button>
