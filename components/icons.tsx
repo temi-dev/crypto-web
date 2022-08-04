@@ -147,13 +147,13 @@ const BitCoinFilledIcon = ({ color, fillColor }: { color?: string, fillColor: st
 const EtherumFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
     return (
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_628_7886)">
+            <g clipPath="url(#clip0_628_7886)">
                 <path d="M19.6988 12.4192C18.3631 17.7764 12.9369 21.0364 7.57908 19.7008C2.22377 18.3652 -1.03654 12.9389 0.299398 7.58206C1.6344 2.22425 7.06034 -1.03638 12.4166 0.299249C17.7741 1.63487 21.0341 7.06175 19.6985 12.4192H19.6988Z" fill={fillColor} />
-                <path d="M10.3201 3V8.17525L14.6394 10.1298L10.3201 3Z" fill={color ? color : altColor} fill-opacity="0.602" />
+                <path d="M10.3201 3V8.17525L14.6394 10.1298L10.3201 3Z" fill={color ? color : altColor} fillOpacity="0.602" />
                 <path d="M10.3199 3L6 10.1298L10.3199 8.17525V3Z" fill={color ? color : altColor} />
-                <path d="M10.3201 13.483V16.9995L14.6423 10.9438L10.3201 13.483Z" fill={color ? color : altColor} fill-opacity="0.602" />
+                <path d="M10.3201 13.483V16.9995L14.6423 10.9438L10.3201 13.483Z" fill={color ? color : altColor} fillOpacity="0.602" />
                 <path d="M10.3199 16.9995V13.4825L6 10.9438L10.3199 16.9995Z" fill={color ? color : altColor} />
-                <path d="M10.3201 12.6695L14.6394 10.1297L10.3201 8.17627V12.6695Z" fill={color ? color : altColor} fill-opacity="0.2" />
+                <path d="M10.3201 12.6695L14.6394 10.1297L10.3201 8.17627V12.6695Z" fill={color ? color : altColor} fillOpacity="0.2" />
                 <path d="M6 10.1297L10.3199 12.6695V8.17627L6 10.1297Z" fill={color ? color : altColor} fillOpacity="0.602" />
             </g>
             <defs>
@@ -168,7 +168,7 @@ const EtherumFilledIcon = ({ color, fillColor }: { color?: string, fillColor: st
 const DashCoinFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
     return (
         <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_542_2023)">
+            <g clipPath="url(#clip0_542_2023)">
                 <path d="M11.0459 22.9326C17.1463 22.9326 22.0917 17.9872 22.0917 11.8867C22.0917 5.78623 17.1463 0.84082 11.0459 0.84082C4.94541 0.84082 0 5.78623 0 11.8867C0 17.9872 4.94541 22.9326 11.0459 22.9326Z" fill={fillColor} />
                 <path d="M13.4078 5.7002H7.85895L7.39929 8.27052L12.4087 8.27755C14.8759 8.27755 15.6052 9.17341 15.5841 10.6579C15.5724 11.4201 15.2441 12.7076 15.101 13.1251C14.7211 14.2367 13.9401 15.5078 11.0133 15.5031L6.14225 15.5007L5.68024 18.0734H11.2173C13.1709 18.0734 14.0011 17.8459 14.8806 17.4402C16.8318 16.5396 17.9927 14.6142 18.457 12.1026C19.1512 8.36198 18.2882 5.7002 13.4078 5.7002Z" fill={color ? color : altColor} />
                 <path d="M5.4622 10.5945C4.00818 10.5945 3.79946 11.542 3.66344 12.1142C3.48286 12.8647 3.42422 13.1672 3.42422 13.1672H9.10663C10.5607 13.1672 10.7694 12.2197 10.9054 11.6475C11.086 10.897 11.1446 10.5945 11.1446 10.5945H5.4622Z" fill={color ? color : altColor} />
@@ -185,7 +185,7 @@ const DashCoinFilledIcon = ({ color, fillColor }: { color?: string, fillColor: s
 const TetherCoinFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
     return (
         <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_542_2045)">
+            <g clipPath="url(#clip0_542_2045)">
                 <path d="M11.0459 0.840576C17.1461 0.840576 22.0917 5.78625 22.0917 11.8864C22.0917 17.9866 17.1458 22.9323 11.0459 22.9323C4.9459 22.9323 0 17.988 0 11.8864C0 5.78493 4.94501 0.840576 11.0459 0.840576Z" fill={fillColor} />
                 <path d="M12.4092 10.4147V8.77149H16.1668V6.26782H5.93476V8.77149H9.69278V10.4134C6.6386 10.5536 4.34216 11.1585 4.34216 11.8831C4.34216 12.6077 6.6397 13.2126 9.69278 13.3538V18.6172H12.4101V13.3533C15.4587 13.2126 17.7505 12.6082 17.7505 11.8842C17.7505 11.1603 15.4587 10.5558 12.4101 10.4151L12.4092 10.4147ZM12.4101 12.9075V12.9062C12.3334 12.9111 11.9395 12.9347 11.0625 12.9347C10.3613 12.9347 9.86797 12.9148 9.69411 12.9058V12.908C6.99582 12.7884 4.98172 12.3186 4.98172 11.7563C4.98172 11.1941 6.99604 10.7248 9.69411 10.6051V12.4398C9.87084 12.452 10.3763 12.4818 11.074 12.4818C11.9119 12.4818 12.3332 12.4469 12.4105 12.4398V10.6051C15.1035 10.7251 17.113 11.1954 17.113 11.7557C17.113 12.3159 15.1026 12.7865 12.4105 12.9064" fill="white" />
             </g>
