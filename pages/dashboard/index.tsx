@@ -127,20 +127,6 @@ const Dashboard: NextPage = (props) => {
 
                         <div className="box-section mt-4">
                             <div className="head d-flex">
-                                <div className="title">Portfolio History</div>
-                                <div className="d-flex flex-grow-1 justify-content-end">
-                                    <Link href="/dashboard">
-                                        <a className="view-all">View all</a>
-                                    </Link>
-                                </div>
-                            </div>
-
-                            <div className="mt-2">
-                                <Chart type="line" data={ChartData}></Chart>
-                            </div>
-                        </div>
-                        <div className="box-section mt-4">
-                            <div className="head d-flex">
                                 <div className="title">Recent Transactions</div>
                                 <div className="d-flex flex-grow-1 justify-content-end">
                                     <Link href="/dashboard">
