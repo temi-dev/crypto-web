@@ -12,7 +12,16 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import { BellIcon, BitCoinFilledIcon, CoinSwapIcon, DashCoinFilledIcon, EtherumFilledIcon, ExchangeIcon, PaperIcon, TetherCoinFilledIcon } from "../../components/icons";
+import {
+    BellIcon,
+    BitCoinFilledIcon,
+    CoinSwapIcon,
+    DashCoinFilledIcon,
+    EtherumFilledIcon,
+    ExchangeIcon,
+    PaperIcon,
+    TetherCoinFilledIcon
+} from "../../components/icons";
 
 import {
     Chart as ChartJS,
@@ -23,8 +32,11 @@ import {
     Title,
     Tooltip,
     Legend,
+    ChartConfiguration, LineController
 } from 'chart.js';
+
 ChartJS.register(
+    LineController,
     CategoryScale,
     LinearScale,
     PointElement,
@@ -66,26 +78,26 @@ const Dashboard: NextPage = (props) => {
             label: 'Balance',
             backgroundColor: '#1d38e4',
             borderColor: '#1d38e4',
-            
-            data: [0, 10, 5,  20, 22],
+
+            data: [0, 10, 5, 20, 22],
         }],
         options: {
             responsive: true,
             scales: {
-              y: {
-                title: {
-                  display: true,
-                  text: 'Value'
-                },
-                min: 0,
-                max: 100,
-                ticks: {
-                  // forces step size to be 50 units
-                  stepSize: 20
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Value'
+                    },
+                    min: 0,
+                    max: 100,
+                    ticks: {
+                        // forces step size to be 50 units
+                        stepSize: 20
+                    }
                 }
-              }
             }
-          },
+        },
     }
 
     return (
