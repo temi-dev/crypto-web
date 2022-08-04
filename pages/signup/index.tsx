@@ -109,15 +109,6 @@ const Signup: NextPage = (props) => {
                                                 setPhonenumber(value)
                                             }}
                                         />
-                                        {/* 
-                                        <TextField
-                                            {...props} variant="standard"
-                                            placeholder='+234'
-                                            fullWidth
-                                            InputProps={{
-                                                disableUnderline: true
-                                            }}
-                                        /> */}
                                     </div>
                                     <div className='mt-4'>
                                         <label className='mb-2'>Password*</label>
