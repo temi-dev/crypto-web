@@ -1,16 +1,8 @@
 import { NextPage } from "next";
-import Link from "next/link";
 import DashboardHeader from "../../components/dashboard-header";
 import DashboardPortfolioBalance from "../../components/dashboard-portfolio-balance";
 import DashboardSidebar from "../../components/dashboard-sidebar";
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 
 import {
     BellIcon,
@@ -32,7 +24,7 @@ import {
     Title,
     Tooltip,
     Legend,
-    ChartConfiguration, LineController
+    LineController
 } from 'chart.js';
 
 ChartJS.register(
@@ -45,81 +37,47 @@ ChartJS.register(
     Tooltip,
     Legend
 )
-import { Chart } from 'react-chartjs-2'
+import DashboardTransactionList from "../../components/dashboard-transaction-list";
 
 const Dashboard: NextPage = (props) => {
+   
     const rows = [
         {
-            id: 12,
+            id: '12',
             description: "Bitcoin transaction",
             timestamp: "12th Feb, 2022",
             amount: "-$1000",
             status: "Pending"
         },
         {
-            id: 12,
+            id: '12',
             description: "Cash Withdraw",
             timestamp: "12th Feb, 2022",
             amount: "-$1000",
             status: "Success"
         },
         {
-            id: 12,
+            id: '12',
             description: "Bitcoin transaction",
             timestamp: "12th Feb, 2022",
             amount: "-$1000",
             status: "Pending"
         },
         {
-            id: 12,
+            id: '12',
             description: "Cash Withdraw",
             timestamp: "12th Feb, 2022",
             amount: "-$1000",
             status: "Success"
         },
         {
-            id: 12,
+            id: '12',
             description: "Bitcoin transaction",
             timestamp: "12th Feb, 2022",
             amount: "-$1000",
             status: "Pending"
         }
     ];
-
-    const labels = [
-        'Jan 10',
-        'Jan 11',
-        'Jan 12',
-        'Jan 13',
-        'Jan 14',
-    ];
-    const ChartData = {
-        labels: labels,
-        datasets: [{
-            label: 'Balance',
-            backgroundColor: '#1d38e4',
-            borderColor: '#1d38e4',
-
-            data: [0, 10, 5, 20, 22],
-        }],
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Value'
-                    },
-                    min: 0,
-                    max: 100,
-                    ticks: {
-                        // forces step size to be 50 units
-                        stepSize: 20
-                    }
-                }
-            }
-        },
-    }
 
     return (
         <div className="dashboard">
@@ -146,45 +104,8 @@ const Dashboard: NextPage = (props) => {
                             </div>
                         </div>
 
-                        <div className="box-section mt-4">
-                            <div className="head d-flex">
-                                <div className="title">Recent Transactions</div>
-                                <div className="d-flex flex-grow-1 justify-content-end">
-                                    <Link href="/dashboard">
-                                        <a className="view-all">View all</a>
-                                    </Link>
-                                </div>
-                            </div>
-
-                            <div className="mt-2">
-                                <TableContainer component={Paper}>
-                                    <Table>
-
-                                        <TableBody>
-                                            {rows.map((row) => (
-                                                <TableRow
-                                                    key={row.id}
-                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                                >
-                                                    <TableCell className="transaction-description" >
-                                                        {row.description}
-                                                    </TableCell>
-                                                    <TableCell>{row.timestamp}</TableCell>
-                                                    <TableCell>
-                                                        <span className="transaction-amount">{row.amount}</span>
-                                                    </TableCell>
-                                                    <TableCell align="right">
-                                                        <span className={`transaction-status ${row.status == 'Success' ? 'success' : 'pending'}`}>
-                                                            {row.status}
-                                                        </span>
-                                                    </TableCell>
-                                                </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </div>
-
+                        <div className="box-section mt-4 d-none d-lg-block">
+                            <DashboardTransactionList data={rows}></DashboardTransactionList>
                         </div>
 
                     </div>
@@ -254,6 +175,10 @@ const Dashboard: NextPage = (props) => {
                                 <DashboardPortfolioBalance coinIcon={<TetherCoinFilledIcon color="white" fillColor="#53AE94"></TetherCoinFilledIcon>} coinName="TETHER" percentageChange={"+5%"} coinBalance={110.222} fiatBalance={"NGN50,000"} ></DashboardPortfolioBalance>
                             </div>
 
+                        </div>
+
+                        <div className="box-section mt-4 d-block d-lg-none">
+                            <DashboardTransactionList data={rows}></DashboardTransactionList>
                         </div>
                     </div>
                 </div>
