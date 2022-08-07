@@ -55,8 +55,8 @@ a {
 }
 
 .MuiPaper-root {
-  box-shadow: 8px 16px 32px rgba(113, 128, 150, 0.08);
-  border-radius: 12px;
+  box-shadow: 8px 16px 32px rgba(113, 128, 150, 0.08) !important;
+  border-radius: 12px !important;
 }
 
 a {
