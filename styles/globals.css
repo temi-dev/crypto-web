@@ -25,7 +25,6 @@ body {
   src: url("/fonts/Manrope-Regular.ttf") format("truetype");
 }
 
-
 a {
   color: inherit;
   text-decoration: none;
@@ -49,6 +48,15 @@ a {
 ::-webkit-scrollbar-thumb {
   background: #112291 !important;
   border-radius: 2px;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiTableContainer-root.css-11xur9t-MuiPaper-root-MuiTableContainer-root {
+  box-shadow: none;
+}
+
+.MuiPaper-root {
+  box-shadow: 8px 16px 32px rgba(113, 128, 150, 0.08);
+  border-radius: 12px;
 }
 
 a {
@@ -363,7 +371,7 @@ form label {
 .header .title {
   color: #1a202c;
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .header .btn {
@@ -374,6 +382,10 @@ form label {
   font-size: 15px;
   height: 40px;
   outline: none;
+}
+
+.header .btn {
+  border: 1px solid var(--primaryColor);
 }
 
 .header .notification-btn {
@@ -404,12 +416,131 @@ form label {
   font-weight: 600;
 }
 
+#profile-menu ul {
+  width: 200px;
+  font-family: "ManropeNormal" !important;
+}
+
+#notifications-menu ul {
+  width: 370px;
+  font-family: "ManropeNormal" !important;
+}
+
+#notifications-menu .heading {
+  padding: 10px 24px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+#notifications-menu .heading .text {
+  font-weight: 800;
+  font-size: 16px;
+  font-family: "ManropeNormal";
+  display: flex;
+  align-items: center;
+}
+
+#notifications-menu #content {
+  padding: 21px;
+}
+
+#notifications-menu #content .section-headline {
+  font-weight: 700;
+  font-size: 14px;
+  color: #a4a7b3;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+#notifications-menu #content .notification {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+#notifications-menu #content .notification .notification-image {
+  width: 48px;
+  height: 48px;
+  background-size: cover;
+  border-radius: 100%;
+}
+
+#notifications-menu #content .notification .notification-content {
+  padding: 5px 12px;
+}
+
+#notifications-menu #content .notification .notification-heading {
+  font-weight: 800;
+  font-size: 15px;
+}
+
+#notifications-menu #content .notification .notification-note {
+  color: #718096;
+  font-weight: 550;
+  font-size: 12px;
+}
+
+#notifications-menu #content .notification .notification-note .amount{
+  color: #FF784B;
+  font-weight: 600;
+}
+
+#notifications-menu #content .notification .notification-timestamp {
+  color: #a0aec0;
+  font-weight: 800;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+#notifications-menu #footer {
+  display: flex;
+  padding: 15px 24px;
+  border-top: 1px solid #edf2f7;
+}
+
+#notifications-menu #footer div:nth-child(2) {
+  display: flex;
+  flex-grow: 1;
+  justify-content: end;
+}
+
+#notifications-menu #footer a {
+  font-weight: 800;
+  font-size: 14px;
+}
+
+#profile-menu ul li {
+  font-size: 14px;
+  color: #1a202c;
+  padding: 10px 13px;
+}
+
+#profile-menu ul li .menu-item {
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  font-family: "ManropeNormal" !important;
+}
+
+.profile-menu-name {
+  padding: 0 15px 14px 15px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.profile-menu-name .name {
+  color: #1a202c;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.profile-menu-name .email {
+  font-size: 12px;
+  color: #718096;
+}
+
 .dashboard-content {
   width: 100%;
   background-color: #ffffff;
 }
 
-.dashboard-inner-content{
+.dashboard-inner-content {
   padding-top: 100px;
 }
 
@@ -627,7 +758,7 @@ form label {
   .page-content form .form-content {
     margin-top: 30px;
   }
-  .header{
-  width: calc(100% - 330px);
+  .header {
+    width: calc(100% - 330px);
   }
 }

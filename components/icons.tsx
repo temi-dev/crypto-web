@@ -198,6 +198,33 @@ const TetherCoinFilledIcon = ({ color, fillColor }: { color?: string, fillColor:
     )
 }
 
+const UserOutlineIcon = ({ color }: { color?: string }) => {
+    return (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.99996 9.16667C11.8409 9.16667 13.3333 7.67428 13.3333 5.83333C13.3333 3.99238 11.8409 2.5 9.99996 2.5C8.15901 2.5 6.66663 3.99238 6.66663 5.83333C6.66663 7.67428 8.15901 9.16667 9.99996 9.16667Z" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M5 17.5V15.8333C5 14.9493 5.35119 14.1014 5.97631 13.4763C6.60143 12.8512 7.44928 12.5 8.33333 12.5H11.6667C12.5507 12.5 13.3986 12.8512 14.0237 13.4763C14.6488 14.1014 15 14.9493 15 15.8333V17.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    )
+}
+const LogoutOutlineIcon = ({ color }: { color?: string }) => {
+    return (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.33333 6.66658V4.99992C8.33333 4.55789 8.50893 4.13397 8.82149 3.82141C9.13405 3.50885 9.55797 3.33325 10 3.33325H15.8333C16.2754 3.33325 16.6993 3.50885 17.0118 3.82141C17.3244 4.13397 17.5 4.55789 17.5 4.99992V14.9999C17.5 15.4419 17.3244 15.8659 17.0118 16.1784C16.6993 16.491 16.2754 16.6666 15.8333 16.6666H10C9.55797 16.6666 9.13405 16.491 8.82149 16.1784C8.50893 15.8659 8.33333 15.4419 8.33333 14.9999V13.3333" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M14.1666 10H2.49996M2.49996 10L4.99996 7.5M2.49996 10L4.99996 12.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+
+    )
+}
+
+const CheckFilledIcon = ({ color }: { color?: string }) => {
+    return (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.8335 9.99992L10.0002 14.1666L18.3335 5.83325" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M10.0001 9.99992L14.1667 5.83325M1.66675 9.99992L5.83341 14.1666L1.66675 9.99992Z" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    )
+}
+
 export {
     HomeIcon,
     ChartIcon,
@@ -214,5 +241,8 @@ export {
     BitCoinFilledIcon,
     EtherumFilledIcon,
     DashCoinFilledIcon,
-    TetherCoinFilledIcon
+    TetherCoinFilledIcon,
+    UserOutlineIcon,
+    LogoutOutlineIcon,
+    CheckFilledIcon
 }

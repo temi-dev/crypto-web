@@ -62,6 +62,27 @@ const Dashboard: NextPage = (props) => {
             timestamp: "12th Feb, 2022",
             amount: "-$1000",
             status: "Success"
+        },
+        {
+            id: 12,
+            description: "Bitcoin transaction",
+            timestamp: "12th Feb, 2022",
+            amount: "-$1000",
+            status: "Pending"
+        },
+        {
+            id: 12,
+            description: "Cash Withdraw",
+            timestamp: "12th Feb, 2022",
+            amount: "-$1000",
+            status: "Success"
+        },
+        {
+            id: 12,
+            description: "Bitcoin transaction",
+            timestamp: "12th Feb, 2022",
+            amount: "-$1000",
+            status: "Pending"
         }
     ];
 
@@ -152,7 +173,7 @@ const Dashboard: NextPage = (props) => {
                                                     <TableCell>
                                                         <span className="transaction-amount">{row.amount}</span>
                                                     </TableCell>
-                                                    <TableCell>
+                                                    <TableCell align="right">
                                                         <span className={`transaction-status ${row.status == 'Success' ? 'success' : 'pending'}`}>
                                                             {row.status}
                                                         </span>
