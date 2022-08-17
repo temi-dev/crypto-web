@@ -112,8 +112,12 @@ a.grey {
 .form-control-2 input, .form-control-select{
   padding: 10px 14px !important;
   border: 1px solid #ced4da !important;
-  border-radius: 10px;
+  border-radius: 12px;
   outline: none
+}
+
+.form-control-select .MuiSelect-select{
+  background: white !important;
 }
 
 .form-control-2 .MuiInput-root{
@@ -795,6 +799,8 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 .currency-selector {
   /* padding: 0 !important; */
   border: 0 !important;
+  font-size: 14px !important;
+  color: #718096 !important;
 }
 
 .currency-menu-item{
