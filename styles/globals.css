@@ -528,7 +528,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 #notifications-menu #footer div:nth-child(2) {
   display: flex;
   flex-grow: 1;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 #notifications-menu #footer a {
@@ -798,8 +798,8 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 }
 
 .currency-menu-item{
-  padding: 10px;
-  margin: 2px 10px;
+  padding: 10px !important;
+  margin: 2px 10px !important;
   background: white !important;
 }
 
@@ -887,7 +887,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 .transaction-details .data .item .value {
   display: flex;
   flex-grow: 1;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .pin-field{
