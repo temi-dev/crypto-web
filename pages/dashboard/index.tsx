@@ -50,28 +50,28 @@ const Dashboard: NextPage = (props) => {
             status: "Pending"
         },
         {
-            id: '12',
+            id: '13',
             description: "Cash Withdraw",
             timestamp: "12th Feb, 2022",
             amount: "-$1000",
             status: "Success"
         },
         {
-            id: '12',
+            id: '14',
             description: "Bitcoin transaction",
             timestamp: "12th Feb, 2022",
             amount: "-$1000",
             status: "Pending"
         },
         {
-            id: '12',
+            id: '15',
             description: "Cash Withdraw",
             timestamp: "12th Feb, 2022",
             amount: "-$1000",
             status: "Success"
         },
         {
-            id: '12',
+            id: '16',
             description: "Bitcoin transaction",
             timestamp: "12th Feb, 2022",
             amount: "-$1000",

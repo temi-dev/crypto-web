@@ -225,6 +225,89 @@ const CheckFilledIcon = ({ color }: { color?: string }) => {
     )
 }
 
+const ActivityFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
+    return (
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="24" fill={fillColor} />
+            <path d="M28.8395 32.1642V18.5464" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M32.9173 28.0681L28.8395 32.1648L24.7617 28.0681" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M18.9113 15.8328V29.4505" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M14.8335 19.9289L18.9113 15.8323L22.9891 19.9289" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    )
+}
+
+const DownloadFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
+    return (
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="24" fill={fillColor} />
+            <path d="M33 27V31C33 31.5304 32.7893 32.0391 32.4142 32.4142C32.0391 32.7893 31.5304 33 31 33H17C16.4696 33 15.9609 32.7893 15.5858 32.4142C15.2107 32.0391 15 31.5304 15 31V27" stroke={color ? color : altColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M19 22L24 27L29 22" stroke={color ? color : altColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M24 27V15" stroke={color ? color : altColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    )
+}
+
+const WalletDepositFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
+    return (
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="24" fill={fillColor} />
+            <path d="M14 20.5H26.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M18 28.5H20" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M22.5 28.5H26.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M34 26.03V28.11C34 31.62 33.11 32.5 29.56 32.5H18.44C14.89 32.5 14 31.62 14 28.11V19.89C14 16.38 14.89 15.5 18.44 15.5H26.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M32 15.5V21.5L34 19.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M32 21.5L30 19.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    )
+}
+
+const ArrowLeftIcon = ({ color }: { color?: string }) => {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.25 12.2739L19.25 12.2739" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M10.2998 18.2985L4.2498 12.2745L10.2998 6.24951" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    )
+}
+
+const WalletDebitFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
+    return (
+        <svg width="47" height="48" viewBox="0 0 47 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.0646973" y="0.166504" width="46.9259" height="46.9259" rx="23.463" fill={fillColor} />
+            <path d="M14 20.5H26.5" stroke={color ? color : altColor} strokeWidth="1.5" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M18 28.5H20" stroke={color ? color : altColor} strokeWidth="1.5" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M22.5 28.5H26.5" stroke={color ? color : altColor} strokeWidth="1.5" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M34 26.03V28.11C34 31.62 33.11 32.5 29.56 32.5H18.44C14.89 32.5 14 31.62 14 28.11V19.89C14 16.38 14.89 15.5 18.44 15.5H26.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M32 21.5V15.5L34 17.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M32 15.5L30 17.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+
+    )
+}
+
+const CheckCircleFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
+    return (
+        <svg width="201" height="200" viewBox="0 0 201 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g filter="url(#filter0_d_627_6646)">
+                <rect x="43" y="37" width="115" height="115" rx="56.0976" fill={fillColor} />
+                <path d="M122.939 77.6704L92.0854 108.524L78.061 94.4997" stroke={color ? color : altColor} strokeWidth="7.0122" strokeLinecap="round" strokeLinejoin="round" />
+                <rect x="38.7927" y="32.7927" width="123.415" height="123.415" rx="60.3049" stroke="#2972FF" strokeOpacity="0.05" strokeWidth="8.41463" />
+            </g>
+            <defs>
+                <filter id="filter0_d_627_6646" x="0.926914" y="0.53667" width="199.146" height="199.146" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                    <feOffset dy="5.60976" />
+                    <feGaussianBlur stdDeviation="16.8293" />
+                    <feColorMatrix type="matrix" values="0 0 0 0 0.160784 0 0 0 0 0.447059 0 0 0 0 1 0 0 0 0.25 0" />
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_627_6646" />
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_627_6646" result="shape" />
+                </filter>
+            </defs>
+        </svg>
+    )
+}
 export {
     HomeIcon,
     ChartIcon,
@@ -244,5 +327,11 @@ export {
     TetherCoinFilledIcon,
     UserOutlineIcon,
     LogoutOutlineIcon,
-    CheckFilledIcon
+    CheckFilledIcon,
+    ActivityFilledIcon,
+    DownloadFilledIcon,
+    WalletDepositFilledIcon,
+    ArrowLeftIcon,
+    WalletDebitFilledIcon,
+    CheckCircleFilledIcon
 }

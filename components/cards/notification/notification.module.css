@@ -1,0 +1,59 @@
+.notificationCard {
+  display: flex;
+  padding: 24px 40px;
+  border: 1px solid rgba(175, 175, 175, 0.7);
+  border-radius: 16px;
+  margin-bottom: 15px;
+  font-family: "ManropeNormal";
+}
+
+.content {
+  display: flex;
+  flex-grow: 1;
+  padding: 0 10px;
+}
+
+.notificationCardTitle {
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.notificationCardDescription,
+.notificationCardTimestamp {
+  font-weight: 500;
+  font-size: 12px;
+  color: #718096;
+}
+
+.separator {
+  margin: 0 5px;
+}
+
+.amount {
+  display: flex;
+  align-items: center;
+}
+
+.debit {
+  background: #fff2f2;
+  border-radius: 6px;
+  color: #ff1818;
+  font-weight: 700;
+  padding: 8px 23px;
+}
+
+.credit {
+  color: #00b900;
+  background: #e4ffe4;
+  border-radius: 6px;
+  font-weight: 700;
+  padding: 8px 23px;
+}
+
+.deposit {
+  background: #e8edff;
+  border-radius: 6px;
+  color: #194bfb;
+  font-weight: 700;
+  padding: 8px 23px;
+}
