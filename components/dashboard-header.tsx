@@ -210,10 +210,10 @@ const DashboardHeader = ({ title }: { title: string }) => {
                                     <ArrowLeftIcon color="black"></ArrowLeftIcon>
                                 </div>
 
-                                <FormControl fullWidth>
+                                <div>
                                     <label className="form-label">Select a digital currency to {buyForm.action}</label>
                                     <Select
-                                        className="form-control-select"
+                                        className="form-control-select w-100"
                                         disableUnderline
                                         displayEmpty
                                         variant='standard'
@@ -241,9 +241,9 @@ const DashboardHeader = ({ title }: { title: string }) => {
                                             </div>
                                         </MenuItem>
                                     </Select>
-                                </FormControl>
+                                </div>
 
-                                <FormControl className="mt-3" fullWidth>
+                                <div className="mt-3">
                                     <label className="form-label">How much would you like to {buyForm.action} ?</label>
                                     <TextField
                                         className="amount-field"
@@ -271,7 +271,7 @@ const DashboardHeader = ({ title }: { title: string }) => {
                                         }}
                                     />
 
-                                </FormControl>
+                                </div>
 
                                 <div className="form-coin-wallet-balance">
                                     <div className="balance-header">Total Balance</div>
