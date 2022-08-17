@@ -118,6 +118,7 @@ a.grey {
 
 .form-control-select .MuiSelect-select{
   background: white !important;
+  padding: 0;
 }
 
 .form-control-2 .MuiInput-root{
@@ -782,17 +783,27 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 }
 
 .amount-field {
-  padding: 10px !important;
+  padding: 12px !important;
   border: 1px solid #ced4da !important;
   border-radius: 10px;
   outline: none
+}
+
+.amount-field input{
+  padding: 0 !important;
+}
+
+.amount-field .MuiSelect-standard{
+  padding: 0;
+  padding-right: 14px;
+  padding-top: 2px;
+  margin-right: 5px;
 }
 
 .amount-field
   .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input {
   margin-right: 20px;
   outline: none;
-
   font-size: 14px;
 }
 
@@ -899,9 +910,10 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 .pin-field{
   width: 40px;
   height: 40px;
-  margin: 0 5px;
-  display: inline-block;
+  margin: 0 5px !important;
+  display: inline-block !important;
 }
+
 /* Large screens */
 @media (min-width: 992px) {
   .dashboard-content {
