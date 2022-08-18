@@ -308,6 +308,15 @@ const CheckCircleFilledIcon = ({ color, fillColor }: { color?: string, fillColor
         </svg>
     )
 }
+
+const CancelIcon = ({ color }: { color?: string }) => {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.9498 7.05029L7.05033 16.9498" stroke={color ? color : altColor} stroke-width="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M7.05029 7.05029L16.9498 16.9498" stroke={color ? color : altColor} stroke-width="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    )
+}
 export {
     HomeIcon,
     ChartIcon,
@@ -333,5 +342,6 @@ export {
     WalletDepositFilledIcon,
     ArrowLeftIcon,
     WalletDebitFilledIcon,
-    CheckCircleFilledIcon
+    CheckCircleFilledIcon,
+    CancelIcon
 }

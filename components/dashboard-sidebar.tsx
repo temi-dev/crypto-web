@@ -36,14 +36,6 @@ const DashboardSidebar = () => {
                     <li>
                         <Link href='/dashboard'>
                             <a className="d-flex">
-                                <WalletIcon></WalletIcon>
-                                <span>My wallets</span>
-                            </a>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href='/dashboard'>
-                            <a className="d-flex">
                                 <BriefcaseIcon></BriefcaseIcon>
                                 <span>Portfolios</span>
                             </a>

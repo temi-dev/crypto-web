@@ -59,6 +59,10 @@ a {
   border-radius: 12px !important;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 a {
   color: var(--primaryColor);
 }
@@ -109,20 +113,48 @@ a.grey {
   border-radius: 10px;
 }
 
-.form-control-2 input, .form-control-select{
+.form-control-2 input,
+.form-control-select {
   padding: 10px 14px !important;
   border: 1px solid #ced4da !important;
   border-radius: 12px;
-  outline: none
+  outline: none;
 }
 
-.form-control-select .MuiSelect-select{
+.form-control-select .MuiSelect-select {
   background: white !important;
   padding: 0;
 }
 
-.form-control-2 .MuiInput-root{
+.form-control-2 .MuiInput-root {
   border: 0 !important;
+}
+
+.flex-select-menu-item {
+  display: flex;
+}
+
+.flex-select-menu-item .text {
+  display: flex;
+  margin-left: 5px;
+  padding-top: 1px;
+  align-items: center;
+}
+
+.ui-select-menu {
+  padding: 10px !important;
+  margin: 2px 10px !important;
+  background: white !important;
+}
+
+.ui-select-menu:hover {
+  background: #194bfb !important;
+  color: white;
+  border-radius: 12px;
+}
+
+.ui-select-menu:not(:last-of-type) {
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .input-focus {
@@ -749,6 +781,30 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   text-align: center;
 }
 
+.dialog-page .dialog-header {
+  display: flex;
+  padding: 20px 15px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.dialog-page .content.padding {
+  padding: 0 20px;
+}
+
+.dialog-page .dialog-header .title {
+  display: flex;
+  flex-grow: 1 ;
+  color: #1a202c;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.dialog-page .dialog-header button{
+  background: none;
+  outline: none;
+  border: 0;
+}
+
 .dialog-page .heading-note {
   color: #718096;
   font-weight: 500;
@@ -756,10 +812,31 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   text-align: center;
 }
 
-
-.dialog-page .content{
+.dialog-page .content {
   margin-top: 15px;
 }
+
+.dialog-page .transaction-fee {
+  color: #2972ff;
+  font-weight: 500;
+  font-size: 13.1228px;
+  margin-top: 15px;
+  text-align: center;
+}
+.dialog-page .transaction-fee span {
+  background: #d7dcff;
+  border-radius: 7.7193px;
+  padding: 15px 20px;
+  display: inline-block;
+  margin: auto;
+}
+
+.swap-coin-circle-icon{
+  box-shadow: 0px 3.57143px 22.3214px rgba(0, 0, 0, 0.08);
+  display: inline-block;
+  border-radius: 50%;
+}
+
 /* Buy Form */
 
 .buy-sell-action-picker {
@@ -786,14 +863,14 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   padding: 12px !important;
   border: 1px solid #ced4da !important;
   border-radius: 10px;
-  outline: none
+  outline: none;
 }
 
-.amount-field input{
+.amount-field input {
   padding: 0 !important;
 }
 
-.amount-field .MuiSelect-standard{
+.amount-field .MuiSelect-standard {
   padding: 0;
   padding-right: 14px;
   padding-top: 2px;
@@ -811,22 +888,6 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   border: 0 !important;
   font-size: 14px !important;
   color: #718096 !important;
-}
-
-.currency-menu-item{
-  padding: 10px !important;
-  margin: 2px 10px !important;
-  background: white !important;
-}
-
-.currency-menu-item:hover{
-  background: #194bfb !important;
-  color: white;
-  border-radius:12px ;
-}
-
-.currency-menu-item:not(:last-of-type){
-  border-bottom: 1px solid #E2E8F0;
 }
 
 .form-coin-wallet-balance {
@@ -906,7 +967,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   justify-content: flex-end;
 }
 
-.pin-field{
+.pin-field {
   width: 40px;
   height: 40px;
   margin: 0 5px !important;

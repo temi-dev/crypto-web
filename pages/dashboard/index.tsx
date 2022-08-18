@@ -38,6 +38,8 @@ ChartJS.register(
     Legend
 )
 import DashboardTransactionList from "../../components/dashboard-transaction-list";
+import React from "react";
+import CoinSwap from "../../components/dialogs/coin-swap/coin-swap";
 
 const Dashboard: NextPage = (props) => {
    
@@ -69,15 +71,14 @@ const Dashboard: NextPage = (props) => {
             timestamp: "12th Feb, 2022",
             amount: "-$1000",
             status: "Success"
-        },
-        {
-            id: '16',
-            description: "Bitcoin transaction",
-            timestamp: "12th Feb, 2022",
-            amount: "-$1000",
-            status: "Pending"
         }
     ];
+
+    const [coinSwapDialogVisibilityState, setCoinSwapDialogVisibilityState] = React.useState(false);
+
+    const handleCoinSwapDialogOpen = () => {
+        setCoinSwapDialogVisibilityState(true);
+    };
 
     return (
         <div className="dashboard">
@@ -132,25 +133,25 @@ const Dashboard: NextPage = (props) => {
                             </div>
 
                             <div className="d-flex mt-5 ctas">
-                                <div className="flex-fill ">
+                                <div className="flex-fill cursor-pointer" onClick={handleCoinSwapDialogOpen}>
                                     <div className="cta">
                                         <CoinSwapIcon color="#936DFF"></CoinSwapIcon>
                                     </div>
                                     <div className="cta-text">Coin Swap</div>
                                 </div>
-                                <div className="flex-fill ">
+                                <div className="flex-fill cursor-pointer">
                                     <div className="cta">
                                         <PaperIcon color="#22C55E"></PaperIcon>
                                     </div>
                                     <div className="cta-text">Transfer</div>
                                 </div>
-                                <div className="flex-fill ">
+                                <div className="flex-fill cursor-pointer">
                                     <div className="cta">
                                         <ExchangeIcon color="#FACC15"></ExchangeIcon>
                                     </div>
                                     <div className="cta-text">Convert</div>
                                 </div>
-                                <div className="flex-fill ">
+                                <div className="flex-fill cursor-pointer">
                                     <div className="cta">
                                         <BellIcon color="#1D38E4"></BellIcon>
                                     </div>
@@ -182,6 +183,8 @@ const Dashboard: NextPage = (props) => {
                         </div>
                     </div>
                 </div>
+
+                <CoinSwap open={coinSwapDialogVisibilityState} setVisibilityState={setCoinSwapDialogVisibilityState}></CoinSwap>
             </div>
 
         </div>
