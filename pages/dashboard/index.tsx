@@ -40,9 +40,11 @@ ChartJS.register(
 import DashboardTransactionList from "../../components/dashboard-transaction-list";
 import React from "react";
 import CoinSwap from "../../components/dialogs/coin-swap/coin-swap";
+import MoneyConversion from "../../components/dialogs/convert/convert";
+import Transfer from "../../components/dialogs/transfer/transfer";
 
 const Dashboard: NextPage = (props) => {
-   
+
     const rows = [
         {
             id: '12',
@@ -78,6 +80,19 @@ const Dashboard: NextPage = (props) => {
 
     const handleCoinSwapDialogOpen = () => {
         setCoinSwapDialogVisibilityState(true);
+    };
+
+
+    const [conversionDialogVisibilityState, setConversionDialogVisibilityState] = React.useState(false);
+
+    const handleConversionDialogOpen = () => {
+        setConversionDialogVisibilityState(true);
+    };
+    
+    const [transferDialogVisibilityState, setTransferDialogVisibilityState] = React.useState(false);
+
+    const transferDialogOpen = () => {
+        setTransferDialogVisibilityState(true);
     };
 
     return (
@@ -139,13 +154,13 @@ const Dashboard: NextPage = (props) => {
                                     </div>
                                     <div className="cta-text">Coin Swap</div>
                                 </div>
-                                <div className="flex-fill cursor-pointer">
+                                <div className="flex-fill cursor-pointer" onClick={transferDialogOpen}>
                                     <div className="cta">
                                         <PaperIcon color="#22C55E"></PaperIcon>
                                     </div>
                                     <div className="cta-text">Transfer</div>
                                 </div>
-                                <div className="flex-fill cursor-pointer">
+                                <div className="flex-fill cursor-pointer" onClick={handleConversionDialogOpen}>
                                     <div className="cta">
                                         <ExchangeIcon color="#FACC15"></ExchangeIcon>
                                     </div>
@@ -185,6 +200,10 @@ const Dashboard: NextPage = (props) => {
                 </div>
 
                 <CoinSwap open={coinSwapDialogVisibilityState} setVisibilityState={setCoinSwapDialogVisibilityState}></CoinSwap>
+
+                <MoneyConversion open={conversionDialogVisibilityState} setVisibilityState={setConversionDialogVisibilityState}></MoneyConversion>
+
+                <Transfer open={transferDialogVisibilityState} setVisibilityState={setTransferDialogVisibilityState}></Transfer>
             </div>
 
         </div>

@@ -793,13 +793,13 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 
 .dialog-page .dialog-header .title {
   display: flex;
-  flex-grow: 1 ;
+  flex-grow: 1;
   color: #1a202c;
   font-weight: 500;
   font-size: 18px;
 }
 
-.dialog-page .dialog-header button{
+.dialog-page .dialog-header button {
   background: none;
   outline: none;
   border: 0;
@@ -831,12 +831,29 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   margin: auto;
 }
 
-.swap-coin-circle-icon{
+.swap-coin-circle-icon {
   box-shadow: 0px 3.57143px 22.3214px rgba(0, 0, 0, 0.08);
   display: inline-block;
+  background: white;
+  padding: 7px;
   border-radius: 50%;
 }
 
+.transfer-currency {
+  display: inline-block;
+  color: #1a202c;
+  margin-left: 8px;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.recent-contacts .contact-image-placeholder {
+  width: 56px;
+  height: 56px;
+  display: inline-block;
+  background-size: cover;
+  border-radius: 50%;
+}
 /* Buy Form */
 
 .buy-sell-action-picker {
