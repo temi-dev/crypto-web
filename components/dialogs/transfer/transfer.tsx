@@ -1,7 +1,6 @@
-import { Dialog, MenuItem, Select, TextField } from "@mui/material"
+import { Dialog, TextField } from "@mui/material"
 import React, { useState } from "react";
-import { ArrowLeftIcon, BitCoinFilledIcon, CancelIcon, CheckCircleFilledIcon, CoinSwapIcon, EtherumFilledIcon, NigeriaIcon } from "../../icons";
-import { Carousel } from 'react-responsive-carousel';
+import { ArrowLeftIcon, CancelIcon, CheckCircleFilledIcon, NigeriaIcon } from "../../icons";
 import ReactSimplyCarousel from 'react-simply-carousel';
 
 const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: any }) => {
@@ -59,63 +58,72 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
 
                                 <div className="recent-contacts my-3">
                                     <div className="headline">Recent Contacts</div>
-                                    <ReactSimplyCarousel
-                                        activeSlideIndex={activeSlideIndex}
-                                        onRequestChange={setActiveSlideIndex}
-                                        itemsToShow={1}
-                                        itemsToScroll={1}
-                                        forwardBtnProps={{
-                                            style: {
-                                                visibility: 'hidden',
-                                            },
-                                            children: <span>{`>`}</span>,
-                                        }}
-                                        backwardBtnProps={{
-                                            //here you can also pass className, or any other button element attributes
-                                            style: {
-                                                visibility: 'hidden'
-                                            },
-                                            children: <span>{`<`}</span>,
-                                        }}
-                                        responsiveProps={[
-                                            {
-                                                itemsToShow: 7,
-                                                itemsToScroll: 7,
-                                                minWidth: 768,
-                                            },
-                                        ]}
-                                        speed={400}
-                                        easing="linear"
-                                    >
-                                        <div style={{ width: 50, height: 50, background: '#ff80ed' }}>
-                                            slide 0
-                                        </div>
-                                        <div style={{ width: 50, height: 50, background: '#065535' }}>
-                                            slide 1
-                                        </div>
-                                        <div style={{ width: 50, height: 50, background: '#000000' }}>
-                                            slide 2
-                                        </div>
-                                        <div style={{ width: 50, height: 50, background: '#133337' }}>
-                                            slide 3
-                                        </div>
-                                        <div style={{ width: 50, height: 50, background: '#ffc0cb' }}>
-                                            slide 4
-                                        </div>
-                                        <div style={{ width: 50, height: 50, background: '#ffffff' }}>
-                                            slide 5
-                                        </div>
-                                        <div style={{ width: 50, height: 50, background: '#ffffff' }}>
-                                            slide 5
-                                        </div>
-                                        <div style={{ width: 50, height: 50, background: '#ffffff' }}>
-                                            slide 5
-                                        </div>
-                                        <div style={{ width: 50, height: 50, background: '#ffffff' }}>
-                                            slide 5
-                                        </div>
-                                    </ReactSimplyCarousel>
+                                    <div className="my-3">
+                                        <ReactSimplyCarousel
+                                            activeSlideIndex={activeSlideIndex}
+                                            onRequestChange={setActiveSlideIndex}
+                                            // itemsToShow={5}
+                                            // itemsToScroll={5}
+                                            forwardBtnProps={{
+                                                style: {
+                                                    visibility: 'hidden',
+                                                },
+                                                children: <span>{`>`}</span>,
+                                            }}
+                                            backwardBtnProps={{
+                                                //here you can also pass className, or any other button element attributes
+                                                style: {
+                                                    visibility: 'hidden'
+                                                },
+                                                children: <span>{`<`}</span>,
+                                            }}
+                                            responsiveProps={[
+                                                {
+                                                    itemsToShow: 3,
+                                                    itemsToScroll: 3,
+                                                    minWidth: 768,
+                                                }, {
+                                                    itemsToShow: 5,
+                                                    itemsToScroll: 5,
+                                                    minWidth: 1200,
+                                                },
+                                            ]}
+                                            speed={400}
+                                            easing="linear"
+                                        >
+                                            <div className="contact-carousel-item">
+                                                <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/avatar.png" + ")" }}></div>
+                                                <div className="contact-name text-truncate">Yemmy</div>
+                                            </div>
 
+                                            <div className="contact-carousel-item">
+                                                <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/img.png" + ")" }}></div>
+                                                <div className="contact-name text-truncate">Miliano</div>
+                                            </div>
+
+                                            <div className="contact-carousel-item">
+                                                <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/pic.png" + ")" }}></div>
+                                                <div className="contact-name text-truncate">Ebuka</div>
+                                            </div>
+
+                                            <div className="contact-carousel-item">
+                                                <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }}></div>
+                                                <div className="contact-name text-truncate">Pedro</div>
+                                            </div>
+
+                                            <div className="contact-carousel-item">
+                                                <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }}></div>
+                                                <div className="contact-name text-truncate">Owk</div>
+                                            </div>
+
+                                            
+                                            {/* <div className="contact-carousel-item">
+                                                <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/img.png" + ")" }}></div>
+                                                <div className="contact-name text-truncate">Miliano</div>
+                                            </div> */}
+
+                                        </ReactSimplyCarousel>
+                                    </div>
                                 </div>
 
                                 <div >
@@ -132,6 +140,20 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                                     <NigeriaIcon></NigeriaIcon>  <span className="transfer-currency">NGN</span>
                                                 </div>
                                             ),
+                                        }}
+                                    />
+
+                                </div>
+
+                                <div className="mt-3">
+                                    <label className="form-label">Add a Note</label>
+                                    <TextField
+                                        className="amount-field"
+                                        variant="standard"
+                                        placeholder="What’s this for?"
+                                        fullWidth
+                                        InputProps={{
+                                            disableUnderline: true,
                                         }}
                                     />
 
