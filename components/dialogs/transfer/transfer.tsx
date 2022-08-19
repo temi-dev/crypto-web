@@ -23,7 +23,7 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
         setForm({ ...formData, ...data });
     };
     const handleDialogClose = () => {
-        if (form.step == 3) handleSetFormData({ step: 1 })
+        if (form.step == 4) handleSetFormData({ step: 1 })
         setVisibilityState({ transferDialogVisibility: false });
     };
     const [activeSlideIndex, setActiveSlideIndex] = useState(0);
