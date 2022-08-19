@@ -148,7 +148,7 @@ a.grey {
 }
 
 .ui-select-menu:hover {
-  background: #194bfb !important;
+  background: var(--primaryColor) !important;
   color: white;
   border-radius: 12px;
 }
@@ -170,6 +170,17 @@ a.grey {
 
 .back-nav {
   cursor: pointer;
+}
+
+.pagination{
+  justify-content: end;
+}
+
+.MuiPaginationItem-rounded.Mui-selected {
+  border: 1px solid var(--primaryColor);
+  color: var(--primaryColor);
+  background-color: var(--secondaryColor) !important;
+  border-radius: 8px;
 }
 
 ::-webkit-input-placeholder {
@@ -460,6 +471,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   border-radius: 50%;
   background-color: white;
   border: 1px solid #ececec;
+  outline: none;
 }
 
 .header .profile-menu {
@@ -611,7 +623,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 }
 
 .dashoard-overview-banner {
-  background-color: #194bfb;
+  background-color: var(--primaryColor);
   border-radius: 18px;
 }
 
@@ -648,7 +660,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 }
 
 .balance-card {
-  background: #194bfb;
+  background: var(--primaryColor);
   padding: 24px;
   border-radius: 16px;
 }
@@ -849,7 +861,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 
 .transfer-name-confirmation {
   padding: 8px 28px;
-  border: 1px solid #194bfb;
+  border: 1px solid var(--primaryColor);
   border-radius: 20px;
   display: inline-block;
   margin: 10px 0;
@@ -905,8 +917,8 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 }
 
 .price-alert-currency span.active {
-  border: 1px solid #194bfb;
-  color: #194bfb;
+  border: 1px solid var(--primaryColor);
+  color: var(--primaryColor);
 }
 
 /* Buy Form */
@@ -927,7 +939,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 }
 
 .buy-sell-action-picker > div:hover {
-  background-color: #194bfb;
+  background-color: var(--primaryColor);
   color: #fff;
 }
 
