@@ -65,17 +65,10 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                             // itemsToShow={5}
                                             // itemsToScroll={5}
                                             forwardBtnProps={{
-                                                style: {
-                                                    visibility: 'hidden',
-                                                },
-                                                children: <span>{`>`}</span>,
+                                                hidden: true
                                             }}
                                             backwardBtnProps={{
-                                                //here you can also pass className, or any other button element attributes
-                                                style: {
-                                                    visibility: 'hidden'
-                                                },
-                                                children: <span>{`<`}</span>,
+                                                hidden: true
                                             }}
                                             responsiveProps={[
                                                 {
@@ -117,10 +110,10 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                             </div>
 
                                             
-                                            {/* <div className="contact-carousel-item">
+                                            <div className="contact-carousel-item">
                                                 <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/img.png" + ")" }}></div>
                                                 <div className="contact-name text-truncate">Miliano</div>
-                                            </div> */}
+                                            </div>
 
                                         </ReactSimplyCarousel>
                                     </div>
