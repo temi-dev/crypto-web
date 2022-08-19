@@ -181,7 +181,7 @@ const PriceAlert = ({ open, setVisibilityState }: { open: boolean, setVisibility
                                 </div>
 
                                 <div className="my-4">
-                                    <button onClick={() => handleDialogClose} className='btn btn-radius w-100 btn-primary'>Create</button>
+                                    <button onClick={handleDialogClose} className='btn btn-radius w-100 btn-primary'>Create</button>
                                 </div>
                             </div>
                         </div>

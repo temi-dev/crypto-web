@@ -164,6 +164,25 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                         <div className="mb-3 back-nav" onClick={() => handleSetFormData({ step: 1 })}>
                             <ArrowLeftIcon color="black"></ArrowLeftIcon>
                         </div>
+                        <div className="heading">Confirm</div>
+                        <div className="heading-note">
+                            Notice: Ensure that the name of the recipient is corrent as transfer are not reversible
+                        </div>
+                        <div className="content text-center">
+                            <span className="transfer-name-confirmation">Obi Pedro</span>
+                        </div>
+                        <div className="mt-5">
+                            <button onClick={() => setForm({ step: 3 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                        </div>
+                    </div>
+                )
+            }
+            {
+                form.step == 3 && (
+                    <div className="dialog-page p-4">
+                        <div className="mb-3 back-nav" onClick={() => handleSetFormData({ step: 2 })}>
+                            <ArrowLeftIcon color="black"></ArrowLeftIcon>
+                        </div>
                         <div className="heading">Enter your pin</div>
                         <div className="content text-center">
                             <TextField
@@ -203,13 +222,13 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                             />
                         </div>
                         <div className="mt-5">
-                            <button onClick={() => setForm({ step: 3 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                            <button onClick={() => setForm({ step: 4 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
                         </div>
                     </div>
                 )
             }
             {
-                form.step == 3 && (
+                form.step == 4 && (
                     <div className="dialog-page p-4">
                         <div className="heading">Success</div>
                         <div className="heading-note">Transaction successful</div>

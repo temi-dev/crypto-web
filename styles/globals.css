@@ -847,6 +847,14 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   font-size: 14px;
 }
 
+.transfer-name-confirmation {
+  padding: 8px 28px;
+  border: 1px solid #194bfb;
+  border-radius: 20px;
+  display: inline-block;
+  margin: 10px 0;
+}
+
 .contact-carousel-item {
   display: inline-block;
   width: 80px;
@@ -872,23 +880,23 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   margin: 25px 0;
 }
 
-.price-alert-notification-bell svg{
+.price-alert-notification-bell svg {
   height: 90px;
 }
 
-.price-alert-sms-consent span{
-  font-size: 14px ;
-  color: #94959B;
+.price-alert-sms-consent span {
+  font-size: 14px;
+  color: #94959b;
 }
 
-.price-alert-currency{
+.price-alert-currency {
   text-align: right;
   margin-bottom: 5px;
 }
 
-.price-alert-currency span{
-  color: #7A869A;
-  background: #E8F1FF;
+.price-alert-currency span {
+  color: #7a869a;
+  background: #e8f1ff;
   display: inline-block;
   padding: 8px 15px;
   border-radius: 10px;
@@ -896,7 +904,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   cursor: pointer;
 }
 
-.price-alert-currency span.active{
+.price-alert-currency span.active {
   border: 1px solid #194bfb;
   color: #194bfb;
 }
