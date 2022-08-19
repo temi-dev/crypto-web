@@ -1,8 +1,8 @@
 import { Dialog, Select, MenuItem, TextField } from "@mui/material";
 import React from "react";
-import { WalletDepositFilledIcon, WalletDebitFilledIcon, ArrowLeftIcon, BitCoinFilledIcon, EtherumFilledIcon, CheckCircleFilledIcon } from "../../icons";
+import { WalletDepositFilledIcon, WalletDebitFilledIcon, ArrowLeftIcon, BitCoinFilledIcon, EtherumFilledIcon, CheckCircleFilledIcon } from "../../icons/icons";
 
-const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilityState:any }) => {
+const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<boolean>> }) => {
 
     interface IFormData {
         coin?: string,

@@ -1,4 +1,4 @@
-import { ActivityFilledIcon, DownloadFilledIcon, WalletDepositFilledIcon } from '../../icons';
+import { ActivityFilledIcon, DownloadFilledIcon, WalletDepositFilledIcon } from '../../icons/icons';
 import styles from './notification.module.css';
 
 const NotificationCard = ({ title, description, timestamp, amount, type }: { title: string, description: string, timestamp: string, amount: string, type: string }) => {

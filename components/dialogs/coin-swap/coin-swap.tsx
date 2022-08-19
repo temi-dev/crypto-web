@@ -1,8 +1,9 @@
 import { Dialog, MenuItem, Select, TextField } from "@mui/material"
 import React from "react";
-import { ArrowLeftIcon, BitCoinFilledIcon, CancelIcon, CheckCircleFilledIcon, CoinSwapIcon, EtherumFilledIcon } from "../../icons";
+import { IDialogs } from "../../../shared/interface/global.interface";
+import { ArrowLeftIcon, BitCoinFilledIcon, CancelIcon, CheckCircleFilledIcon, CoinSwapIcon, EtherumFilledIcon } from "../../icons/icons";
 
-const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: any }) => {
+const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
 
     interface IFormData {
         fromCoin?: string,
@@ -22,7 +23,7 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
     };
     const handleDialogClose = () => {
         if (form.step == 3) handleSetFormData({ step: 1 })
-        setVisibilityState(false);
+        setVisibilityState({ coinSwapDialogVisibitlity: false });
     };
     return (
         <Dialog fullWidth maxWidth='xs' open={open} onClose={handleDialogClose}>

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { HomeIcon, ChartIcon, WalletAddIcon, WalletIcon, BriefcaseIcon, SettingsIcon, QuestionCircleIcon } from "./icons"
+import { HomeIcon, ChartIcon, WalletAddIcon, WalletIcon, BriefcaseIcon, SettingsIcon, QuestionCircleIcon } from "../icons/icons"
 
 const DashboardSidebar = () => {
     return (

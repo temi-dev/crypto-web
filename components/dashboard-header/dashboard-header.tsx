@@ -1,4 +1,4 @@
-import { ActivityFilledIcon, ArrowLeftIcon, BellIcon, BitCoinFilledIcon, CheckCircleFilledIcon, CheckFilledIcon, ChevronDownIcon, DownloadFilledIcon, EtherumFilledIcon, LogoutOutlineIcon, SettingsIcon, UserOutlineIcon, WalletDebitFilledIcon, WalletDepositFilledIcon } from "./icons"
+import { ActivityFilledIcon, ArrowLeftIcon, BellIcon, BitCoinFilledIcon, CheckCircleFilledIcon, CheckFilledIcon, ChevronDownIcon, DownloadFilledIcon, EtherumFilledIcon, LogoutOutlineIcon, SettingsIcon, UserOutlineIcon, WalletDebitFilledIcon, WalletDepositFilledIcon } from "../icons/icons"
 import React from 'react';
 import Dialog from '@mui/material/Dialog';
 import { Button, FormControl, InputLabel, ListItemIcon, ListItemText, Select, SelectChangeEvent, Tab, Tabs, TextField } from "@mui/material";
@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Link from "next/link";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import BuySell from "./dialogs/buy-sell/buy-sell";
+import BuySell from "../dialogs/buy-sell/buy-sell";
 
 
 const DashboardHeader = ({ title }: { title: string }) => {

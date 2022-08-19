@@ -1,7 +1,7 @@
 import { NextPage } from "next";
-import DashboardHeader from "../../components/dashboard-header";
-import DashboardPortfolioBalance from "../../components/dashboard-portfolio-balance";
-import DashboardSidebar from "../../components/dashboard-sidebar";
+import DashboardHeader from "../../components/dashboard-header/dashboard-header";
+import DashboardPortfolioBalance from "../../components/dashboard-portfolio-balance/dashboard-portfolio-balance";
+import DashboardSidebar from "../../components/dashboard-sidebar/dashboard-sidebar";
 
 
 import {
@@ -13,7 +13,7 @@ import {
     ExchangeIcon,
     PaperIcon,
     TetherCoinFilledIcon
-} from "../../components/icons";
+} from "../../components/icons/icons";
 
 import {
     Chart as ChartJS,
@@ -37,11 +37,13 @@ ChartJS.register(
     Tooltip,
     Legend
 )
-import DashboardTransactionList from "../../components/dashboard-transaction-list";
+import DashboardTransactionList from "../../components/dashboard-transaction-list/dashboard-transaction-list";
 import React from "react";
 import CoinSwap from "../../components/dialogs/coin-swap/coin-swap";
 import MoneyConversion from "../../components/dialogs/convert/convert";
 import Transfer from "../../components/dialogs/transfer/transfer";
+import { IDialogs } from "../../shared/interface/global.interface";
+import PriceAlert from "../../components/dialogs/price-alert/price-alert";
 
 const Dashboard: NextPage = (props) => {
 
@@ -76,25 +78,20 @@ const Dashboard: NextPage = (props) => {
         }
     ];
 
-    const [coinSwapDialogVisibilityState, setCoinSwapDialogVisibilityState] = React.useState(false);
+    const DialogsVisibilityInitState : IDialogs = {
+        coinSwapDialogVisibitlity: false,
+        conversionDialogVisibilty: false,
+        transferDialogVisibility: false,
+        priceAlertsDialogVisibility: false
+    }
 
-    const handleCoinSwapDialogOpen = () => {
-        setCoinSwapDialogVisibilityState(true);
+    const [dialogsVisibilityState, setDialogVisibilityState] = React.useState({...DialogsVisibilityInitState});
+
+    const openDialog = (data: IDialogs) => {
+        setDialogVisibilityState({...dialogsVisibilityState, ...data });
     };
 
-
-    const [conversionDialogVisibilityState, setConversionDialogVisibilityState] = React.useState(false);
-
-    const handleConversionDialogOpen = () => {
-        setConversionDialogVisibilityState(true);
-    };
     
-    const [transferDialogVisibilityState, setTransferDialogVisibilityState] = React.useState(false);
-
-    const transferDialogOpen = () => {
-        setTransferDialogVisibilityState(true);
-    };
-
     return (
         <div className="dashboard">
 
@@ -148,25 +145,25 @@ const Dashboard: NextPage = (props) => {
                             </div>
 
                             <div className="d-flex mt-5 ctas">
-                                <div className="flex-fill cursor-pointer" onClick={handleCoinSwapDialogOpen}>
+                                <div className="flex-fill cursor-pointer" onClick={() => openDialog({coinSwapDialogVisibitlity: true})}>
                                     <div className="cta">
                                         <CoinSwapIcon color="#936DFF"></CoinSwapIcon>
                                     </div>
                                     <div className="cta-text">Coin Swap</div>
                                 </div>
-                                <div className="flex-fill cursor-pointer" onClick={transferDialogOpen}>
+                                <div className="flex-fill cursor-pointer" onClick={() => openDialog({transferDialogVisibility: true})}>
                                     <div className="cta">
                                         <PaperIcon color="#22C55E"></PaperIcon>
                                     </div>
                                     <div className="cta-text">Transfer</div>
                                 </div>
-                                <div className="flex-fill cursor-pointer" onClick={handleConversionDialogOpen}>
+                                <div className="flex-fill cursor-pointer" onClick={() => openDialog({conversionDialogVisibilty: true})}>
                                     <div className="cta">
                                         <ExchangeIcon color="#FACC15"></ExchangeIcon>
                                     </div>
                                     <div className="cta-text">Convert</div>
                                 </div>
-                                <div className="flex-fill cursor-pointer">
+                                <div className="flex-fill cursor-pointer" onClick={() => openDialog({priceAlertsDialogVisibility: true})}>
                                     <div className="cta">
                                         <BellIcon color="#1D38E4"></BellIcon>
                                     </div>
@@ -199,11 +196,13 @@ const Dashboard: NextPage = (props) => {
                     </div>
                 </div>
 
-                <CoinSwap open={coinSwapDialogVisibilityState} setVisibilityState={setCoinSwapDialogVisibilityState}></CoinSwap>
+                <CoinSwap open={dialogsVisibilityState.coinSwapDialogVisibitlity!} setVisibilityState={setDialogVisibilityState}></CoinSwap>
 
-                <MoneyConversion open={conversionDialogVisibilityState} setVisibilityState={setConversionDialogVisibilityState}></MoneyConversion>
+                <MoneyConversion open={dialogsVisibilityState.conversionDialogVisibilty!} setVisibilityState={setDialogVisibilityState}></MoneyConversion>
 
-                <Transfer open={transferDialogVisibilityState} setVisibilityState={setTransferDialogVisibilityState}></Transfer>
+                <Transfer open={dialogsVisibilityState.transferDialogVisibility!} setVisibilityState={setDialogVisibilityState}></Transfer>
+
+                <PriceAlert open={dialogsVisibilityState.priceAlertsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></PriceAlert>
             </div>
 
         </div>

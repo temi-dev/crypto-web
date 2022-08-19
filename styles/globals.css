@@ -866,6 +866,41 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   font-size: 14px;
   text-align: center;
 }
+
+.price-alert-notification-bell {
+  text-align: center;
+  margin: 25px 0;
+}
+
+.price-alert-notification-bell svg{
+  height: 90px;
+}
+
+.price-alert-sms-consent span{
+  font-size: 14px ;
+  color: #94959B;
+}
+
+.price-alert-currency{
+  text-align: right;
+  margin-bottom: 5px;
+}
+
+.price-alert-currency span{
+  color: #7A869A;
+  background: #E8F1FF;
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.price-alert-currency span.active{
+  border: 1px solid #194bfb;
+  color: #194bfb;
+}
+
 /* Buy Form */
 
 .buy-sell-action-picker {

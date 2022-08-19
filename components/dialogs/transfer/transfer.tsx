@@ -1,9 +1,10 @@
 import { Dialog, TextField } from "@mui/material"
 import React, { useState } from "react";
-import { ArrowLeftIcon, CancelIcon, CheckCircleFilledIcon, NigeriaIcon } from "../../icons";
+import { ArrowLeftIcon, CancelIcon, CheckCircleFilledIcon, NigeriaIcon } from "../../icons/icons";
 import ReactSimplyCarousel from 'react-simply-carousel';
+import { IDialogs } from "../../../shared/interface/global.interface";
 
-const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: any }) => {
+const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
 
     interface IFormData {
         fromCoin?: string,
@@ -23,7 +24,7 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
     };
     const handleDialogClose = () => {
         if (form.step == 3) handleSetFormData({ step: 1 })
-        setVisibilityState(false);
+        setVisibilityState({ transferDialogVisibility: false });
     };
     const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
@@ -62,8 +63,6 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                         <ReactSimplyCarousel
                                             activeSlideIndex={activeSlideIndex}
                                             onRequestChange={setActiveSlideIndex}
-                                            // itemsToShow={5}
-                                            // itemsToScroll={5}
                                             forwardBtnProps={{
                                                 hidden: true
                                             }}
@@ -109,7 +108,6 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                                 <div className="contact-name text-truncate">Owk</div>
                                             </div>
 
-                                            
                                             <div className="contact-carousel-item">
                                                 <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/img.png" + ")" }}></div>
                                                 <div className="contact-name text-truncate">Miliano</div>

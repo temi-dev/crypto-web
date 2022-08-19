@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import NotificationCard from "../../../components/cards/notification/notification";
-import DashboardHeader from "../../../components/dashboard-header";
-import DashboardSidebar from "../../../components/dashboard-sidebar";
+import DashboardHeader from "../../../components/dashboard-header/dashboard-header";
+import DashboardSidebar from "../../../components/dashboard-sidebar/dashboard-sidebar";
 
 const Notifications: NextPage = () => {
     const data = [
