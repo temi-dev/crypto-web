@@ -78,7 +78,7 @@ const Dashboard: NextPage = (props) => {
         }
     ];
 
-    const DialogsVisibilityInitState : IDialogs = {
+    const DialogsVisibilityInitState: IDialogs = {
         coinSwapDialogVisibitlity: false,
         conversionDialogVisibilty: false,
         transferDialogVisibility: false,
@@ -86,13 +86,13 @@ const Dashboard: NextPage = (props) => {
         portfolioDetailsDialogVisibility: false
     }
 
-    const [dialogsVisibilityState, setDialogVisibilityState] = React.useState({...DialogsVisibilityInitState});
+    const [dialogsVisibilityState, setDialogVisibilityState] = React.useState({ ...DialogsVisibilityInitState });
 
     const openDialog = (data: IDialogs) => {
-        setDialogVisibilityState({...dialogsVisibilityState, ...data });
+        setDialogVisibilityState({ ...dialogsVisibilityState, ...data });
     };
 
-    
+
     return (
         <div className="dashboard">
 
@@ -109,8 +109,12 @@ const Dashboard: NextPage = (props) => {
                                 <div className="title">Crypto For Better</div>
                                 <div className="note">Experience kochure on mobile app</div>
                                 <div className="mt-3">
-                                    <img src="/icons/google-play.svg"></img>
-                                    <img className="d-inline-block ms-2" src="/icons/apple-store.svg"></img>
+                                    <picture>
+                                        <img alt="google play" src="/icons/google-play.svg"></img>
+                                    </picture>
+                                    <picture>
+                                        <img alt="apple store" className="d-inline-block ms-2" src="/icons/apple-store.svg"></img>
+                                    </picture>
                                 </div>
                             </div>
                             <div className="d-none d-lg-flex flex-grow-1 justify-content-end">
@@ -133,10 +137,14 @@ const Dashboard: NextPage = (props) => {
                             <div className="balance-card mt-3">
                                 <div className="align-items-start d-flex">
                                     <div className="d-flex align-items-start">
-                                        <img src="/images/balance-btc.svg" height={'80'}></img>
+                                        <picture>
+                                            <img alt="balance" src="/images/balance-btc.svg" height={'80'}></img>
+                                        </picture>
                                     </div>
                                     <div className="d-flex flex-grow-1 align-items-start justify-content-end">
-                                        <img src="/logo.svg" width={'84'}></img>
+                                        <picture>
+                                            <img alt="logo" src="/logo.svg" width={'84'}></img>
+                                        </picture>
                                     </div>
                                 </div>
                                 <div className="balance">
@@ -146,25 +154,25 @@ const Dashboard: NextPage = (props) => {
                             </div>
 
                             <div className="d-flex mt-3 ctas">
-                                <div className="flex-fill cursor-pointer" onClick={() => openDialog({coinSwapDialogVisibitlity: true})}>
+                                <div className="flex-fill cursor-pointer" onClick={() => openDialog({ coinSwapDialogVisibitlity: true })}>
                                     <div className="cta">
                                         <CoinSwapIcon color="#936DFF"></CoinSwapIcon>
                                     </div>
                                     <div className="cta-text">Coin Swap</div>
                                 </div>
-                                <div className="flex-fill cursor-pointer" onClick={() => openDialog({transferDialogVisibility: true})}>
+                                <div className="flex-fill cursor-pointer" onClick={() => openDialog({ transferDialogVisibility: true })}>
                                     <div className="cta">
                                         <PaperIcon color="#22C55E"></PaperIcon>
                                     </div>
                                     <div className="cta-text">Transfer</div>
                                 </div>
-                                <div className="flex-fill cursor-pointer" onClick={() => openDialog({conversionDialogVisibilty: true})}>
+                                <div className="flex-fill cursor-pointer" onClick={() => openDialog({ conversionDialogVisibilty: true })}>
                                     <div className="cta">
                                         <ExchangeIcon color="#FACC15"></ExchangeIcon>
                                     </div>
                                     <div className="cta-text">Convert</div>
                                 </div>
-                                <div className="flex-fill cursor-pointer" onClick={() => openDialog({priceAlertsDialogVisibility: true})}>
+                                <div className="flex-fill cursor-pointer" onClick={() => openDialog({ priceAlertsDialogVisibility: true })}>
                                     <div className="cta">
                                         <BellIcon color="#1D38E4"></BellIcon>
                                     </div>
@@ -180,7 +188,7 @@ const Dashboard: NextPage = (props) => {
                             </div>
 
                             <div className="mt-2">
-                                <DashboardPortfolioBalance  coinIcon={<BitCoinFilledIcon color="white" fillColor="#F7931A"></BitCoinFilledIcon>} coinName="BTC" percentageChange={"+5%"} coinBalance={0.222} fiatBalance={"NGN200,000"} ></DashboardPortfolioBalance>
+                                <DashboardPortfolioBalance coinIcon={<BitCoinFilledIcon color="white" fillColor="#F7931A"></BitCoinFilledIcon>} coinName="BTC" percentageChange={"+5%"} coinBalance={0.222} fiatBalance={"NGN200,000"} ></DashboardPortfolioBalance>
 
                                 <DashboardPortfolioBalance coinIcon={<EtherumFilledIcon color="white" fillColor="#627EEA"></EtherumFilledIcon>} coinName="ETH" percentageChange={"+2%"} coinBalance={1.222} fiatBalance={"NGN1,000,000"} ></DashboardPortfolioBalance>
 
@@ -205,7 +213,7 @@ const Dashboard: NextPage = (props) => {
 
                 <PriceAlert open={dialogsVisibilityState.priceAlertsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></PriceAlert>
 
-                
+
             </div>
 
         </div>

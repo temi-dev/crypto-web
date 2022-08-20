@@ -1,34 +1,38 @@
+import Image from "next/image"
 import Link from "next/link"
+import { NextRouter, useRouter } from "next/router";
 import { HomeIcon, ChartIcon, WalletAddIcon, WalletIcon, BriefcaseIcon, SettingsIcon, QuestionCircleIcon } from "../icons/icons"
 
 const DashboardSidebar = () => {
+    const router: NextRouter = useRouter();
+
     return (
         <div className="side-bar">
             <div className="top-section">
-                <img className='logo' src={'/logo-coloured.svg'} width='132 px' height='32px'></img>
+                <Image className='logo' src={'/logo-coloured.svg'} width='132 px' height='32px'></Image>
             </div>
             <div className="menu-links">
                 <ul>
                     <li>
-                        <Link href='/dashboard'>
-                            <a className="active d-flex">
-                                <HomeIcon color="white"></HomeIcon>
+                        <Link href='/dashboard' >
+                            <a className={router.pathname == "/dashboard" ? "active d-flex" : "d-flex"}>
+                                <HomeIcon color={router.pathname == "/dashboard" ? "white" : "#718096"}></HomeIcon>
                                 <span>Overview</span>
                             </a>
                         </Link>
                     </li>
                     <li>
-                        <Link href='/dashboard'>
-                            <a className="d-flex">
-                                <ChartIcon></ChartIcon>
+                        <Link href='/dashboard/market'>
+                            <a className={router.pathname == "/dashboard/market" ? "active d-flex" : "d-flex"}>
+                                <ChartIcon color={router.pathname == "/dashboard/market" ? "white" : "#718096"}></ChartIcon>
                                 <span>Market</span>
                             </a>
                         </Link>
                     </li>
                     <li>
-                        <Link href='/dashboard'>
+                        <Link href='/dashboard/add-money'>
                             <a className="d-flex">
-                                <WalletAddIcon></WalletAddIcon>
+                                <WalletAddIcon color={router.pathname == "/dashboard/add-money" ? "white" : "#718096"}></WalletAddIcon>
                                 <span>Add money</span>
                             </a>
                         </Link>

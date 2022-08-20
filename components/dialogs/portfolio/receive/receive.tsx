@@ -36,7 +36,7 @@ const PortfolioReceive = ({ open, setVisibilityState, coin}: { open: boolean, se
                         <div className="portfolio-receive-address">
                             <div className="title">Wallet address</div>
                             <div className="address-barcode">
-                                <Image src='/images/barcode.png' height='240px' width='240px'></Image>
+                                <Image alt="barcode" src='/images/barcode.png' height='240px' width='240px'></Image>
                             </div>
                             
                         </div>

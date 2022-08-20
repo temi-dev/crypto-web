@@ -394,7 +394,35 @@ const CopyIcon = ({ color }: { color?: string }) => {
     )
 }
 
+const GraphUp = () => {
+    return (
+        <svg width="45" height="29" viewBox="0 0 45 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.2251 23.1935L4.28687 11.0613L7.34864 23.9687L10.4104 15.9525L13.4722 17.022L16.5339 10.7868L19.5957 6.25482L22.6575 5.53152L25.7192 7.5317L28.781 16.3334L31.8428 7.85914L34.9046 13.4022L37.9663 11.2255L41.0281 0.587891L44.0899 17.5866" stroke="#1355FF" strokeWidth="0.974199" />
+            <path d="M4.28687 11.0613L1.2251 23.1935V28.8397H44.0899V17.5866L41.0281 0.587891L37.9663 11.2255L34.9046 13.4022L31.8428 7.85914L28.781 16.3334L25.7192 7.5317L22.6575 5.53152L19.5957 6.25482L16.5339 10.7868L13.4722 17.022L10.4104 15.9525L7.34864 23.9687L4.28687 11.0613Z" fill="url(#paint0_linear_862_19712)" />
+            <defs>
+                <linearGradient id="paint0_linear_862_19712" x1="22.6575" y1="5.94599" x2="22.6575" y2="28.8397" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#1F28EB" stopOpacity="0.1" />
+                    <stop offset="1" stop-color="#1F28EB" stopOpacity="0" />
+                </linearGradient>
+            </defs>
+        </svg>
+    )
+}
 
+const GraphDown = () => {
+    return (
+        <svg width="45" height="30" viewBox="0 0 45 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.22522 23.422L4.28699 11.2898L7.34876 24.1972L10.4105 16.181L13.4723 17.2505L16.5341 11.0153L19.5958 6.48333L22.6576 5.76003L25.7194 7.76022L28.7811 16.5619L31.8429 8.08765L34.9047 13.6308L37.9664 11.454L41.0282 0.816406L44.09 17.8151" stroke="#FC3400" strokeWidth="0.974199" />
+            <path d="M4.28699 11.2898L1.22522 23.422V29.0682H44.09V17.8151L41.0282 0.816406L37.9664 11.454L34.9047 13.6308L31.8429 8.08766L28.7811 16.5619L25.7194 7.76022L22.6576 5.76003L19.5958 6.48333L16.5341 11.0153L13.4723 17.2505L10.4105 16.181L7.34876 24.1972L4.28699 11.2898Z" fill="url(#paint0_linear_862_19796)" />
+            <defs>
+                <linearGradient id="paint0_linear_862_19796" x1="22.6576" y1="6.1745" x2="22.6576" y2="29.0682" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#FC3400" stopOpacity="0.1" />
+                    <stop offset="1" stopColor="#FC3400" stopOpacity="0" />
+                </linearGradient>
+            </defs>
+        </svg>
+    )
+}
 export {
     HomeIcon,
     ChartIcon,
@@ -428,5 +456,7 @@ export {
     ArrowRightTopFilledIcon,
     ArrowSidewaysFilledIcon,
     WalletFilledIcon,
-    CopyIcon
+    CopyIcon,
+    GraphUp,
+    GraphDown
 }

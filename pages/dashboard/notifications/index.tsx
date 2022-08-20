@@ -3,9 +3,6 @@ import NotificationCard from "../../../components/cards/notification/notificatio
 import DashboardHeader from "../../../components/dashboard-header/dashboard-header";
 import DashboardSidebar from "../../../components/dashboard-sidebar/dashboard-sidebar";
 import Pagination from '@mui/material/Pagination';
-import { PaginationItem } from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const Notifications: NextPage = () => {
     const data = [

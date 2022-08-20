@@ -88,10 +88,10 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
                             </div>
 
                             <div className="portfolio-dialog-footer">
-                                <Image src="/images/vault-safe.svg" width='250px' height='250px'></Image>
+                                <Image alt="wallet vault" src="/images/vault-safe.svg" width='250px' height='250px'></Image>
                                 <div>
-                                    <Image width='140px' height='40px' src="/icons/google-play.svg"></Image>
-                                    <Image width='140px' height='40px' className="d-inline-block ms-2" src="/icons/apple-store.svg"></Image>
+                                    <Image alt="google play" width='140px' height='40px' src="/icons/google-play.svg"></Image>
+                                    <Image alt="apple store" width='140px' height='40px' className="d-inline-block ms-2" src="/icons/apple-store.svg"></Image>
                                 </div>
                             </div>
                         </div>

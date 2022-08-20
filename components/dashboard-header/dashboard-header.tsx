@@ -101,13 +101,11 @@ const DashboardHeader = ({ title }: { title: string }) => {
                     </div>
                     <div id='footer'>
                         <div>
-                            <Link href={'/dashboard/notifications'}>See all Notifications</Link>
+                            <Link href='/dashboard/notifications'>See all Notifications</Link>
                         </div>
                         <div>
-                            <Link href={'/dashboard/settings'}>
-                                <div>
+                            <Link href='/dashboard/settings'>
                                     <SettingsIcon color="#A0AEC0"></SettingsIcon>
-                                </div>
                             </Link>
                         </div>
                     </div>

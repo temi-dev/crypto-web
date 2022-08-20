@@ -13,7 +13,6 @@ const DashboardPortfolioBalance = (
     const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
 
     const openDialog = (data: IDialogs) => {
-        console.log({ ...data })
         setDialogVisibilityState({ ...dialogsVisibilityState, ...data });
     };
     return (
