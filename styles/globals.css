@@ -109,7 +109,7 @@ a.grey {
 
 .form-control {
   padding: 14px !important;
-  border: 1px solid #ced4da !important;
+  border: 1px solid #EDF2F7 !important;
   border-radius: 10px;
 }
 
@@ -172,7 +172,7 @@ a.grey {
   cursor: pointer;
 }
 
-.pagination{
+.pagination {
   justify-content: end;
 }
 
@@ -713,6 +713,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 .portfolio-list {
   padding: 10px 0;
   border-bottom: 1px solid #edf2f7;
+  cursor: pointer;
 }
 
 .portfolio-list .coin-name {
@@ -1058,18 +1059,256 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   display: inline-block !important;
 }
 
+.MuiDialog-paperFullScreen {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.portfolio-dialog-content,
+.portfolio-dialog {
+  background-color: var(--secondaryColor);
+}
+
+.portfolio-dialog-header {
+  padding: 0 25px;
+  margin-top: 30px;
+}
+
+.portfolio-dialog-header .close-dialog {
+  text-align: right;
+}
+
+.portfolio-dialog-header .close-dialog button {
+  background-color: var(--secondaryColor);
+  border: 0;
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0px 4.77778px 9.55556px rgba(0, 0, 0, 0.1);
+}
+
+.portfolio-dialog-header .title {
+  font-weight: 800;
+  font-size: 28px;
+  margin-top: 20px;
+}
+
+.portfolio-dialog-header .title span{
+  text-transform: uppercase;
+}
+
+.portfolio-dialog-inner-content {
+  padding: 30px;
+}
+
+.portfolio-balance-card {
+  border: 1px solid var(--primaryColor);
+  border-radius: 22px;
+  padding: 25px;
+  background-image: url("/images/bitcoin-bg.png");
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
+.portfolio-balance-card .coin-details {
+  display: flex;
+}
+
+.portfolio-balance-card .coin-details svg {
+  height: 60px;
+  width: 50px;
+}
+
+.portfolio-balance-card .coin-details .coin-name {
+  font-size: 17px;
+  display: flex;
+  margin-left: 10px;
+  align-self: center;
+  color: #23262f;
+  opacity: 0.4;
+}
+
+.portfolio-balance-card .balance {
+  margin-top: 10px;
+}
+
+.portfolio-balance-card .balance .naira-fiat {
+  color: #23262f;
+  font-weight: 600;
+  font-size: 25.2899px;
+}
+
+.portfolio-balance-card .balance .usd-fiat {
+  color: #a4a6aa;
+  display: flex;
+  align-self: center;
+}
+
+.portfolio-balance-card .balance .percentage-increase {
+  border-radius: 17px;
+  color: var(--secondaryColor);
+  padding: 5px 15px;
+}
+
+.portfolio-balance-card .balance .percentage-increase.green {
+  background: #0abe64;
+}
+
+.portfolio-dialog-inner-content .rate {
+  border: 1px solid #ececec;
+  border-radius: 22px;
+  margin-top: 20px;
+  padding: 15px 20px;
+}
+
+.portfolio-dialog-inner-content .rate .coin {
+  color: #718096;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.portfolio-dialog-inner-content .rate .conversion {
+  font-weight: 700;
+  font-size: 15px;
+  margin-top: 5px;
+}
+
+.portfolio-dialog-inner-content .ctas {
+  text-align: center;
+}
+
+.portfolio-dialog-inner-content .ctas button {
+  background: #ffffff;
+  box-shadow: 0px 11.5916px 28.9791px #f1f4f6;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.portfolio-dialog-inner-content .ctas .cta-text {
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.portfolio-dialog-footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.portfolio-receive-address {
+  background-color: var(--primaryColor);
+  border-radius: 20px;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.portfolio-receive-address .title {
+  color: var(--secondaryColor);
+  font-weight: 600;
+  font-size: 18.8413px;
+}
+
+.portfolio-receive-address .address-barcode {
+  background-color: var(--secondaryColor);
+  padding: 10px;
+  border-radius: 22px;
+  margin: 20px auto;
+}
+
+.portfolio-receive-address .coin-select {
+  background-color: var(--secondaryColor);
+  border-radius: 22px;
+  width: 100%;
+}
+
+.wallet-address-clipboard {
+  border: 1px solid var(--primaryColor);
+  color: var(--primaryColor);
+  border-radius: 12px;
+  display: flex;
+  margin-top: 15px;
+}
+
+.wallet-address-clipboard .address {
+  display: flex;
+  padding: 14px 18px;
+  flex-grow: 1;
+  align-self: center;
+}
+
+.wallet-address-clipboard .copy {
+  border-left: 1px solid var(--primaryColor);
+  padding: 10px;
+  display: flex;
+  margin-left: 15px;
+}
+
+.wallet-address-clipboard .copy button {
+  padding: 5px;
+  outline: none;
+  background: none;
+  border: 0;
+}
+
+.portfolio-dialog-inner-content .form-container{
+  border: 1px solid #EDF2F7;
+  padding: 40px 15px;
+  border-radius: 18px;
+}
+
+.portfolio-dialog-inner-content .form-container  .amount-field input::placeholder,
+.portfolio-dialog-inner-content .form-container  .amount-field input{
+  color: #1A202C !important;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.portfolio-dialog-inner-content .form-container .amount-field-box{
+  border: 1px solid var(--primaryColor);
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.portfolio-dialog-inner-content .form-container  .amount-field-box .label{
+  color: #718096;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.portfolio-dialog-inner-content .form-container  .amount-field-box .currency{
+  font-weight: 800;
+  font-size: 24px;
+  margin-right: 2px;
+}
+
+.portfolio-dialog-inner-content .form-container  .amount-field-box .currency.blue{
+  color: var(--primaryColor);
+}
+
+.portfolio-dialog-inner-content .form-container   .currency-picker button{
+  background: #E8EDFF;
+  color: var(--primaryColor);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 13px;
+  padding: 0;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 2px;
+  border: none;
+}
+
+.portfolio-dialog-inner-content .form-container   .currency-picker button.usdt{
+  font-size: 12px;
+}
+
+.portfolio-dialog-inner-content .form-container  .currency-picker button.active{
+  border: 1px solid var(--primaryColor);
+}
 /* Large screens */
 @media (min-width: 992px) {
-  .dashboard-content {
-    padding: 0 40px;
-  }
-  .side-bar {
-    display: block;
-  }
-  .dashboard-content {
-    margin-left: 250px;
-    width: calc(100% - 250px);
-  }
 }
 
 /* Small screens */
@@ -1111,5 +1350,27 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   }
   .header {
     width: calc(100% - 330px);
+  }
+
+  .dashboard-content {
+    padding: 0 40px;
+  }
+  .side-bar {
+    display: block;
+  }
+  .dashboard-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+  }
+
+  .portfolio-dialog-content {
+    position: fixed;
+    right: 0;
+    width: 490px;
+    height: 100%;
+    overflow: scroll;
+  }
+  .portfolio-receive-address .address-barcode, .portfolio-receive-address .coin-select {
+    width: 280px;
   }
 }

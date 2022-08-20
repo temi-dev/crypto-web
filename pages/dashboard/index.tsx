@@ -82,7 +82,8 @@ const Dashboard: NextPage = (props) => {
         coinSwapDialogVisibitlity: false,
         conversionDialogVisibilty: false,
         transferDialogVisibility: false,
-        priceAlertsDialogVisibility: false
+        priceAlertsDialogVisibility: false,
+        portfolioDetailsDialogVisibility: false
     }
 
     const [dialogsVisibilityState, setDialogVisibilityState] = React.useState({...DialogsVisibilityInitState});
@@ -144,7 +145,7 @@ const Dashboard: NextPage = (props) => {
                                 </div>
                             </div>
 
-                            <div className="d-flex mt-5 ctas">
+                            <div className="d-flex mt-3 ctas">
                                 <div className="flex-fill cursor-pointer" onClick={() => openDialog({coinSwapDialogVisibitlity: true})}>
                                     <div className="cta">
                                         <CoinSwapIcon color="#936DFF"></CoinSwapIcon>
@@ -179,7 +180,7 @@ const Dashboard: NextPage = (props) => {
                             </div>
 
                             <div className="mt-2">
-                                <DashboardPortfolioBalance coinIcon={<BitCoinFilledIcon color="white" fillColor="#F7931A"></BitCoinFilledIcon>} coinName="BTC" percentageChange={"+5%"} coinBalance={0.222} fiatBalance={"NGN200,000"} ></DashboardPortfolioBalance>
+                                <DashboardPortfolioBalance  coinIcon={<BitCoinFilledIcon color="white" fillColor="#F7931A"></BitCoinFilledIcon>} coinName="BTC" percentageChange={"+5%"} coinBalance={0.222} fiatBalance={"NGN200,000"} ></DashboardPortfolioBalance>
 
                                 <DashboardPortfolioBalance coinIcon={<EtherumFilledIcon color="white" fillColor="#627EEA"></EtherumFilledIcon>} coinName="ETH" percentageChange={"+2%"} coinBalance={1.222} fiatBalance={"NGN1,000,000"} ></DashboardPortfolioBalance>
 
@@ -203,6 +204,8 @@ const Dashboard: NextPage = (props) => {
                 <Transfer open={dialogsVisibilityState.transferDialogVisibility!} setVisibilityState={setDialogVisibilityState}></Transfer>
 
                 <PriceAlert open={dialogsVisibilityState.priceAlertsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></PriceAlert>
+
+                
             </div>
 
         </div>
