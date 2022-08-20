@@ -18,28 +18,52 @@ const Market: NextPage = () => {
 
     const columns = [
         {
-            name: "Coin Pair",
-            options: {
-                filter: false,
-                customBodyRender: (value: any, tableMeta: any, updateValue: any) => {
-                    return <Typography key={tableMeta.index}>{value}</Typography>
-                  }
-            }
-        },
-        "Coin",
-        "Last Price",
-        {
-            name: "24 Hours Change",
+            name: "coinPair",
+            label: "Coin Pair",
             options: {
                 filter: false,
             }
         },
-        "High 24 Hours",
-        "Low 24 Hours",
         {
-            name: "Market Trend",
+            name: "coin",
+            label: "Coin",
+            options: {
+                filter: true,
+            }
+        },
+        {
+            name: "lastPrice",
+            label: "Last Price",
             options: {
                 filter: false,
+            }
+        },
+        {
+            name: "hoursChange",
+            label: "24 Hours Change",
+            options: {
+                filter: false,
+            }
+        },
+        {
+            name: "high24Hours",
+            label: "High 24 Hours",
+            options: {
+                filter: false,
+            }
+        },
+        {
+            name: "low24Hours",
+            label: "Low 24 Hours",
+            options: {
+                filter: false,
+            }
+        },
+        {
+            name: "marketTrend",
+            label: "Market Trend",
+            options: {
+                filter: false
             }
         }
     ];
@@ -69,31 +93,50 @@ const Market: NextPage = () => {
     };
 
     const data = [
-        [
-            <div>
-                <BitCoinFilledIcon color="white" fillColor="#F7931A"></BitCoinFilledIcon>
-                <span className="coin-pair">BTC / <span>USD</span></span>
-            </div>,
-            "Bitcoin",
-            '$580.000',
-            <span>+0.37%</span>,
-            '$680.000',
-            '$680.000',
-            <GraphUp></GraphUp>
-        ],
-        [
-            <div>
-                <EtherumFilledIcon color="white" fillColor="#627EEA"></EtherumFilledIcon>
-                <span className="coin-pair">ETH / <span>USD</span></span>
-            </div>,
-            "Etherum",
-            '$580.000',
-            <span>+0.37%</span>,
-            '$680.000',
-            '$680.000',
-            <GraphDown></GraphDown>
+        {
+            coinPair: () => {
+                return (
+                    <div>
+                        <BitCoinFilledIcon color="white" fillColor="#F7931A"></BitCoinFilledIcon>
+                        <span className="coin-pair">BTC / <span>USD</span></span>
+                    </div>
+                )
+            },
+            coin: 'Bitcoin',
+            key: 1,
+            lastPrice: '$680.000',
+            hoursChange: () => {
+                return (
+                    <span>+0.37%</span>
+                )
+            },
+            high24Hours: '$680.000',
+            low24Hours: '$680.000',
+            marketTrend: <GraphUp></GraphUp>
 
-        ]
+        },
+        {
+            coinPair: () => {
+                return (
+                    <div>
+                        <EtherumFilledIcon color="white" fillColor="#627EEA"></EtherumFilledIcon>
+                        <span className="coin-pair">ETH / <span>USD</span></span>
+                    </div>
+                )
+            },
+            coin: 'Etherum',
+            key: 2,
+            lastPrice: '$80.000',
+            hoursChange: () => {
+                return (
+                    <span>+0.37%</span>
+                )
+            },
+            high24Hours: '$80.000',
+            low24Hours: '$80.000',
+            marketTrend: <GraphDown></GraphDown>
+
+        }
     ];
 
     return (
