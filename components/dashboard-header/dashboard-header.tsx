@@ -104,7 +104,7 @@ const DashboardHeader = ({ title }: { title: string }) => {
                             <Link href='/dashboard/notifications'>See all Notifications</Link>
                         </div>
                         <div>
-                            <Link href='/dashboard/settings'>
+                            <Link href='/dashboard/settings' passHref>
                                     <SettingsIcon color="#A0AEC0"></SettingsIcon>
                             </Link>
                         </div>

@@ -402,7 +402,7 @@ const GraphUp = () => {
             <defs>
                 <linearGradient id="paint0_linear_862_19712" x1="22.6575" y1="5.94599" x2="22.6575" y2="28.8397" gradientUnits="userSpaceOnUse">
                     <stop stopColor="#1F28EB" stopOpacity="0.1" />
-                    <stop offset="1" stop-color="#1F28EB" stopOpacity="0" />
+                    <stop offset="1" stopColor="#1F28EB" stopOpacity="0" />
                 </linearGradient>
             </defs>
         </svg>
