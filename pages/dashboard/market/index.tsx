@@ -1,11 +1,12 @@
 import { NextPage } from "next";
 import DashboardHeader from "../../../components/dashboard-header/dashboard-header";
 import DashboardSidebar from "../../../components/dashboard-sidebar/dashboard-sidebar";
-import { useState } from "react";
+import { ReactChild, ReactFragment, ReactPortal, useState } from "react";
 import MUIDataTable from "mui-datatables";
 import { BitCoinFilledIcon, EtherumFilledIcon, GraphDown, GraphUp } from "../../../components/icons/icons";
 import { IDialogs } from "../../../shared/interface/global.interface";
 import PortfolioDetails from "../../../components/dialogs/portfolio/details/details";
+import { Typography } from "@mui/material";
 
 const Market: NextPage = () => {
 
@@ -20,6 +21,9 @@ const Market: NextPage = () => {
             name: "Coin Pair",
             options: {
                 filter: false,
+                customBodyRender: (value: any, tableMeta: any, updateValue: any) => {
+                    return <Typography key={tableMeta.index}>{value}</Typography>
+                  }
             }
         },
         "Coin",
