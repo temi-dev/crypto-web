@@ -118,7 +118,7 @@ const Dashboard: NextPage = (props) => {
                                 </div>
                             </div>
                             <div className="d-none d-lg-flex flex-grow-1 justify-content-end">
-                                <img className="d-inline-block ms-2" src="/hand-phone.svg"></img>
+                                <img className="d-inline-block ms-2" src="/images/app-slant.png"></img>
                             </div>
                         </div>
 

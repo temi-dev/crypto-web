@@ -423,6 +423,36 @@ const GraphDown = () => {
         </svg>
     )
 }
+
+const WalletPeerToPeerIcon = () => {
+    return (
+        <picture>
+            <img src="/icons/peer-to-peer.svg" alt="peer to peer"></img>
+        </picture>
+    )
+}
+
+const BankCircleFilledIcon = () => {
+    return (
+        <picture>
+            <img src="/icons/bank-filled.svg" alt="bank"></img>
+        </picture>
+    )
+}
+const HometownLogo = () => {
+    return (
+        <picture>
+            <img src="/images/hometown.svg" alt="bank"></img>
+        </picture>
+    )
+}
+const RavenLogo = () => {
+    return (
+        <picture>
+            <img src="/images/raven.svg" alt="bank"></img>
+        </picture>
+    )
+}
 export {
     HomeIcon,
     ChartIcon,
@@ -458,5 +488,9 @@ export {
     WalletFilledIcon,
     CopyIcon,
     GraphUp,
-    GraphDown
+    GraphDown,
+    WalletPeerToPeerIcon,
+    BankCircleFilledIcon,
+    HometownLogo,
+    RavenLogo
 }

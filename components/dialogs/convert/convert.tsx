@@ -29,7 +29,7 @@ const MoneyConversion = ({ open, setVisibilityState }: { open: boolean, setVisib
         <Dialog fullWidth maxWidth='xs' open={open} onClose={handleDialogClose}>
             {
                 form.step == 1 && (
-                    <div>
+                    <div className="animate__animated animate__fadeIn animate__fast">
                         <div className="dialog-page">
                             <div className="dialog-header">
                                 <div className="title">Convert</div>

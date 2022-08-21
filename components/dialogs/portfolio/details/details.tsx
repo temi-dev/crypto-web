@@ -25,8 +25,8 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
     };
     return (
         <div>
-            <Dialog open={open} onClose={handleDialogClose} fullScreen>
-                <div className="portfolio-dialog">
+            <Dialog open={open} onClose={handleDialogClose} className="animate__animated animate__slideInRight animate__faster" fullScreen>
+                <div className="portfolio-dialog ">
                     <div className="portfolio-dialog-content">
                         <div className="portfolio-dialog-header">
                             <div className="close-dialog">

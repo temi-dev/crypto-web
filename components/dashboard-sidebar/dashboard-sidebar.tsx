@@ -31,7 +31,7 @@ const DashboardSidebar = () => {
                     </li>
                     <li>
                         <Link href='/dashboard/add-money'>
-                            <a className="d-flex">
+                            <a className={router.pathname == "/dashboard/add-money" ? "active d-flex" : "d-flex"}>
                                 <WalletAddIcon color={router.pathname == "/dashboard/add-money" ? "white" : "#718096"}></WalletAddIcon>
                                 <span>Add money</span>
                             </a>

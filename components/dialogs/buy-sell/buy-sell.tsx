@@ -29,7 +29,7 @@ const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilitySta
 
     return (
         <Dialog fullWidth maxWidth='xs' open={open} onClose={handleDialogClose}>
-            <div className="p-4">
+            <div className="animate__animated animate__fadeIn animate__fast p-4">
                 {
                     buyForm.step == 1 && (
                         <div className="buy-sell-action-picker">
@@ -145,7 +145,7 @@ const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilitySta
                 }
                 {
                     buyForm.step == 3 && (
-                        <div className="buy-sell-confirmation">
+                        <div className="transaction-confirmation">
                             <div className="mb-3 back-nav" onClick={() => handleSetBuyForm({ step: 2 })}>
                                 <ArrowLeftIcon color="black"></ArrowLeftIcon>
                             </div>

@@ -25,7 +25,7 @@ const PortfolioSend = ({ open, setVisibilityState, coin }: { open: boolean, setV
         setVisibilityState({ portfolioReceiveDialogVisibility: false });
     };
     return (
-        <Dialog open={open} onClose={handleDialogClose} fullScreen>
+        <Dialog open={open} className="animate__animated animate__slideInRight animate__faster" onClose={handleDialogClose} fullScreen>
             <div className="portfolio-dialog">
                 <div className="portfolio-dialog-content">
                     <div className="portfolio-dialog-header">

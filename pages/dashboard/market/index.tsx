@@ -22,6 +22,7 @@ const Market: NextPage = () => {
             label: "Coin Pair",
             options: {
                 filter: false,
+                sort: false
             }
         },
         {
@@ -29,6 +30,7 @@ const Market: NextPage = () => {
             label: "Coin",
             options: {
                 filter: true,
+
             }
         },
         {
@@ -36,6 +38,7 @@ const Market: NextPage = () => {
             label: "Last Price",
             options: {
                 filter: false,
+                sort: false
             }
         },
         {
@@ -43,6 +46,7 @@ const Market: NextPage = () => {
             label: "24 Hours Change",
             options: {
                 filter: false,
+                sort: false
             }
         },
         {
@@ -50,6 +54,7 @@ const Market: NextPage = () => {
             label: "High 24 Hours",
             options: {
                 filter: false,
+                sort: false
             }
         },
         {
@@ -57,13 +62,15 @@ const Market: NextPage = () => {
             label: "Low 24 Hours",
             options: {
                 filter: false,
+                sort: false
             }
         },
         {
             name: "marketTrend",
             label: "Market Trend",
             options: {
-                filter: false
+                filter: false,
+                sort: false
             }
         }
     ];
