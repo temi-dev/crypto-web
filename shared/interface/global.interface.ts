@@ -7,5 +7,6 @@ export interface IDialogs  {
     portfolioReceiveDialogVisibility?: boolean
     portfolioSendDialogVisibility?: boolean
     portfolioSellDialogVisibility?: boolean,
+    portfolioBuyDialogVisibility?: boolean,
     depositConfirmationDialogVisibility?: boolean,
 }

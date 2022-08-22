@@ -30,18 +30,18 @@ const DashboardSidebar = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link href='/dashboard/add-money'>
-                            <a className={router.pathname == "/dashboard/add-money" ? "active d-flex" : "d-flex"}>
-                                <WalletAddIcon color={router.pathname == "/dashboard/add-money" ? "white" : "#718096"}></WalletAddIcon>
-                                <span>Add money</span>
+                        <Link href='/dashboard/wallet'>
+                            <a className={router.pathname == "/dashboard/wallet" ? "active d-flex" : "d-flex"}>
+                                <WalletAddIcon color={router.pathname == "/dashboard/wallet" ? "white" : "#718096"}></WalletAddIcon>
+                                <span>Wallet</span>
                             </a>
                         </Link>
                     </li>
                     <li>
                         <Link href='/dashboard'>
                             <a className="d-flex">
-                                <BriefcaseIcon></BriefcaseIcon>
-                                <span>Portfolios</span>
+                                <SettingsIcon></SettingsIcon>
+                                <span>Settings</span>
                             </a>
                         </Link>
                     </li>
@@ -64,16 +64,6 @@ const DashboardSidebar = () => {
                                 <Link href='/dashboard'>Go To Help Center</Link>
                             </div>
                         </div>
-                        <ul>
-                            <li>
-                                <Link href='/dashboard'>
-                                    <a className="d-flex">
-                                        <SettingsIcon></SettingsIcon>
-                                        <span>Settings</span>
-                                    </a>
-                                </Link>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>

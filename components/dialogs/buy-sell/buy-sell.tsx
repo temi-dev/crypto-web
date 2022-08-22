@@ -249,6 +249,13 @@ const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilitySta
                                     }}
                                     variant="standard"
                                 />
+                                <TextField
+                                    className="form-control-2 pin-field"
+                                    InputProps={{
+                                        disableUnderline: true
+                                    }}
+                                    variant="standard"
+                                />
                             </div>
                             <div className="mt-5">
                                 <button onClick={() => handleSetBuyForm({ step: 5 })} className='btn btn-radius w-100 btn-primary'>Continue</button>

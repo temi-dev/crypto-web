@@ -8,7 +8,7 @@ import { BankCircleFilledIcon, CancelIcon, HometownLogo, RavenLogo, WalletPeerTo
 import DepositConfirmation from "../../../components/dialogs/deposit-confirmation/deposit-confirmation";
 import { IDialogs } from "../../../shared/interface/global.interface";
 
-const AddMoney: NextPage = () => {
+const Wallet: NextPage = () => {
     interface IData {
         network?: string,
         currency?: string,
@@ -51,7 +51,7 @@ const AddMoney: NextPage = () => {
 
             <div className="dashboard-content">
 
-                <DashboardHeader title="Add Money"></DashboardHeader>
+                <DashboardHeader title="Wallet"></DashboardHeader>
                 <div className="row m-auto dashboard-inner-content pb-4">
                     <div className="col-lg-7">
                         <div className="ui-custom-tab">
@@ -184,4 +184,4 @@ const AddMoney: NextPage = () => {
     )
 }
 
-export default AddMoney
+export default Wallet

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { IDialogs } from "../../../../shared/interface/global.interface"
 import { ArrowDownFilledIcon, ArrowRightTopFilledIcon, ArrowSidewaysFilledIcon, BitCoinFilledIcon, CancelIcon, WalletFilledIcon } from "../../../icons/icons"
+import PortfolioBuy from "../buy/buy";
 import PortfolioReceive from "../receive/receive";
 import PortfolioSell from "../sell/sell";
 import PortfolioSend from "../send/send";
@@ -15,7 +16,8 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
     const DialogsVisibilityInitState: IDialogs = {
         portfolioReceiveDialogVisibility: false,
         portfolioSendDialogVisibility: false,
-        portfolioSellDialogVisibility: false
+        portfolioSellDialogVisibility: false,
+        portfolioBuyDialogVisibility: false
     }
 
     const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
@@ -79,7 +81,7 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
                                     </div>
                                     <div className="cta-text">Sell</div>
                                 </div>
-                                <div className="flex-fill cursor-pointer">
+                                <div className="flex-fill cursor-pointer" onClick={() => setDialogVisibilityState({ portfolioBuyDialogVisibility: true })}>
                                     <div className="cta">
                                         <button><WalletFilledIcon color="#1d38e4"></WalletFilledIcon></button>
                                     </div>
@@ -104,6 +106,8 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
             <PortfolioSend open={dialogsVisibilityState.portfolioSendDialogVisibility!} setVisibilityState={setDialogVisibilityState} coin='btc'></PortfolioSend>
            
             <PortfolioSell open={dialogsVisibilityState.portfolioSellDialogVisibility!} setVisibilityState={setDialogVisibilityState} coin='btc'></PortfolioSell>
+            
+            <PortfolioBuy open={dialogsVisibilityState.portfolioBuyDialogVisibility!} setVisibilityState={setDialogVisibilityState} coin='btc'></PortfolioBuy>
         </div>
     )
 }
