@@ -79,7 +79,7 @@ const PortfolioBuy = ({ open, setVisibilityState, coin }: { open: boolean, setVi
                             </div>
 
                             <div className="mt-4">
-                                <button onClick={handleDialogClose} className='btn btn-radius py-3 w-100 btn-primary'>Sell</button>
+                                <button onClick={handleDialogClose} className='btn btn-radius py-3 w-100 btn-primary'>Buy</button>
                             </div>
                         </div>
                         <div className="form-coin-wallet-balance">
