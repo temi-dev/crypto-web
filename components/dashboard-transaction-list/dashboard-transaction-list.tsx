@@ -5,8 +5,10 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Link from 'next/link';
+import DashboardTransactionCard from '../cards/dashboard-transaction-card/dashboard-transaction-card';
 
-const DashboardTransactionList = ({ data }: { data: Array<{
+const DashboardTransactionList = ({ data }: {
+    data: Array<{
         id: string;
         description: string;
         timestamp: string;
@@ -26,7 +28,14 @@ const DashboardTransactionList = ({ data }: { data: Array<{
             </div>
 
             <div className="mt-2">
-                <TableContainer component={Paper}>
+
+                <div className='d-block d-lg-none'>
+                    {data.map((row) => (
+                        <DashboardTransactionCard key={row.id} status={row.status} ></DashboardTransactionCard>
+                    ))}
+                </div>
+
+                <TableContainer className='d-none d-lg-block' component={Paper}>
                     <Table>
 
                         <TableBody>
@@ -35,8 +44,10 @@ const DashboardTransactionList = ({ data }: { data: Array<{
                                     key={row.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell className="transaction-description" >
-                                        {row.description}
+                                    <TableCell className='d-flex align-items-center transaction-description' >
+                                        <div style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }} className="transaction-image-placeholder" >
+                                        </div>
+                                        <div className='ms-3'>{row.description}</div>
                                     </TableCell>
                                     <TableCell>{row.timestamp}</TableCell>
                                     <TableCell>

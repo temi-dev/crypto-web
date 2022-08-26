@@ -1,0 +1,37 @@
+.dashboardTransactionCard {
+  display: flex;
+  padding: 20px 0;
+}
+
+.dashboardTransactionCard:not(:last-of-type){
+  border-bottom: 1px solid #EDF2F7
+}
+
+.description {
+  display: flex;
+  flex-grow: 1;
+}
+
+.title{
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.timestamp{
+  color: #718096;
+  font-size: 13px;
+  display: block;
+  margin-top: 5px;
+}
+
+.imagePlaceholder{
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+  margin-right: 10px;
+}
+
+.price{
+  font-weight: 800;
+  font-size: 13px;
+}

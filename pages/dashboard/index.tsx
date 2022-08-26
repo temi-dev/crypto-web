@@ -12,7 +12,11 @@ import {
     EtherumFilledIcon,
     ExchangeIcon,
     PaperIcon,
-    TetherCoinFilledIcon
+    TetherCoinFilledIcon,
+    WalletMinusIcon,
+    WalletPlusIcon,
+    WalletReceiveIcon,
+    WalletSendIcon
 } from "../../components/icons/icons";
 
 import {
@@ -100,15 +104,19 @@ const Dashboard: NextPage = (props) => {
 
             <div className="dashboard-content">
 
-                <DashboardHeader title="Overview"></DashboardHeader>
+                <DashboardHeader title="Dashboard"></DashboardHeader>
 
                 <div className="row m-auto dashboard-inner-content pb-4">
-                    <div className="col-12 col-xl-8 mt-3">
+
+                    <div className="col-12 col-xl-8 ">
+                        <div className="mobile-dashboard-page-title">
+                            Dashboard
+                        </div>
                         <div className="dashoard-overview-banner d-flex">
                             <div className="content">
                                 <div className="title">Crypto For Better</div>
                                 <div className="note">Experience kochure on mobile app</div>
-                                <div className="mt-3">
+                                <div className="cta">
                                     <picture>
                                         <img alt="google play" src="/icons/google-play.svg"></img>
                                     </picture>
@@ -118,7 +126,38 @@ const Dashboard: NextPage = (props) => {
                                 </div>
                             </div>
                             <div className="d-none d-lg-flex flex-grow-1 justify-content-end">
-                                <img className="d-inline-block ms-2" src="/images/app-slant.png"></img>
+                                <img className="d-inline-block ms-2" src="/images/btc.svg"></img>
+                            </div>
+                        </div>
+
+                        <div className="dashboard-ctas">
+
+                            <div className="flex-fill cursor-pointer" onClick={() => setDialogVisibilityState({ portfolioBuyDialogVisibility: true })}>
+                                <div className="cta">
+                                    <button><WalletPlusIcon color="white"></WalletPlusIcon></button>
+                                </div>
+                                <div className="cta-text">Buy</div>
+                            </div>
+
+                            <div className="flex-fill cursor-pointer" onClick={() => setDialogVisibilityState({ portfolioSellDialogVisibility: true })}>
+                                <div className="cta">
+                                    <button><WalletMinusIcon color="white"></WalletMinusIcon></button>
+                                </div>
+                                <div className="cta-text">Sell</div>
+                            </div>
+
+                            <div className="flex-fill cursor-pointer" onClick={() => setDialogVisibilityState({ portfolioSendDialogVisibility: true })}>
+                                <div className="cta">
+                                    <button><WalletSendIcon color="white"></WalletSendIcon></button>
+                                </div>
+                                <div className="cta-text">Send</div>
+                            </div>
+
+                            <div className="flex-fill cursor-pointer" onClick={() => setDialogVisibilityState({ portfolioReceiveDialogVisibility: true })} >
+                                <div className="cta">
+                                    <button><WalletReceiveIcon color="white"></WalletReceiveIcon></button>
+                                </div>
+                                <div className="cta-text">Receive</div>
                             </div>
                         </div>
 
@@ -128,7 +167,7 @@ const Dashboard: NextPage = (props) => {
 
                     </div>
 
-                    <div className="col-12 col-xl-4 mt-3">
+                    <div className="col-12 col-xl-4 ">
                         <div className="box-section">
                             <div className="head d-flex">
                                 <div className="title">Total Balance</div>
@@ -181,6 +220,10 @@ const Dashboard: NextPage = (props) => {
                             </div>
                         </div>
 
+                        <div className="box-section mt-4 d-block d-lg-none">
+                            <DashboardTransactionList data={rows}></DashboardTransactionList>
+                        </div>
+                        
                         <div className="box-section mt-4">
                             <div className="head d-flex">
                                 <div className="title">Your Portfolio</div>
@@ -199,9 +242,7 @@ const Dashboard: NextPage = (props) => {
 
                         </div>
 
-                        <div className="box-section mt-4 d-block d-lg-none">
-                            <DashboardTransactionList data={rows}></DashboardTransactionList>
-                        </div>
+                       
                     </div>
                 </div>
 

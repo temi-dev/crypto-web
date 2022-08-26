@@ -1,4 +1,4 @@
-import { ActivityFilledIcon, ArrowLeftIcon, BellIcon, BitCoinFilledIcon, CheckCircleFilledIcon, CheckFilledIcon, ChevronDownIcon, DownloadFilledIcon, EtherumFilledIcon, LogoutOutlineIcon, SettingsIcon, UserOutlineIcon, WalletDebitFilledIcon, WalletDepositFilledIcon } from "../icons/icons"
+import { ActivityFilledIcon, ArrowLeftIcon, BellIcon, BitCoinFilledIcon, CheckCircleFilledIcon, CheckFilledIcon, ChevronDownIcon, DownloadFilledIcon, EtherumFilledIcon, LogoutOutlineIcon, MenuBarFilledIcon, SettingsIcon, UserOutlineIcon, WalletDebitFilledIcon, WalletDepositFilledIcon } from "../icons/icons"
 import React from 'react';
 import Dialog from '@mui/material/Dialog';
 import { Button, FormControl, InputLabel, ListItemIcon, ListItemText, Select, SelectChangeEvent, Tab, Tabs, TextField } from "@mui/material";
@@ -41,21 +41,41 @@ const DashboardHeader = ({ title }: { title: string }) => {
     };
 
     return (
-        <div className="header px-3 d-flex">
-            <div className="title">{title}</div>
-            <div className="d-flex flex-grow-1  align-items-center justify-content-end">
-                <button className="btn d-none d-lg-block btn-primary" onClick={handleBuySellDialogOpen}>Buy / Sell</button>
-                <button className="btn d-none d-lg-block btn-secondary">Send / Receive</button>
-                <button className="notification-btn" onClick={openNotificationsMenu}>
-                    <BellIcon color="black"></BellIcon>
-                </button>
-                <button onClick={openProfileMenu} className="profile-menu align-items-center d-flex">
-                    <div className="profile-image " style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }}></div>
-                    <div className="profile-name">Oluwayemi</div>
-                    <div className="profile-menu-nav ms-2">
-                        <ChevronDownIcon color="#718096"></ChevronDownIcon>
+        <div>
+            <div className="header d-none px-3 d-lg-flex">
+                <div className="title">{title}</div>
+                <div className="d-flex flex-grow-1  align-items-center justify-content-end">
+                    <button className="btn d-none d-lg-block btn-primary" onClick={handleBuySellDialogOpen}>Buy / Sell</button>
+                    <button className="btn d-none d-lg-block btn-secondary">Send / Receive</button>
+                    <button className="notification-btn" onClick={openNotificationsMenu}>
+                        <BellIcon color="black"></BellIcon>
+                    </button>
+                    <button onClick={openProfileMenu} className="profile-menu align-items-center d-flex">
+                        <div className="profile-image " style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }}></div>
+                        <div className="profile-name">Oluwayemi</div>
+                        <div className="profile-menu-nav ms-2">
+                            <ChevronDownIcon color="#718096"></ChevronDownIcon>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div className="header d-block d-lg-none">
+                <div className="d-flex">
+                    <div className="mobile-menu-bar">
+                        <button>
+                            <MenuBarFilledIcon color="#18181B" fillColor="#EEEEEE"></MenuBarFilledIcon>
+                        </button>
                     </div>
-                </button>
+                    <div className="d-flex flex-grow-1  align-items-center justify-content-end">
+                        <button className="notification-btn" onClick={openNotificationsMenu}>
+                            <BellIcon color="black"></BellIcon>
+                        </button>
+                        <button onClick={openProfileMenu} className="profile-menu align-items-center d-flex">
+                            <div className="profile-image " style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }}></div>
+                        </button>
+                    </div>
+                </div>
+                
             </div>
 
             <Menu
@@ -105,7 +125,7 @@ const DashboardHeader = ({ title }: { title: string }) => {
                         </div>
                         <div>
                             <Link href='/dashboard/settings' passHref>
-                                    <SettingsIcon color="#A0AEC0"></SettingsIcon>
+                                <SettingsIcon color="#A0AEC0"></SettingsIcon>
                             </Link>
                         </div>
                     </div>

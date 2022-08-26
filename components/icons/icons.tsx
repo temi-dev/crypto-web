@@ -439,6 +439,7 @@ const BankCircleFilledIcon = () => {
         </picture>
     )
 }
+
 const HometownLogo = () => {
     return (
         <picture>
@@ -446,6 +447,7 @@ const HometownLogo = () => {
         </picture>
     )
 }
+
 const RavenLogo = () => {
     return (
         <picture>
@@ -453,6 +455,71 @@ const RavenLogo = () => {
         </picture>
     )
 }
+
+const MenuBarFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
+    return (
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="21.75" fill={fillColor} stroke={fillColor} strokeWidth="0.5" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M13.6 16C13.6 15.6817 13.7264 15.3765 13.9514 15.1515C14.1765 14.9264 14.4817 14.8 14.8 14.8H29.2C29.5182 14.8 29.8235 14.9264 30.0485 15.1515C30.2735 15.3765 30.4 15.6817 30.4 16C30.4 16.3182 30.2735 16.6235 30.0485 16.8485C29.8235 17.0736 29.5182 17.2 29.2 17.2H14.8C14.4817 17.2 14.1765 17.0736 13.9514 16.8485C13.7264 16.6235 13.6 16.3182 13.6 16ZM13.6 22C13.6 21.6817 13.7264 21.3765 13.9514 21.1515C14.1765 20.9264 14.4817 20.8 14.8 20.8H29.2C29.5182 20.8 29.8235 20.9264 30.0485 21.1515C30.2735 21.3765 30.4 21.6817 30.4 22C30.4 22.3182 30.2735 22.6235 30.0485 22.8485C29.8235 23.0736 29.5182 23.2 29.2 23.2H14.8C14.4817 23.2 14.1765 23.0736 13.9514 22.8485C13.7264 22.6235 13.6 22.3182 13.6 22ZM13.6 28C13.6 27.6817 13.7264 27.3765 13.9514 27.1515C14.1765 26.9264 14.4817 26.8 14.8 26.8H29.2C29.5182 26.8 29.8235 26.9264 30.0485 27.1515C30.2735 27.3765 30.4 27.6817 30.4 28C30.4 28.3182 30.2735 28.6235 30.0485 28.8485C29.8235 29.0736 29.5182 29.2 29.2 29.2H14.8C14.4817 29.2 14.1765 29.0736 13.9514 28.8485C13.7264 28.6235 13.6 28.3182 13.6 28Z" fill={color} />
+        </svg>
+    )
+}
+
+const WalletPlusIcon = ({ color }: { color?: string }) => {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 9V15C22 15.23 22 15.45 21.98 15.67C21.94 15.61 21.89 15.55 21.84 15.5C21.83 15.49 21.82 15.47 21.81 15.46C21 14.56 19.81 14 18.5 14C17.24 14 16.09 14.52 15.27 15.36C14.48 16.17 14 17.28 14 18.5C14 19.34 14.24 20.14 14.65 20.82C14.87 21.19 15.15 21.53 15.47 21.81C15.49 21.82 15.5 21.83 15.51 21.84C15.56 21.89 15.61 21.93 15.67 21.98C15.46 22 15.23 22 15 22H9C4 22 2 20 2 15V9C2 4 4 2 9 2H15C20 2 22 4 22 9Z" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M2.52002 7.10999H21.48" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M8.52002 2.10999V6.96997" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M15.48 2.10999V6.52002" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M23 18.5C23 18.86 22.96 19.21 22.87 19.55C22.76 20 22.58 20.43 22.35 20.82C21.57 22.12 20.14 23 18.5 23C17.42 23 16.44 22.62 15.68 21.98C15.67 21.98 15.67 21.98 15.67 21.98C15.61 21.93 15.56 21.89 15.51 21.84C15.5 21.83 15.49 21.82 15.47 21.81C15.15 21.53 14.87 21.19 14.65 20.82C14.24 20.14 14 19.34 14 18.5C14 17.28 14.48 16.17 15.27 15.36C16.09 14.52 17.24 14 18.5 14C19.81 14 21 14.56 21.81 15.46C21.82 15.47 21.83 15.49 21.84 15.5C21.89 15.55 21.94 15.61 21.98 15.67C22.62 16.44 23 17.43 23 18.5Z" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M20.1801 18.48H16.8201" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M18.5 16.84V20.2" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    )
+}
+
+const WalletMinusIcon = ({ color }: { color?: string }) => {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 9V15C22 15.23 22 15.45 21.98 15.67C21.94 15.61 21.89 15.55 21.84 15.5C21.83 15.49 21.82 15.47 21.81 15.46C21 14.56 19.81 14 18.5 14C17.24 14 16.09 14.52 15.27 15.36C14.48 16.17 14 17.28 14 18.5C14 19.34 14.24 20.14 14.65 20.82C14.87 21.19 15.15 21.53 15.47 21.81C15.49 21.82 15.5 21.83 15.51 21.84C15.56 21.89 15.61 21.93 15.67 21.98C15.46 22 15.23 22 15 22H9C4 22 2 20 2 15V9C2 4 4 2 9 2H15C20 2 22 4 22 9Z" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M2.52002 7.10999H21.48" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M8.52002 2.10999V6.96997" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M15.48 2.10999V6.52002" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M23 18.5C23 18.86 22.96 19.21 22.87 19.55C22.76 20 22.58 20.43 22.35 20.82C21.57 22.12 20.14 23 18.5 23C17.42 23 16.44 22.62 15.68 21.98C15.67 21.98 15.67 21.98 15.67 21.98C15.61 21.93 15.56 21.89 15.51 21.84C15.5 21.83 15.49 21.82 15.47 21.81C15.15 21.53 14.87 21.19 14.65 20.82C14.24 20.14 14 19.34 14 18.5C14 17.28 14.48 16.17 15.27 15.36C16.09 14.52 17.24 14 18.5 14C19.81 14 21 14.56 21.81 15.46C21.82 15.47 21.83 15.49 21.84 15.5C21.89 15.55 21.94 15.61 21.98 15.67C22.62 16.44 23 17.43 23 18.5Z" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M20.1801 18.48H16.8201" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+
+    )
+}
+
+const WalletReceiveIcon = ({ color }: { color?: string }) => {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 8.5H14.5" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M6 16.5H8" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M10.5 16.5H14.5" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M22 14.03V16.11C22 19.62 21.11 20.5 17.56 20.5H6.44C2.89 20.5 2 19.62 2 16.11V7.89C2 4.38 2.89 3.5 6.44 3.5H14.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M20 3.5V9.5L22 7.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M20 9.5L18 7.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    )
+}
+
+const WalletSendIcon = ({ color }: { color?: string }) => {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 8.5H14.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M6 16.5H8" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M10.5 16.5H14.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M22 14.03V16.11C22 19.62 21.11 20.5 17.56 20.5H6.44C2.89 20.5 2 19.62 2 16.11V7.89C2 4.38 2.89 3.5 6.44 3.5H14.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M20 9.5V3.5L22 5.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M20 3.5L18 5.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    )
+}
+
+
 export {
     HomeIcon,
     ChartIcon,
@@ -492,5 +559,10 @@ export {
     WalletPeerToPeerIcon,
     BankCircleFilledIcon,
     HometownLogo,
-    RavenLogo
+    RavenLogo,
+    MenuBarFilledIcon,
+    WalletPlusIcon,
+    WalletMinusIcon,
+    WalletSendIcon,
+    WalletReceiveIcon
 }

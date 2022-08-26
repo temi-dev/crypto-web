@@ -11,13 +11,14 @@ const DashboardSidebar = () => {
             <div className="top-section">
                 <Image alt="logo" className='logo' src={'/logo-coloured.svg'} width='132 px' height='32px'></Image>
             </div>
+    
             <div className="menu-links">
                 <ul>
                     <li>
                         <Link href='/dashboard' >
                             <a className={router.pathname == "/dashboard" ? "active d-flex" : "d-flex"}>
                                 <HomeIcon color={router.pathname == "/dashboard" ? "white" : "#718096"}></HomeIcon>
-                                <span>Overview</span>
+                                <span>Dashboard</span>
                             </a>
                         </Link>
                     </li>
