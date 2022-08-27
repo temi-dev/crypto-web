@@ -663,7 +663,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 }
 
 .dashoard-overview-banner .content {
-  padding: 20px;
+  padding: 30px 20px;
 }
 
 .dashoard-overview-banner .title {
@@ -923,7 +923,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   box-shadow: 0px 3.57143px 22.3214px rgba(0, 0, 0, 0.08);
   display: inline-block;
   background: white;
-  padding: 7px;
+  padding: 9px 8px;
   border-radius: 50%;
 }
 
