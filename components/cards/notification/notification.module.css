@@ -1,5 +1,5 @@
 .notificationCard {
-  padding: 24px 10px;
+  padding: 24px 15px;
   border: 1px solid rgba(175, 175, 175, 0.7);
   border-radius: 16px;
   margin-bottom: 15px;
@@ -83,7 +83,11 @@
     display: inline-block;
   }
 
-  .mobile-amount {
+  .mobileAmount {
     display: none;
+  }
+
+  .amount{
+    display: flex;
   }
 }
