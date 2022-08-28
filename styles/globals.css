@@ -46,12 +46,20 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #112291 !important;
+  background: #EDF2F7 !important;
   border-radius: 2px;
 }
 
 .MuiTableCell-body{
   border-bottom: 1px solid #EDF2F7;
+}
+
+.MuiToolbar-gutters{
+  display: flex !important;
+}
+
+.tss-qbo1l6-MUIDataTableToolbar-actions{
+  display: flex;
 }
 
 .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiTableContainer-root.css-11xur9t-MuiPaper-root-MuiTableContainer-root {
@@ -1602,6 +1610,11 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 
 /* Large screens */
 @media (min-width: 992px) {
+  ::-webkit-scrollbar-thumb {
+    background: #112291 !important;
+    border-radius: 2px;
+  } 
+
   .dashoard-overview-banner .content {
     padding: 32px;
   }
@@ -1680,5 +1693,9 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   .portfolio-receive-address .address-barcode,
   .portfolio-receive-address .coin-select {
     width: 280px;
+  }
+
+  .tss-qbo1l6-MUIDataTableToolbar-actions{
+    display: block;
   }
 }

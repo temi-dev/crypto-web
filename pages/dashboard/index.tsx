@@ -48,6 +48,7 @@ import MoneyConversion from "../../components/dialogs/convert/convert";
 import Transfer from "../../components/dialogs/transfer/transfer";
 import { IDialogs } from "../../shared/interface/global.interface";
 import PriceAlert from "../../components/dialogs/price-alert/price-alert";
+import BuySell from "../../components/dialogs/buy-sell/buy-sell";
 
 const Dashboard: NextPage = (props) => {
 
@@ -87,7 +88,8 @@ const Dashboard: NextPage = (props) => {
         conversionDialogVisibilty: false,
         transferDialogVisibility: false,
         priceAlertsDialogVisibility: false,
-        portfolioDetailsDialogVisibility: false
+        portfolioDetailsDialogVisibility: false,
+        buySellDialogVisibitlity: false
     }
 
     const [dialogsVisibilityState, setDialogVisibilityState] = React.useState({ ...DialogsVisibilityInitState });
@@ -132,14 +134,14 @@ const Dashboard: NextPage = (props) => {
 
                         <div className="dashboard-ctas">
 
-                            <div className="flex-fill cursor-pointer" onClick={() => setDialogVisibilityState({ portfolioBuyDialogVisibility: true })}>
+                            <div className="flex-fill cursor-pointer" onClick={() => setDialogVisibilityState({ buySellDialogVisibitlity: true })}>
                                 <div className="cta">
                                     <button><WalletPlusIcon color="white"></WalletPlusIcon></button>
                                 </div>
                                 <div className="cta-text">Buy</div>
                             </div>
 
-                            <div className="flex-fill cursor-pointer" onClick={() => setDialogVisibilityState({ portfolioSellDialogVisibility: true })}>
+                            <div className="flex-fill cursor-pointer" onClick={() => setDialogVisibilityState({ buySellDialogVisibitlity: true })}>
                                 <div className="cta">
                                     <button><WalletMinusIcon color="white"></WalletMinusIcon></button>
                                 </div>
@@ -257,6 +259,7 @@ const Dashboard: NextPage = (props) => {
 
             </div>
 
+            <BuySell open={dialogsVisibilityState.buySellDialogVisibitlity!} setVisibilityState={setDialogVisibilityState} ></BuySell>
         </div>
     )
 }

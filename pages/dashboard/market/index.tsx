@@ -22,7 +22,25 @@ const Market: NextPage = () => {
             label: "Coin Pair",
             options: {
                 filter: false,
-                sort: false
+                sort: false,
+                setCellProps: () => ({
+                    style: {
+                        whiteSpace: "nowrap",
+                        position: "sticky",
+                        left: "0",
+                        background: "white",
+                        zIndex: 100
+                    }
+                }),
+                setCellHeaderProps: () => ({
+                    style: {
+                        whiteSpace: "nowrap",
+                        position: "sticky",
+                        left: 0,
+                        background: "white",
+                        zIndex: 101
+                    }
+                })
             }
         },
         {
@@ -38,7 +56,17 @@ const Market: NextPage = () => {
             label: "Last Price",
             options: {
                 filter: false,
-                sort: false
+                sort: false,
+                setCellProps: () => ({
+                    style: {
+                        minWidth: "100px"
+                    }
+                }),
+                setCellHeaderProps: () => ({
+                    style: {
+                        minWidth: "100px"
+                    }
+                })
             }
         },
         {
@@ -46,7 +74,17 @@ const Market: NextPage = () => {
             label: "24 Hours Change",
             options: {
                 filter: false,
-                sort: false
+                sort: false,
+                setCellProps: () => ({
+                    style: {
+                        minWidth: "150px"
+                    }
+                }),
+                setCellHeaderProps: () => ({
+                    style: {
+                        minWidth: "150px"
+                    }
+                })
             }
         },
         {
@@ -54,7 +92,17 @@ const Market: NextPage = () => {
             label: "High 24 Hours",
             options: {
                 filter: false,
-                sort: false
+                sort: false,
+                setCellProps: () => ({
+                    style: {
+                        minWidth: "150px"
+                    }
+                }),
+                setCellHeaderProps: () => ({
+                    style: {
+                        minWidth: "150px"
+                    }
+                })
             }
         },
         {
@@ -62,7 +110,17 @@ const Market: NextPage = () => {
             label: "Low 24 Hours",
             options: {
                 filter: false,
-                sort: false
+                sort: false,
+                setCellProps: () => ({
+                    style: {
+                        minWidth: "150px"
+                    }
+                }),
+                setCellHeaderProps: () => ({
+                    style: {
+                        minWidth: "150px"
+                    }
+                })
             }
         },
         {
@@ -70,12 +128,22 @@ const Market: NextPage = () => {
             label: "Market Trend",
             options: {
                 filter: false,
-                sort: false
+                sort: false,
+                setCellProps: () => ({
+                    style: {
+                        minWidth: "150px"
+                    }
+                }),
+                setCellHeaderProps: () => ({
+                    style: {
+                        minWidth: "150px"
+                    }
+                })
             }
         }
     ];
 
-    const [responsive, setResponsive] = useState("vertical");
+    const [responsive, setResponsive] = useState("horizontal");
     const [viewColumnBtn, setViewColumnBtn] = useState(true);
     const [filterBtn, setFilterBtn] = useState(true);
 
