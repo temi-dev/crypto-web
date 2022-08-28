@@ -522,7 +522,7 @@ const WalletSendIcon = ({ color }: { color?: string }) => {
 const CircleCancelFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
     return (
         <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="21.75" fill={fillColor} stroke={fillColor} stroke-width="0.5" />
+            <circle cx="22" cy="22" r="21.75" fill={fillColor} stroke={fillColor} strokeWidth="0.5" />
             <g clipPath="url(#clip0_1500_26867)">
                 <path d="M29 16.41L27.59 15L22 20.59L16.41 15L15 16.41L20.59 22L15 27.59L16.41 29L22 23.41L27.59 29L29 27.59L23.41 22L29 16.41Z" fill={color ? color : altColor} />
             </g>
