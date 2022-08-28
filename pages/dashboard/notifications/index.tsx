@@ -29,7 +29,7 @@ const Notifications: NextPage = () => {
             timestamp: "12th Feb, 2022",
             amount: "NGN 100,000",
             type: 'deposit'
-        },{
+        }, {
             id: '4',
             title: "BTC Sold",
             description: "Sold 0.07027 BTC for NGN 1,708,624.00	",
@@ -53,13 +53,18 @@ const Notifications: NextPage = () => {
             <div className="dashboard-content">
 
                 <DashboardHeader title="Notifications"></DashboardHeader>
-                <div className="row m-auto dashboard-inner-content pb-4">
-                    {data.map((item) => (
-                        <NotificationCard type={item.type} key={item.id} title={item.title} description={item.description} timestamp={item.timestamp} amount={item.amount}></NotificationCard>
-                    ))}
-                    <div className="pagination">
-                        <Pagination count={5} shape="rounded"
-                        />
+                <div className=" dashboard-inner-content pb-4">
+                    <div className="container">
+                        <div className="mobile-dashboard-page-title">
+                            Notification History
+                        </div>
+                        {data.map((item) => (
+                            <NotificationCard type={item.type} key={item.id} title={item.title} description={item.description} timestamp={item.timestamp} amount={item.amount}></NotificationCard>
+                        ))}
+                        <div className="pagination">
+                            <Pagination count={5} shape="rounded"
+                            />
+                        </div>
                     </div>
                 </div>
 

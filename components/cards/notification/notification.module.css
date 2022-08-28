@@ -1,6 +1,5 @@
 .notificationCard {
-  display: flex;
-  padding: 24px 40px;
+  padding: 24px 10px;
   border: 1px solid rgba(175, 175, 175, 0.7);
   border-radius: 16px;
   margin-bottom: 15px;
@@ -23,36 +22,68 @@
   font-weight: 500;
   font-size: 12px;
   color: #718096;
+  display: block;
 }
 
 .separator {
   margin: 0 5px;
+  display: none;
 }
 
 .amount {
-  display: flex;
+  display: none;
   align-items: center;
   font-size: 13px;
   font-weight: 600;
 }
 
+.mobileAmount {
+  display: block;
+  padding-top: 15px;
+  padding-left: 50px;
+}
+
+.mobileAmount span{
+  font-size: 13px;
+}
+
+.debit,
+.credit,
+.deposit {
+  padding: 8px 15px;
+  border-radius: 6px;
+}
+
 .debit {
   background: #fff2f2;
-  border-radius: 6px;
   color: #ff1818;
-  padding: 8px 23px;
 }
 
 .credit {
   color: #00b900;
   background: #e4ffe4;
-  border-radius: 6px;
-  padding: 8px 23px;
 }
 
 .deposit {
   background: #e8edff;
-  border-radius: 6px;
   color: #194bfb;
-  padding: 8px 23px;
+}
+
+@media (min-width: 992px) {
+  .notificationCard {
+    padding: 24px 40px;
+  }
+
+  .separator {
+    display: inline-block;
+  }
+
+  .notificationCardDescription,
+  .notificationCardTimestamp {
+    display: inline-block;
+  }
+
+  .mobile-amount {
+    display: none;
+  }
 }
