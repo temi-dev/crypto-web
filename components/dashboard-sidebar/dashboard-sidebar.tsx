@@ -7,7 +7,7 @@ const DashboardSidebar = () => {
     const router: NextRouter = useRouter();
 
     return (
-        <div className="side-bar">
+        <div className="side-bar desktop-side-bar">
             <div className="top-section">
                 <Image alt="logo" className='logo' src={'/logo-coloured.svg'} width='132 px' height='32px'></Image>
             </div>

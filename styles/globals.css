@@ -326,12 +326,27 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 }
 
 .side-bar {
-  width: 250px;
   background-color: #fafafa;
   position: fixed;
   height: 100%;
   padding: 25px 24px;
+ 
+}
+
+.desktop-side-bar{
   display: none;
+  width: 250px;
+}
+
+.mobile-side-bar{
+  display: block;
+  width: 100%;
+}
+
+.close-mobile-side-bar button{
+  background: none;
+  outline: none;
+  border: 0;
 }
 
 .side-bar .top-section {
@@ -350,7 +365,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   bottom: 0;
   right: 24px;
   left: 24px;
-
+  font-family: 'ManropeNormal';
   padding-bottom: 20px;
 }
 
@@ -424,7 +439,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   padding: 0;
 }
 
-.side-bar .menu-links ul li a {
+.side-bar .menu-links ul li  a {
   display: block;
   border-radius: 12px;
   padding: 12px 15px;
@@ -433,6 +448,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
+  text-decoration: none;
 }
 
 .side-bar .menu-links ul li a.active {
@@ -451,6 +467,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   position: fixed;
   background: white;
   width: 100%;
+  z-index: 999;
 }
 
 .header .title {
@@ -663,7 +680,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 }
 
 .dashoard-overview-banner .content {
-  padding: 30px 20px;
+  padding: 30px 25px;
 }
 
 .dashoard-overview-banner .title {

@@ -1,13 +1,12 @@
-import { ActivityFilledIcon, ArrowLeftIcon, BellIcon, BitCoinFilledIcon, CheckCircleFilledIcon, CheckFilledIcon, ChevronDownIcon, DownloadFilledIcon, EtherumFilledIcon, LogoutOutlineIcon, MenuBarFilledIcon, SettingsIcon, UserOutlineIcon, WalletDebitFilledIcon, WalletDepositFilledIcon } from "../icons/icons"
-import React from 'react';
-import Dialog from '@mui/material/Dialog';
-import { Button, FormControl, InputLabel, ListItemIcon, ListItemText, Select, SelectChangeEvent, Tab, Tabs, TextField } from "@mui/material";
+import { BellIcon, CheckFilledIcon, ChevronDownIcon, LogoutOutlineIcon, MenuBarFilledIcon, SettingsIcon, UserOutlineIcon } from "../icons/icons"
+import React, { useState } from 'react';
+import { Button, ListItemIcon, ListItemText } from "@mui/material";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Link from "next/link";
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import BuySell from "../dialogs/buy-sell/buy-sell";
+import { IDialogs } from "../../shared/interface/global.interface";
+import MobileSideBar from "../dialogs/side-bar/side-bar";
 
 
 const DashboardHeader = ({ title }: { title: string }) => {
@@ -34,18 +33,19 @@ const DashboardHeader = ({ title }: { title: string }) => {
         setNotificationsMenu(null);
     };
 
-    const [buySellDialogVisibilityState, setBuySellDialogVisibilityState] = React.useState(false);
-
-    const handleBuySellDialogOpen = () => {
-        setBuySellDialogVisibilityState(true);
-    };
+    const DialogsVisibilityInitState: IDialogs = {
+        buySellDialogVisibitlity: false,
+        sideBarDialogVisibitlity: false
+    }
+    const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
 
     return (
         <div>
+
             <div className="header d-none px-3 d-lg-flex">
                 <div className="title">{title}</div>
                 <div className="d-flex flex-grow-1  align-items-center justify-content-end">
-                    <button className="btn d-none d-lg-block btn-primary" onClick={handleBuySellDialogOpen}>Buy / Sell</button>
+                    <button className="btn d-none d-lg-block btn-primary" onClick={() => setDialogVisibilityState({ buySellDialogVisibitlity: true })}>Buy / Sell</button>
                     <button className="btn d-none d-lg-block btn-secondary">Send / Receive</button>
                     <button className="notification-btn" onClick={openNotificationsMenu}>
                         <BellIcon color="black"></BellIcon>
@@ -59,10 +59,11 @@ const DashboardHeader = ({ title }: { title: string }) => {
                     </button>
                 </div>
             </div>
+
             <div className="header d-block d-lg-none">
                 <div className="d-flex">
                     <div className="mobile-menu-bar">
-                        <button>
+                        <button onClick={() => setDialogVisibilityState({ sideBarDialogVisibitlity: true }) }>
                             <MenuBarFilledIcon color="#18181B" fillColor="#EEEEEE"></MenuBarFilledIcon>
                         </button>
                     </div>
@@ -75,7 +76,6 @@ const DashboardHeader = ({ title }: { title: string }) => {
                         </button>
                     </div>
                 </div>
-                
             </div>
 
             <Menu
@@ -169,7 +169,9 @@ const DashboardHeader = ({ title }: { title: string }) => {
                 </MenuItem>
             </Menu>
 
-            <BuySell open={buySellDialogVisibilityState} setVisibilityState={setBuySellDialogVisibilityState} ></BuySell>
+            <BuySell open={dialogsVisibilityState.buySellDialogVisibitlity!} setVisibilityState={setDialogVisibilityState} ></BuySell>
+
+            <MobileSideBar open={dialogsVisibilityState.sideBarDialogVisibitlity!} setVisibilityState={setDialogVisibilityState}></MobileSideBar>
         </div>
     )
 }

@@ -1,8 +1,9 @@
 import { Dialog, Select, MenuItem, TextField } from "@mui/material";
 import React from "react";
+import { IDialogs } from "../../../shared/interface/global.interface";
 import { WalletDepositFilledIcon, WalletDebitFilledIcon, ArrowLeftIcon, BitCoinFilledIcon, EtherumFilledIcon, CheckCircleFilledIcon } from "../../icons/icons";
 
-const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<boolean>> }) => {
+const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
 
     interface IFormData {
         coin?: string,
@@ -24,7 +25,7 @@ const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilitySta
 
     const handleDialogClose = () => {
         if (buyForm.step == 5) handleSetBuyForm({ step: 1 })
-        setVisibilityState(false);
+        setVisibilityState({ buySellDialogVisibitlity: false });
     };
 
     return (

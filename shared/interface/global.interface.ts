@@ -1,4 +1,6 @@
 export interface IDialogs  {
+    buySellDialogVisibitlity?: boolean,
+    sideBarDialogVisibitlity?: boolean,
     coinSwapDialogVisibitlity?: boolean,
     conversionDialogVisibilty?: boolean,
     transferDialogVisibility?: boolean,

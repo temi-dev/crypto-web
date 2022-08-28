@@ -496,12 +496,12 @@ const WalletMinusIcon = ({ color }: { color?: string }) => {
 const WalletReceiveIcon = ({ color }: { color?: string }) => {
     return (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 8.5H14.5" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M6 16.5H8" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M10.5 16.5H14.5" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M22 14.03V16.11C22 19.62 21.11 20.5 17.56 20.5H6.44C2.89 20.5 2 19.62 2 16.11V7.89C2 4.38 2.89 3.5 6.44 3.5H14.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M20 3.5V9.5L22 7.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M20 9.5L18 7.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M2 8.5H14.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M6 16.5H8" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M10.5 16.5H14.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M22 14.03V16.11C22 19.62 21.11 20.5 17.56 20.5H6.44C2.89 20.5 2 19.62 2 16.11V7.89C2 4.38 2.89 3.5 6.44 3.5H14.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M20 3.5V9.5L22 7.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M20 9.5L18 7.5" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     )
 }
@@ -519,6 +519,21 @@ const WalletSendIcon = ({ color }: { color?: string }) => {
     )
 }
 
+const CircleCancelFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
+    return (
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="21.75" fill={fillColor} stroke={fillColor} stroke-width="0.5" />
+            <g clipPath="url(#clip0_1500_26867)">
+                <path d="M29 16.41L27.59 15L22 20.59L16.41 15L15 16.41L20.59 22L15 27.59L16.41 29L22 23.41L27.59 29L29 27.59L23.41 22L29 16.41Z" fill={color ? color : altColor} />
+            </g>
+            <defs>
+                <clipPath id="clip0_1500_26867">
+                    <rect width="24" height="24" fill="white" transform="translate(10 10)" />
+                </clipPath>
+            </defs>
+        </svg>
+    )
+}
 
 export {
     HomeIcon,
@@ -564,5 +579,6 @@ export {
     WalletPlusIcon,
     WalletMinusIcon,
     WalletSendIcon,
-    WalletReceiveIcon
+    WalletReceiveIcon,
+    CircleCancelFilledIcon
 }
