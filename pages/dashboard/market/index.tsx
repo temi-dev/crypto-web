@@ -222,21 +222,26 @@ const Market: NextPage = () => {
 
                 <DashboardHeader title="Market"></DashboardHeader>
                 <div className="row m-auto dashboard-inner-content pb-4">
-                    <div className="market-table">
-                        <div className="martket-data-filter">
-                            <button className="active">All</button>
-                            <button>Top Gainers</button>
-                            <button>Top Losers</button>
+                    <div className="container">
+                        <div className="mobile-dashboard-page-title">
+                            Market
                         </div>
-                        <MUIDataTable
-                            data={data}
-                            columns={columns}
-                            options={options}
-                            title={undefined} />
+                        <div className="market-table">
+                            <div className="martket-data-filter">
+                                <button className="active">All</button>
+                                <button>Top Gainers</button>
+                                <button>Top Losers</button>
+                            </div>
+                            <MUIDataTable
+                                data={data}
+                                columns={columns}
+                                options={options}
+                                title={undefined} />
+                        </div>
                     </div>
                 </div>
-                <PortfolioDetails open={dialogsVisibilityState.portfolioDetailsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></PortfolioDetails>
             </div>
+            <PortfolioDetails open={dialogsVisibilityState.portfolioDetailsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></PortfolioDetails>
         </div>
     )
 }
