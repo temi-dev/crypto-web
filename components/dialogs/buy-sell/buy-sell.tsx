@@ -1,41 +1,64 @@
-import { Dialog, Select, MenuItem, TextField } from "@mui/material";
-import React from "react";
-import { IDialogs } from "../../../shared/interface/global.interface";
+import { Dialog, Select, MenuItem, TextField, FormGroup, FormControl } from "@mui/material";
+import React, { useState } from "react";
+import { useAppContext } from "../../../shared/contexts/app.context";
 import { WalletDepositFilledIcon, WalletDebitFilledIcon, ArrowLeftIcon, BitCoinFilledIcon, EtherumFilledIcon, CheckCircleFilledIcon } from "../../icons/icons";
 
-const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
+const BuySell = () => {
+
+    const [appState, setAppState] = useAppContext()
+
+    const action = appState.dialogStates!.buySellDialog?.action!
+    const step = appState.dialogStates!.buySellDialog?.step! || 1
 
     interface IFormData {
         coin?: string,
-        step: number,
-        action?: string,
+        step?: number,
         currency?: string
     }
+
     const formData: IFormData = {
         coin: 'bitcoin',
-        step: 1,
+        step: action ? 2 : 1,
         currency: 'NGN'
     }
-    const [buyForm, setBuyForm] = React.useState({ ...formData });
+
+    const [buyForm, setBuyForm] = useState({ ...formData });
 
     const handleSetBuyForm = (data: object) => {
         setBuyForm({ ...buyForm, ...data });
     };
 
-
     const handleDialogClose = () => {
-        if (buyForm.step == 5) handleSetBuyForm({ step: 1 })
-        setVisibilityState({ buySellDialogVisibitlity: false });
+        setAppState({ dialogStates: { buySellDialog: { visibitlity: false } } });
     };
 
+    const navigate = (step: number) => {
+        setAppState({
+            dialogStates: {
+                buySellDialog: {
+                    ...appState.dialogStates?.buySellDialog,
+                    step
+                }
+            }
+        })
+    }
+
     return (
-        <Dialog fullWidth maxWidth='xs' open={open} onClose={handleDialogClose}>
+        <Dialog fullWidth maxWidth='xs' open={appState.dialogStates?.buySellDialog?.visibitlity! || false} onClose={handleDialogClose}>
             <div className="animate__animated animate__fadeIn animate__fast p-4">
                 {
-                    buyForm.step == 1 && (
-                        <div className="buy-sell-action-picker">
+                    step == 1 && (
+                        <div className="dailog-action-picker">
                             <div className="buy" onClick={() => {
-                                handleSetBuyForm({ step: 2, action: 'buy' })
+                                setAppState({
+                                    dialogStates: {
+                                        buySellDialog: {
+                                            ...appState.dialogStates?.buySellDialog,
+                                            action: 'buy',
+                                            step: 2
+                                        }
+                                    }
+                                })
                             }}>
                                 <div className="my-2">
                                     <WalletDepositFilledIcon fillColor='#FAFAFA' color='#194BFB'></WalletDepositFilledIcon>
@@ -43,7 +66,15 @@ const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilitySta
                                 <div>Buy</div>
                             </div>
                             <div className="sell" onClick={() => {
-                                handleSetBuyForm({ step: 2, action: 'sell' })
+                                setAppState({
+                                    dialogStates: {
+                                        buySellDialog: {
+                                            ...appState.dialogStates?.buySellDialog,
+                                            action: 'sell',
+                                            step: 2
+                                        }
+                                    }
+                                })
                             }}>
                                 <div className="my-2">
                                     <WalletDebitFilledIcon fillColor='#FAFAFA' color='#194BFB'></WalletDebitFilledIcon>
@@ -54,14 +85,14 @@ const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilitySta
                     )
                 }
                 {
-                    buyForm.step == 2 && (
+                    step == 2 && (
                         <div>
-                            <div className="mb-3 back-nav" onClick={() => handleSetBuyForm({ step: 1 })}>
+                            <div className="mb-3 back-nav" onClick={() => navigate(1)}>
                                 <ArrowLeftIcon color="black"></ArrowLeftIcon>
                             </div>
 
                             <div>
-                                <label className="form-label">Select a digital currency to {buyForm.action}</label>
+                                <label className="form-label">Select a digital currency to {action}</label>
                                 <Select
                                     className="form-control-select w-100"
                                     disableUnderline
@@ -94,7 +125,8 @@ const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilitySta
                             </div>
 
                             <div className="mt-3">
-                                <label className="form-label">How much would you like to {buyForm.action} ?</label>
+                                <label className="form-label">How much would you like to {action} ?</label>
+
                                 <TextField
                                     className="amount-field"
                                     variant="standard"
@@ -139,15 +171,15 @@ const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilitySta
                             </div>
 
                             <div className="mt-5 mb-3">
-                                <button onClick={() => handleSetBuyForm({ step: 3 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                <button onClick={() => navigate(3)} className='btn btn-radius w-100 btn-primary'>Continue</button>
                             </div>
                         </div>
                     )
                 }
                 {
-                    buyForm.step == 3 && (
+                    step == 3 && (
                         <div className="transaction-confirmation">
-                            <div className="mb-3 back-nav" onClick={() => handleSetBuyForm({ step: 2 })}>
+                            <div className="mb-3 back-nav" onClick={() => navigate(2)}>
                                 <ArrowLeftIcon color="black"></ArrowLeftIcon>
                             </div>
                             <div className="heading">Confirmation</div>
@@ -202,15 +234,15 @@ const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilitySta
                                 </div>
                             </div>
                             <div className="mt-5">
-                                <button onClick={() => handleSetBuyForm({ step: 4 })} className='btn btn-radius w-100 btn-primary'>Confirm</button>
+                                <button onClick={() => navigate(4)} className='btn btn-radius w-100 btn-primary'>Confirm</button>
                             </div>
                         </div>
                     )
                 }
                 {
-                    buyForm.step == 4 && (
+                    step == 4 && (
                         <div className="dialog-page">
-                            <div className="mb-3 back-nav" onClick={() => handleSetBuyForm({ step: 3 })}>
+                            <div className="mb-3 back-nav" onClick={() => navigate(3)}>
                                 <ArrowLeftIcon color="black"></ArrowLeftIcon>
                             </div>
                             <div className="heading">Enter your pin</div>
@@ -259,13 +291,13 @@ const BuySell = ({ open, setVisibilityState }: { open: boolean, setVisibilitySta
                                 />
                             </div>
                             <div className="mt-5">
-                                <button onClick={() => handleSetBuyForm({ step: 5 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                <button onClick={() => navigate(5)} className='btn btn-radius w-100 btn-primary'>Continue</button>
                             </div>
                         </div>
                     )
                 }
                 {
-                    buyForm.step == 5 && (
+                    step == 5 && (
                         <div className="dialog-page">
                             <div className="heading">Success</div>
                             <div className="heading-note">Transaction successful</div>

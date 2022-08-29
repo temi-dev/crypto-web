@@ -1,5 +1,14 @@
 export interface IDialogs  {
-    buySellDialogVisibitlity?: boolean,
+    buySellDialog?: {
+        visibitlity?: boolean,
+        action?: string,
+        step?: number
+    },
+    sendReceive?: {
+        visibitlity?: boolean,
+        action?: string,
+        step?: number
+    },
     sideBarDialogVisibitlity?: boolean,
     coinSwapDialogVisibitlity?: boolean,
     conversionDialogVisibilty?: boolean,
@@ -11,4 +20,8 @@ export interface IDialogs  {
     portfolioSellDialogVisibility?: boolean,
     portfolioBuyDialogVisibility?: boolean,
     depositConfirmationDialogVisibility?: boolean,
+}
+
+export interface IAppState{
+    dialogStates?: IDialogs
 }

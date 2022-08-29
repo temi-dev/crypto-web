@@ -7,6 +7,8 @@ import Link from "next/link";
 import BuySell from "../dialogs/buy-sell/buy-sell";
 import { IDialogs } from "../../shared/interface/global.interface";
 import MobileSideBar from "../dialogs/side-bar/side-bar";
+import { useAppContext } from "../../shared/contexts/app.context";
+import SendReceive from "../dialogs/send-receive/send-receive";
 
 
 const DashboardHeader = ({ title }: { title: string }) => {
@@ -32,12 +34,12 @@ const DashboardHeader = ({ title }: { title: string }) => {
     const closeNotificationsMenu = () => {
         setNotificationsMenu(null);
     };
-
     const DialogsVisibilityInitState: IDialogs = {
-        buySellDialogVisibitlity: false,
         sideBarDialogVisibitlity: false
     }
     const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
+
+    const [appState, setAppState] = useAppContext()
 
     return (
         <div>
@@ -45,8 +47,20 @@ const DashboardHeader = ({ title }: { title: string }) => {
             <div className="header d-none px-3 d-lg-flex">
                 <div className="title">{title}</div>
                 <div className="d-flex flex-grow-1  align-items-center justify-content-end">
-                    <button className="btn d-none d-lg-block btn-primary" onClick={() => setDialogVisibilityState({ buySellDialogVisibitlity: true })}>Buy / Sell</button>
-                    <button className="btn d-none d-lg-block btn-secondary">Send / Receive</button>
+                    <button className="btn d-none d-lg-block btn-primary" onClick={() =>
+                        setAppState({
+                            dialogStates: {
+                                buySellDialog: { visibitlity: true }
+                            }
+                        })
+                    }>Buy / Sell</button>
+                    <button className="btn d-none d-lg-block btn-secondary"  onClick={() =>
+                        setAppState({
+                            dialogStates: {
+                                sendReceive: { visibitlity: true }
+                            }
+                        })
+                    }>Send / Receive</button>
                     <button className="notification-btn" onClick={openNotificationsMenu}>
                         <BellIcon color="black"></BellIcon>
                     </button>
@@ -63,7 +77,7 @@ const DashboardHeader = ({ title }: { title: string }) => {
             <div className="header d-block d-lg-none">
                 <div className="d-flex">
                     <div className="mobile-menu-bar">
-                        <button onClick={() => setDialogVisibilityState({ sideBarDialogVisibitlity: true }) }>
+                        <button onClick={() => setDialogVisibilityState({ sideBarDialogVisibitlity: true })}>
                             <MenuBarFilledIcon color="#18181B" fillColor="#EEEEEE"></MenuBarFilledIcon>
                         </button>
                     </div>
@@ -169,7 +183,8 @@ const DashboardHeader = ({ title }: { title: string }) => {
                 </MenuItem>
             </Menu>
 
-            <BuySell open={dialogsVisibilityState.buySellDialogVisibitlity!} setVisibilityState={setDialogVisibilityState} ></BuySell>
+            <BuySell></BuySell>
+            <SendReceive></SendReceive>
 
             <MobileSideBar open={dialogsVisibilityState.sideBarDialogVisibitlity!} setVisibilityState={setDialogVisibilityState}></MobileSideBar>
         </div>

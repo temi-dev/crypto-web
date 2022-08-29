@@ -1029,26 +1029,33 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 
 /* Buy Form */
 
-.buy-sell-action-picker {
+.dailog-action-picker {
   display: flex;
   text-align: center;
   justify-content: center;
   padding: 40px 0;
 }
 
-.buy-sell-action-picker > div {
+.dailog-action-picker > div {
   padding: 25px 35px;
   border: 1px solid #edf2f7;
   border-radius: 12px;
   margin: 0 10px;
   cursor: pointer;
+  width: 130px;
 }
 
-.buy-sell-action-picker > div:hover {
+.dailog-action-picker > div:hover {
   background-color: var(--primaryColor);
   color: #fff;
 }
 
+.dailog-action-picker .icon-holder{
+  background: white;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 50%;
+}
 .amount-field {
   padding: 12px !important;
   border: 1px solid #edf2f7 !important;
@@ -1325,6 +1332,42 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   background-color: var(--secondaryColor);
   border-radius: 22px;
   width: 100%;
+}
+
+.receive-wallet-address{
+  padding: 20px;
+  border: 1px solid #EDF2F7;
+  border-radius: 16px;
+}
+
+.receive-wallet-address .address-barcode{
+  text-align: center;
+  border-bottom: 1px solid #EDF2F7;
+}
+
+.wallet-receive-address-clipboard {
+  padding: 10px 0;
+}
+
+.wallet-receive-address-clipboard .title{
+  font-family: 800;
+  font-size: 20px;
+}
+
+.wallet-receive-address-clipboard .copy button{
+  background: none;
+  padding: 0;
+  border: 0;
+  outline: none;
+}
+.wallet-receive-address-clipboard .copy {
+ display: flex;
+ flex-grow: 1;
+ justify-content: flex-end;
+}
+
+.wallet-receive-address-clipboard .copy svg{
+  width: 17px;
 }
 
 .wallet-address-clipboard {

@@ -42,13 +42,14 @@ ChartJS.register(
     Legend
 )
 import DashboardTransactionList from "../../components/dashboard-transaction-list/dashboard-transaction-list";
-import React from "react";
+import React, { useState } from "react";
 import CoinSwap from "../../components/dialogs/coin-swap/coin-swap";
 import MoneyConversion from "../../components/dialogs/convert/convert";
 import Transfer from "../../components/dialogs/transfer/transfer";
 import { IDialogs } from "../../shared/interface/global.interface";
 import PriceAlert from "../../components/dialogs/price-alert/price-alert";
 import BuySell from "../../components/dialogs/buy-sell/buy-sell";
+import { useAppContext } from "../../shared/contexts/app.context";
 
 const Dashboard: NextPage = (props) => {
 
@@ -89,15 +90,17 @@ const Dashboard: NextPage = (props) => {
         transferDialogVisibility: false,
         priceAlertsDialogVisibility: false,
         portfolioDetailsDialogVisibility: false,
-        buySellDialogVisibitlity: false
     }
 
-    const [dialogsVisibilityState, setDialogVisibilityState] = React.useState({ ...DialogsVisibilityInitState });
+    const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
 
     const openDialog = (data: IDialogs) => {
         setDialogVisibilityState({ ...dialogsVisibilityState, ...data });
     };
 
+    const [appState, setAppState] = useAppContext()
+
+    const [buySellDialogAction, setBuySellDialogAction] = useState('buy')
 
     return (
         <div className="dashboard">
@@ -134,28 +137,66 @@ const Dashboard: NextPage = (props) => {
 
                         <div className="dashboard-ctas">
 
-                            <div className="flex-fill cursor-pointer" onClick={() => setDialogVisibilityState({ buySellDialogVisibitlity: true })}>
+                            <div className="flex-fill cursor-pointer" onClick={() => setAppState({
+                                dialogStates: {
+                                    buySellDialog: {
+                                        visibitlity: true,
+                                        action: 'buy',
+                                        step: 2
+                                    }
+                                }
+                            })}>
                                 <div className="cta">
                                     <button><WalletPlusIcon color="white"></WalletPlusIcon></button>
                                 </div>
                                 <div className="cta-text">Buy</div>
                             </div>
 
-                            <div className="flex-fill cursor-pointer" onClick={() => setDialogVisibilityState({ buySellDialogVisibitlity: true })}>
+                            <div className="flex-fill cursor-pointer" onClick={() => setAppState({
+                                dialogStates: {
+                                    buySellDialog: {
+                                        visibitlity: true,
+                                        action: 'sell',
+                                        step: 2
+                                    }
+                                }
+                            })}>
                                 <div className="cta">
                                     <button><WalletMinusIcon color="white"></WalletMinusIcon></button>
                                 </div>
                                 <div className="cta-text">Sell</div>
                             </div>
 
-                            <div className="flex-fill cursor-pointer" onClick={() => setDialogVisibilityState({ portfolioSendDialogVisibility: true })}>
+                            <div className="flex-fill cursor-pointer"
+                                onClick={() =>
+                                    setAppState({
+                                        dialogStates: {
+                                            sendReceive: {
+                                                visibitlity: true,
+                                                action: 'send',
+                                                step: 2
+                                            }
+                                        }
+                                    })
+                                }>
                                 <div className="cta">
                                     <button><WalletSendIcon color="white"></WalletSendIcon></button>
                                 </div>
                                 <div className="cta-text">Send</div>
                             </div>
 
-                            <div className="flex-fill cursor-pointer" onClick={() => setDialogVisibilityState({ portfolioReceiveDialogVisibility: true })} >
+                            <div className="flex-fill cursor-pointer"
+                                onClick={() =>
+                                    setAppState({
+                                        dialogStates: {
+                                            sendReceive: {
+                                                visibitlity: true,
+                                                action: 'receive',
+                                                step: 2
+                                            }
+                                        }
+                                    })
+                                }>
                                 <div className="cta">
                                     <button><WalletReceiveIcon color="white"></WalletReceiveIcon></button>
                                 </div>
@@ -225,7 +266,7 @@ const Dashboard: NextPage = (props) => {
                         <div className="box-section mt-4 d-block d-lg-none">
                             <DashboardTransactionList data={rows}></DashboardTransactionList>
                         </div>
-                        
+
                         <div className="box-section mt-4">
                             <div className="head d-flex">
                                 <div className="title">Your Portfolio</div>
@@ -244,7 +285,7 @@ const Dashboard: NextPage = (props) => {
 
                         </div>
 
-                       
+
                     </div>
                 </div>
 
@@ -259,7 +300,6 @@ const Dashboard: NextPage = (props) => {
 
             </div>
 
-            <BuySell open={dialogsVisibilityState.buySellDialogVisibitlity!} setVisibilityState={setDialogVisibilityState} ></BuySell>
         </div>
     )
 }
