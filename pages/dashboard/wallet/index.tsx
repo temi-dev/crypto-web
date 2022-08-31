@@ -40,10 +40,10 @@ const Wallet: NextPage = () => {
     };
 
     const showChannel = () => {
-        
+
         if (componentData.action == 'deposit') setData({ showDepositChannel: true, mobileHidden: size.width < 992 ? true : false })
         if (componentData.action == 'withdraw') setData({ showWithdrawChannel: true, mobileHidden: size.width < 992 ? true : false })
-      
+
     }
 
     const DialogsVisibilityInitState: IDialogs = {
@@ -109,6 +109,11 @@ const Wallet: NextPage = () => {
                                             />
 
                                         </div>
+
+                                        <div className="wallet-balance">
+                                            <span className="wallet-balance-chip">Balance: ₦ 100,000.00</span>
+                                        </div>
+
                                         <div className="mt-5 mb-4">
                                             <button className='btn btn-radius py-3 w-100 btn-primary' onClick={showChannel}>Confirm</button>
                                         </div>

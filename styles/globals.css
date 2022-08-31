@@ -1630,6 +1630,19 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   text-align: center;
 }
 
+.wallet-balance{
+  text-align: center;
+  margin-top: 25px;
+}
+
+.wallet-balance span{
+  background: rgba(41, 114, 255, 0.1);
+  padding: 8px 20px;
+  color: #2972FF;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
 /* Large screens */
 @media (min-width: 992px) {
 }
