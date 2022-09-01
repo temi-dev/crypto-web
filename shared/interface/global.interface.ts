@@ -20,6 +20,10 @@ export interface IDialogs  {
     portfolioSellDialogVisibility?: boolean,
     portfolioBuyDialogVisibility?: boolean,
     depositConfirmationDialogVisibility?: boolean,
+    settingsBanksDialogVisibility?: boolean,
+    settingsCardsDialogVisibility?: boolean,
+    settingsAddBankDialogVisibility?: boolean
+    settingsBankDetailsDialogVisibility?: boolean
 }
 
 export interface IAppState{

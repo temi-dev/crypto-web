@@ -28,9 +28,9 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
     return (
         <div>
             <Dialog open={open} onClose={handleDialogClose} className="animate__animated animate__slideInRight animate__faster" fullScreen>
-                <div className="portfolio-dialog ">
-                    <div className="portfolio-dialog-content">
-                        <div className="portfolio-dialog-header">
+                <div className="dashbord-right-dialog ">
+                    <div className="dashbord-right-dialog-content">
+                        <div className="dashbord-right-dialog-header">
                             <div className="close-dialog">
                                 <button onClick={handleDialogClose}>
                                     <CancelIcon color="#1d38e4"></CancelIcon>
@@ -38,7 +38,7 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
                             </div>
                             <div className="title">BTC Details</div>
                         </div>
-                        <div className="portfolio-dialog-inner-content">
+                        <div className="dashbord-right-dialog-inner-content">
                             <div className="portfolio-balance-card">
                                 <div className="coin-details">
                                     <div>
@@ -89,7 +89,7 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
                                 </div>
                             </div>
 
-                            <div className="portfolio-dialog-footer">
+                            <div className="dashbord-right-dialog-footer">
                                 <Image alt="wallet vault" src="/images/vault-safe.svg" width='250px' height='250px'></Image>
                                 <div>
                                     <Image alt="google play" width='140px' height='40px' src="/icons/google-play.svg"></Image>

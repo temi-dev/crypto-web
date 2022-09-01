@@ -22,9 +22,9 @@ const PortfolioReceive = ({ open, setVisibilityState, coin}: { open: boolean, se
     };
     return (
         <Dialog open={open} onClose={handleDialogClose} className="animate__animated animate__slideInRight animate__faster" fullScreen>
-            <div className="portfolio-dialog">
-                <div className="portfolio-dialog-content">
-                    <div className="portfolio-dialog-header">
+            <div className="dashbord-right-dialog">
+                <div className="dashbord-right-dialog-content">
+                    <div className="dashbord-right-dialog-header">
                         <div className="close-dialog">
                             <button onClick={handleDialogClose}>
                                 <CancelIcon color="#1d38e4"></CancelIcon>
@@ -32,7 +32,7 @@ const PortfolioReceive = ({ open, setVisibilityState, coin}: { open: boolean, se
                         </div>
                         <div className="title">Receive <span>{coin}</span></div>
                     </div>
-                    <div className="portfolio-dialog-inner-content">
+                    <div className="dashbord-right-dialog-inner-content">
                         <div className="portfolio-receive-address">
                             <div className="title">Wallet address</div>
                             <div className="address-barcode">

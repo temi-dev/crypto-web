@@ -46,19 +46,19 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #EDF2F7 !important;
+  background: #edf2f7 !important;
   border-radius: 2px;
 }
 
-.MuiTableCell-body{
-  border-bottom: 1px solid #EDF2F7;
+.MuiTableCell-body {
+  border-bottom: 1px solid #edf2f7;
 }
 
-.MuiToolbar-gutters{
+.MuiToolbar-gutters {
   display: flex !important;
 }
 
-.tss-qbo1l6-MUIDataTableToolbar-actions{
+.tss-qbo1l6-MUIDataTableToolbar-actions {
   display: flex;
 }
 
@@ -98,6 +98,14 @@ a.grey {
   background: var(--primaryColor) !important;
 }
 
+.btn-dashboard-back {
+  color: #718096;
+  font-size: 800;
+  border: 1px solid #e2e8f0;
+  padding: 10px 45px;
+  outline: none;
+}
+
 .burst-in {
   border: 1px solid var(--secondaryColor) !important  ;
   border: 4px;
@@ -117,6 +125,11 @@ a.grey {
 .page-content {
   width: 98%;
   margin: auto;
+}
+
+.form-submit {
+  margin-top: 30px;
+  text-align: right;
 }
 
 .form-control {
@@ -338,20 +351,19 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   position: fixed;
   height: 100%;
   padding: 25px 24px;
- 
 }
 
-.desktop-side-bar{
+.desktop-side-bar {
   display: none;
   width: 250px;
 }
 
-.mobile-side-bar{
+.mobile-side-bar {
   display: block;
   width: 100%;
 }
 
-.close-mobile-side-bar button{
+.close-mobile-side-bar button {
   background: none;
   outline: none;
   border: 0;
@@ -373,7 +385,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   bottom: 0;
   right: 24px;
   left: 24px;
-  font-family: 'ManropeNormal';
+  font-family: "ManropeNormal";
   padding-bottom: 20px;
 }
 
@@ -447,7 +459,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   padding: 0;
 }
 
-.side-bar .menu-links ul li  a {
+.side-bar .menu-links ul li a {
   display: block;
   border-radius: 12px;
   padding: 12px 15px;
@@ -482,6 +494,8 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   color: #1a202c;
   font-size: 24px;
   font-weight: 800;
+  display: flex;
+  align-self: center;
 }
 
 .header .btn {
@@ -528,21 +542,21 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   font-weight: 600;
 }
 
-.header .mobile-menu-bar{
+.header .mobile-menu-bar {
   display: flex;
   align-items: center;
 }
 
-.mobile-dashboard-page-title{
+.mobile-dashboard-page-title {
   display: block;
   font-size: 24px;
-  color: #1A202C;
+  color: #1a202c;
   font-weight: 800;
   padding: 0 0 20px 10px;
   margin: 10px 0;
 }
 
-.header .mobile-menu-bar button{
+.header .mobile-menu-bar button {
   background: none;
   outline: none;
   border: 0;
@@ -716,18 +730,18 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   margin-top: 25px;
 }
 
-.dashboard-ctas{
+.dashboard-ctas {
   display: flex;
   text-align: center;
   margin: 25px 0;
   font-weight: 600;
 }
 
-.dashboard-ctas .cta-text{
+.dashboard-ctas .cta-text {
   margin-top: 10px;
 }
 
-.dashboard-ctas button{
+.dashboard-ctas button {
   background-color: var(--primaryColor);
   border-radius: 50%;
   outline: none;
@@ -1050,7 +1064,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   color: #fff;
 }
 
-.dailog-action-picker .icon-holder{
+.dailog-action-picker .icon-holder {
   background: white;
   display: inline-block;
   padding: 10px;
@@ -1175,12 +1189,12 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   background-color: rgba(0, 0, 0, 0) !important;
 }
 
-.portfolio-dialog-content,
-.portfolio-dialog {
+.dashbord-right-dialog-content,
+.dashbord-right-dialog {
   background-color: var(--secondaryColor);
 }
 
-.portfolio-dialog-content {
+.dashbord-right-dialog-content {
   position: fixed;
   right: 0;
   width: 100%;
@@ -1188,16 +1202,16 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   overflow: scroll;
 }
 
-.portfolio-dialog-header {
+.dashbord-right-dialog-header {
   padding: 0 25px;
   margin-top: 30px;
 }
 
-.portfolio-dialog-header .close-dialog {
+.dashbord-right-dialog-header .close-dialog {
   text-align: right;
 }
 
-.portfolio-dialog-header .close-dialog button {
+.dashbord-right-dialog-header .close-dialog button {
   background-color: var(--secondaryColor);
   border: 0;
   padding: 10px;
@@ -1205,17 +1219,17 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   box-shadow: 0px 4.77778px 9.55556px rgba(0, 0, 0, 0.1);
 }
 
-.portfolio-dialog-header .title {
+.dashbord-right-dialog-header .title {
   font-weight: 800;
   font-size: 28px;
   margin-top: 20px;
 }
 
-.portfolio-dialog-header .title span {
+.dashbord-right-dialog-header .title span {
   text-transform: uppercase;
 }
 
-.portfolio-dialog-inner-content {
+.dashbord-right-dialog-inner-content {
   padding: 30px;
 }
 
@@ -1272,30 +1286,30 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   background: #0abe64;
 }
 
-.portfolio-dialog-inner-content .rate {
+.dashbord-right-dialog-inner-content .rate {
   border: 1px solid #ececec;
   border-radius: 22px;
   margin-top: 20px;
   padding: 15px 20px;
 }
 
-.portfolio-dialog-inner-content .rate .coin {
+.dashbord-right-dialog-inner-content .rate .coin {
   color: #718096;
   font-weight: 500;
   font-size: 12px;
 }
 
-.portfolio-dialog-inner-content .rate .conversion {
+.dashbord-right-dialog-inner-content .rate .conversion {
   font-weight: 700;
   font-size: 15px;
   margin-top: 5px;
 }
 
-.portfolio-dialog-inner-content .ctas {
+.dashbord-right-dialog-inner-content .ctas {
   text-align: center;
 }
 
-.portfolio-dialog-inner-content .ctas button {
+.dashbord-right-dialog-inner-content .ctas button {
   background: #ffffff;
   box-shadow: 0px 11.5916px 28.9791px #f1f4f6;
   border: none;
@@ -1305,13 +1319,13 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   height: 50px;
 }
 
-.portfolio-dialog-inner-content .ctas .cta-text {
+.dashbord-right-dialog-inner-content .ctas .cta-text {
   margin-top: 10px;
   font-weight: 500;
   font-size: 16px;
 }
 
-.portfolio-dialog-footer {
+.dashbord-right-dialog-footer {
   text-align: center;
   margin-top: 20px;
 }
@@ -1342,39 +1356,39 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   width: 100%;
 }
 
-.receive-wallet-address{
+.receive-wallet-address {
   padding: 20px;
-  border: 1px solid #EDF2F7;
+  border: 1px solid #edf2f7;
   border-radius: 16px;
 }
 
-.receive-wallet-address .address-barcode{
+.receive-wallet-address .address-barcode {
   text-align: center;
-  border-bottom: 1px solid #EDF2F7;
+  border-bottom: 1px solid #edf2f7;
 }
 
 .wallet-receive-address-clipboard {
   padding: 10px 0;
 }
 
-.wallet-receive-address-clipboard .title{
+.wallet-receive-address-clipboard .title {
   font-family: 800;
   font-size: 20px;
 }
 
-.wallet-receive-address-clipboard .copy button{
+.wallet-receive-address-clipboard .copy button {
   background: none;
   padding: 0;
   border: 0;
   outline: none;
 }
 .wallet-receive-address-clipboard .copy {
- display: flex;
- flex-grow: 1;
- justify-content: flex-end;
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
 }
 
-.wallet-receive-address-clipboard .copy svg{
+.wallet-receive-address-clipboard .copy svg {
   width: 17px;
 }
 
@@ -1407,48 +1421,51 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   border: 0;
 }
 
-.portfolio-dialog-inner-content .form-container {
+.dashbord-right-dialog-inner-content .form-container {
   border: 1px solid #edf2f7;
   padding: 40px 15px;
   border-radius: 18px;
 }
 
-.portfolio-dialog-inner-content
+.dashbord-right-dialog-inner-content
   .form-container
   .amount-field
   input::placeholder,
-.portfolio-dialog-inner-content .form-container .amount-field input {
+.dashbord-right-dialog-inner-content .form-container .amount-field input {
   color: #1a202c !important;
   font-size: 24px;
   font-weight: 800;
 }
 
-.portfolio-dialog-inner-content .form-container .amount-field-box {
+.dashbord-right-dialog-inner-content .form-container .amount-field-box {
   border: 1px solid var(--primaryColor);
   padding: 16px;
   border-radius: 12px;
 }
 
-.portfolio-dialog-inner-content .form-container .amount-field-box .label {
+.dashbord-right-dialog-inner-content .form-container .amount-field-box .label {
   color: #718096;
   font-weight: 500;
   font-size: 13px;
 }
 
-.portfolio-dialog-inner-content .form-container .amount-field-box .currency {
+.dashbord-right-dialog-inner-content
+  .form-container
+  .amount-field-box
+  .currency {
   font-weight: 800;
   font-size: 24px;
   margin-right: 2px;
 }
 
-.portfolio-dialog-inner-content
+.dashbord-right-dialog-inner-content
   .form-container
   .amount-field-box
   .currency.blue {
   color: var(--primaryColor);
 }
 
-.portfolio-dialog-inner-content .form-container .currency-picker button {
+.dashbord-right-dialog-inner-content .form-container .currency-picker button {
   background: #e8edff;
   color: var(--primaryColor);
   border-radius: 50%;
@@ -1462,11 +1479,17 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   border: none;
 }
 
-.portfolio-dialog-inner-content .form-container .currency-picker button.usdt {
+.dashbord-right-dialog-inner-content
+  .form-container
+  .currency-picker
+  button.usdt {
   font-size: 12px;
 }
 
-.portfolio-dialog-inner-content .form-container .currency-picker button.active {
+.dashbord-right-dialog-inner-content
+  .form-container
+  .currency-picker
+  button.active {
   border: 1px solid var(--primaryColor);
 }
 
@@ -1630,17 +1653,253 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   text-align: center;
 }
 
-.wallet-balance{
+.wallet-balance {
   text-align: center;
   margin-top: 25px;
 }
 
-.wallet-balance span{
+.wallet-balance span {
   background: rgba(41, 114, 255, 0.1);
   padding: 8px 20px;
-  color: #2972FF;
+  color: #2972ff;
   font-size: 13px;
   border-radius: 8px;
+}
+
+/* Settings */
+
+.settings-complete-profile {
+  padding: 24px;
+  background-color: var(--primaryColor);
+  border-radius: 16px;
+  margin: 0 20px;
+}
+
+.settings-complete-profile .top {
+  display: flex;
+}
+
+.settings-complete-profile .text {
+  display: flex;
+  flex-grow: 1;
+}
+
+.settings-complete-profile .text .heading {
+  color: var(--secondaryColor);
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.settings-complete-profile .text .heading-note {
+  opacity: 0.6;
+  color: var(--secondaryColor);
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.settings-complete-profile .bottom {
+  margin-top: 15px;
+}
+
+.settings-complete-profile .bottom button {
+  color: var(--primaryColor);
+  background: var(--secondaryColor);
+  outline: none;
+  border: 0;
+  font-size: 14px;
+  font-weight: 800;
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.settings-invite {
+  padding: 15px;
+  background-color: var(--primaryColor);
+  margin: 15px 20px;
+  border-radius: 16px;
+  display: flex;
+}
+
+.settings-invite .text {
+  color: var(--secondaryColor);
+  display: flex;
+  flex-grow: 1;
+  padding: 0 10px;
+}
+
+.settings-invite .text .heading {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.settings-invite .text .heading-note {
+  opacity: 0.8;
+  margin-top: 3px;
+  font-size: 11px;
+}
+
+.settings-invite .icon {
+  display: flex;
+  align-self: center;
+}
+
+.settings-tab {
+  margin-top: 25px;
+}
+
+.settings-tab .tab {
+  padding: 20px;
+  display: flex;
+  cursor: pointer;
+}
+
+.settings-tab .tab.active {
+  background: #fafafa;
+  border-left: 2px solid var(--primaryColor);
+}
+
+.settings-tab .tab .text {
+  display: flex;
+  flex-grow: 1;
+  padding: 0 15px;
+}
+
+.settings-tab .tab .text .heading {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.settings-tab .tab .text .heading-note {
+  font-size: 13px;
+  margin-top: 5px;
+  color: #718096;
+}
+
+.setting-page-header {
+  font-size: 22px;
+  color: #1a202c;
+  font-weight: 800;
+}
+
+.setting-page-content {
+  padding: 30px 0;
+}
+
+.settings-profile-details {
+  margin-top: 30px;
+  display: flex;
+}
+
+.settings-profile-details .profile-image-placeholder {
+  border: 1px solid var(--primaryColor);
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.settings-profile-details .profile-image-placeholder div {
+  background-size: cover;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+}
+
+.settings-profile-details .text {
+  padding: 15px 28px 0 28px;
+  justify-content: center;
+}
+
+.settings-profile-details .text .fullname {
+  font-weight: 800;
+  font-size: 27px;
+}
+
+.settings-profile-details .text .email {
+  color: #718096;
+  font-size: 13px;
+  padding-left: 14px;
+}
+
+.avatar-btn {
+  color: var(--primaryColor);
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+.settings-form > div {
+  margin-top: 20px;
+}
+
+.settings-list .list {
+  display: flex;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.settings-list .text {
+  display: flex;
+  flex-grow: 1;
+  padding-right: 15px;
+}
+
+.settings-list .text .heading {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.settings-list .text .heading-note {
+  font-size: 13px;
+  color: #718096;
+  margin-top: 8px;
+}
+
+.banks-list .list {
+  display: flex;
+  border: 1px solid #edf2f7;
+  padding: 10px 12px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.banks-list .list .text {
+  display: flex;
+  flex-grow: 1;
+}
+
+.banks-list .list .text .heading {
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.banks-list .list .text .heading-note {
+  color: #1a202c;
+  font-size: 12px;
+  opacity: 0.4;
+}
+
+.banks-list .list .image .bank-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #edf2f7;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.delete-bank {
+  text-align: center;
+}
+
+.delete-bank button {
+  background: #fff2f2;
+  border: 0;
+  border-radius: 12px;
+  color: #E71D36;
+  font-weight: 400;
+  padding: 8px 30px;
+  opacity: 0.8;
+  outline: none;
 }
 
 /* Large screens */
@@ -1677,7 +1936,12 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   ::-webkit-scrollbar-thumb {
     background: #112291 !important;
     border-radius: 2px;
-  } 
+  }
+  .header {
+    width: calc(100% - 330px);
+    padding: 20px;
+    border-bottom: 1px solid #e2e8f0;
+  }
 
   .dashoard-overview-banner .content {
     padding: 32px;
@@ -1691,8 +1955,8 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
     width: 30px;
     height: 30px;
   }
-  
-  .mobile-dashboard-page-title{
+
+  .mobile-dashboard-page-title {
     display: none;
   }
 
@@ -1700,7 +1964,7 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
     padding-top: 110px;
   }
 
-  .dashboard-ctas{
+  .dashboard-ctas {
     display: none;
   }
 
@@ -1708,14 +1972,14 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
     padding: 8px 18px;
     font-size: 14px;
   }
-  .transaction-image-placeholder{
+  .transaction-image-placeholder {
     width: 40px;
     height: 40px;
     background-size: cover;
     display: inline-block;
     margin-left: 10px;
   }
-  
+
   .page-content {
     width: 550px;
   }
@@ -1724,42 +1988,43 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
     background-color: var(--secondaryColor);
     padding: 70px 50px;
   }
-  
+
   .page-content form .form-content {
     margin-top: 30px;
-  }
-  
-  .header {
-    width: calc(100% - 330px);
   }
 
   .dashboard-content {
     padding: 0 40px;
   }
-  
+
   .side-bar {
     display: block;
   }
-  
+
   .dashboard-content {
     margin-left: 250px;
     width: calc(100% - 250px);
   }
 
-  .portfolio-dialog-content {
+  .dashbord-right-dialog-content {
     position: fixed;
     right: 0;
     width: 490px;
     height: 100%;
     overflow: scroll;
   }
-  
+
   .portfolio-receive-address .address-barcode,
   .portfolio-receive-address .coin-select {
     width: 280px;
   }
 
-  .tss-qbo1l6-MUIDataTableToolbar-actions{
+  .tss-qbo1l6-MUIDataTableToolbar-actions {
     display: block;
+  }
+
+  .settings-left {
+    border-right: 1px solid #e2e8f0;
+    padding: 0 !important;
   }
 }

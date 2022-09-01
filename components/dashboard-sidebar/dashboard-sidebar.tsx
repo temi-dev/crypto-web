@@ -39,9 +39,9 @@ const DashboardSidebar = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link href='/dashboard'>
-                            <a className="d-flex">
-                                <SettingsIcon></SettingsIcon>
+                        <Link href='/dashboard/settings'>
+                            <a className={router.pathname.includes("/dashboard/settings") ? "active d-flex" : "d-flex"}>
+                                <SettingsIcon color={router.pathname.includes("/dashboard/settings") ? "white" : "#718096"}></SettingsIcon>
                                 <span>Settings</span>
                             </a>
                         </Link>
