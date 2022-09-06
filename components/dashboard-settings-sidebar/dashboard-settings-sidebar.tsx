@@ -1,7 +1,16 @@
 import Link from "next/link";
+import { useState } from "react";
+import { IDialogs } from "../../shared/interface/global.interface";
+import BvnUpdate from "../dialogs/settings/bvn-update/bvn-update";
 import { ChevronRightIcon, FilterFilledIcon, GiftBoxIllustration, GuardFilledIcon, NotificationFilledIcon, PeopleFilledIcon, UserFilledIcon, WalletCircleFilledIcon, WalletFilledIcon } from "../icons/icons";
 
 const DashboardSettingsSidebar = () => {
+    const DialogsVisibilityInitState: IDialogs = {
+        settingsBvnUpdateDialogVisibility: false
+    }
+
+    const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
+
     return (
         <div>
             <div className="settings-complete-profile">
@@ -17,7 +26,7 @@ const DashboardSettingsSidebar = () => {
                     </div>
                 </div>
                 <div className="bottom">
-                    <button>Verify BVN</button>
+                    <button onClick={() => setDialogVisibilityState({ settingsBvnUpdateDialogVisibility: true })}>Verify BVN</button>
                 </div>
             </div>
 
@@ -116,6 +125,7 @@ const DashboardSettingsSidebar = () => {
                     </div>
                 </Link>
             </div>
+            <BvnUpdate open={dialogsVisibilityState.settingsBvnUpdateDialogVisibility!} setVisibilityState={setDialogVisibilityState}></BvnUpdate>
         </div>
     )
 }

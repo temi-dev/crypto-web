@@ -1927,17 +1927,18 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   display: flex;
 }
 
-.support-tickets-list .list .text{
+.support-tickets-list .list .text {
   display: flex;
   flex-grow: 1;
 }
 
-.support-tickets-list .list .status{
-display: flex;
-align-items: center;
-color: #757575;
+.support-tickets-list .list .status {
+  display: flex;
+  align-items: center;
+  color: #757575;
 }
-.support-tickets-list .list .status .dot{
+
+.support-tickets-list .list .status .dot {
   margin-right: 4px;
   font-size: 18px;
 }
@@ -1946,10 +1947,20 @@ color: #757575;
   font-size: 17.56px;
 }
 
-.support-tickets-list .list .heading-note  {
+.support-tickets-list .list .heading-note {
   font-weight: 400;
   color: #757575;
   font-size: 13px;
+}
+
+.bvn-confirmation svg {
+  width: 160px;
+  height: 160px;
+}
+
+.bvn-confirmation .heading {
+  font-size: 22.4465px;
+  margin-bottom: 40px;
 }
 /* Large screens */
 @media (min-width: 992px) {

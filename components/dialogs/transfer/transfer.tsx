@@ -48,7 +48,7 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                     <div >
                                         <label className="form-label">Recipient</label>
                                         <TextField
-                                            className="amount-field"
+                                            className="form-control-2"
                                             variant="standard"
                                             placeholder="Name, @username, or email"
                                             fullWidth
@@ -141,7 +141,7 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                     <div className="mt-3">
                                         <label className="form-label">Add a Note</label>
                                         <TextField
-                                            className="amount-field"
+                                            className="form-control-2"
                                             variant="standard"
                                             placeholder="What’s this for?"
                                             fullWidth
