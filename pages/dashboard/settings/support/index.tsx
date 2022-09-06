@@ -1,10 +1,20 @@
 import { NextPage } from "next";
+import Link from "next/link";
+import { useState } from "react";
 import BackButton from "../../../../components/back-button/back-button";
 import DashboardHeader from "../../../../components/dashboard-header/dashboard-header";
 import DashboardSettingsSidebar from "../../../../components/dashboard-settings-sidebar/dashboard-settings-sidebar";
 import DashboardSidebar from "../../../../components/dashboard-sidebar/dashboard-sidebar";
+import SettingsSupportTickets from "../../../../components/dialogs/settings/support-ticket/support-ticket";
 import { ChevronRightIcon } from "../../../../components/icons/icons";
+import { IDialogs } from "../../../../shared/interface/global.interface";
 const Settings: NextPage = () => {
+    const DialogsVisibilityInitState: IDialogs = {
+        settingsSupportTicketsDialogVisibility: false
+    }
+
+    const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
+
     return (
         <div className="dashboard">
             <DashboardSidebar></DashboardSidebar>
@@ -19,7 +29,7 @@ const Settings: NextPage = () => {
                         </div>
 
                         <DashboardSettingsSidebar></DashboardSettingsSidebar>
-                      
+
                     </div>
 
                     <div className="col-lg-8">
@@ -28,18 +38,23 @@ const Settings: NextPage = () => {
 
                             <div className="setting-page-content">
                                 <div className="settings-list">
-                                    <div className="list" >
-                                        <div className="text">
-                                            <div>
-                                                <div className="heading">Get in Touch</div>
-                                            </div>
-                                        </div>
-                                        <div className="action">
-                                            <ChevronRightIcon color="black"></ChevronRightIcon>
-                                        </div>
 
-                                    </div>
-                                    <div className="list" >
+                                    <Link href='/dashboard/settings/support/contacts'>
+                                        <div className="list" >
+                                            <div className="text">
+                                                <div>
+                                                    <div className="heading">Get in Touch</div>
+                                                </div>
+                                            </div>
+                                            <div className="action">
+                                                <ChevronRightIcon color="black"></ChevronRightIcon>
+                                            </div>
+
+                                        </div>
+                                    </Link>
+                                    <div className="list" onClick={() => setDialogVisibilityState({
+                                        settingsSupportTicketsDialogVisibility: true
+                                    })}>
                                         <div className="text">
                                             <div>
                                                 <div className="heading">Support tickets</div>
@@ -59,6 +74,7 @@ const Settings: NextPage = () => {
                     </div>
                 </div>
             </div>
+            <SettingsSupportTickets open={dialogsVisibilityState.settingsSupportTicketsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsSupportTickets>
         </div>
     )
 }

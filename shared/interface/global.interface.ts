@@ -23,7 +23,9 @@ export interface IDialogs  {
     settingsBanksDialogVisibility?: boolean,
     settingsCardsDialogVisibility?: boolean,
     settingsAddBankDialogVisibility?: boolean
-    settingsBankDetailsDialogVisibility?: boolean
+    settingsBankDetailsDialogVisibility?: boolean,
+    settingsSupportTicketsDialogVisibility?: boolean,
+    settingsCreateTicketDialogVisibility?: boolean
 }
 
 export interface IAppState{

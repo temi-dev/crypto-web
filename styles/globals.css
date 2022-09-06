@@ -1836,6 +1836,22 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   cursor: pointer;
 }
 
+.settings-list.big-padding .list {
+  margin-bottom: 50px;
+}
+
+.settings-list .list .action a {
+  background: #f7f5ff;
+  color: #936dff;
+  border-radius: 8px;
+  padding: 10px 15px;
+  text-align: center;
+  font-size: 500;
+  width: 100px;
+  display: inline-block;
+  font-size: 14px;
+}
+
 .settings-list .text {
   display: flex;
   flex-grow: 1;
@@ -1895,13 +1911,42 @@ label + .css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   background: #fff2f2;
   border: 0;
   border-radius: 12px;
-  color: #E71D36;
+  color: #e71d36;
   font-weight: 400;
   padding: 8px 30px;
   opacity: 0.8;
   outline: none;
 }
 
+.support-tickets-list .list {
+  background: #ffffff;
+  box-shadow: 0px 1.35077px 5.40308px rgba(0, 0, 0, 0.1);
+  border-radius: 21.6123px;
+  padding: 18px 15px;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.support-tickets-list .list .text{
+  display: flex;
+  flex-grow: 1;
+}
+
+.support-tickets-list .list .status{
+display: flex;
+align-items: center;
+color: #757575;
+}
+.support-tickets-list .list .heading {
+  font-weight: 500;
+  font-size: 17.56px;
+}
+
+.support-tickets-list .list .heading-note  {
+  font-weight: 400;
+  color: #757575;
+  font-size: 13px;
+}
 /* Large screens */
 @media (min-width: 992px) {
 }

@@ -23,6 +23,7 @@ const Signin: NextPage = (props) => {
                                 <label className='mb-2'>Email address*</label>
                                 <TextField
                                     {...props} variant="standard"
+                                    className='form-control'
                                     placeholder='Email address'
                                     fullWidth
                                     InputProps={{
@@ -34,6 +35,7 @@ const Signin: NextPage = (props) => {
                                 <label className='mb-2'>Password*</label>
                                 <TextField
                                     {...props} variant="standard"
+                                    className='form-control'    
                                     placeholder='Password'
                                     fullWidth
                                     InputProps={{

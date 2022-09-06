@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Link from "next/link";
 import BuySell from "../dialogs/buy-sell/buy-sell";
 import { IDialogs } from "../../shared/interface/global.interface";
-import MobileSideBar from "../dialogs/side-bar/side-bar";
+import MobileSideBar from "../dialogs/mobile-side-bar/side-bar";
 import { useAppContext } from "../../shared/contexts/app.context";
 import SendReceive from "../dialogs/send-receive/send-receive";
 

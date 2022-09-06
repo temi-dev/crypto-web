@@ -37,6 +37,7 @@ const Signup: NextPage = (props) => {
                                         <TextField
                                             {...props} variant="standard"
                                             placeholder='First name'
+                                            className='form-control'
                                             fullWidth
                                             InputProps={{
                                                 disableUnderline: true
@@ -48,6 +49,7 @@ const Signup: NextPage = (props) => {
                                         <TextField
                                             {...props} variant="standard"
                                             placeholder='Last name'
+                                            className='form-control'
                                             fullWidth
                                             InputProps={{
                                                 disableUnderline: true
@@ -77,7 +79,7 @@ const Signup: NextPage = (props) => {
                                                 onChange={(newValue) => {
                                                     setValue(newValue);
                                                 }}
-                                                renderInput={(params) => <TextField variant='standard' fullWidth placeholder='Date of birth (DD/MM/YYY)' {...params} />} />
+                                                renderInput={(params) => <TextField variant='standard' fullWidth className='form-control' placeholder='Date of birth (DD/MM/YYY)' {...params} />} />
                                         </LocalizationProvider>
                                     </div>
                                     <div className='mt-4'>
@@ -92,6 +94,7 @@ const Signup: NextPage = (props) => {
                                         <label className='mb-2'>Email address*</label>
                                         <TextField
                                             {...props} variant="standard"
+                                            className='form-control'
                                             placeholder='Email address'
                                             fullWidth
                                             InputProps={{
@@ -114,6 +117,7 @@ const Signup: NextPage = (props) => {
                                         <label className='mb-2'>Password*</label>
                                         <TextField
                                             {...props} variant="standard"
+                                            className='form-control'
                                             placeholder='Password'
                                             fullWidth
                                             InputProps={{
@@ -132,6 +136,7 @@ const Signup: NextPage = (props) => {
                                         <label className='mb-2'>Confirm Password*</label>
                                         <TextField
                                             {...props} variant="standard"
+                                            className='form-control'
                                             placeholder='Confirm Password'
                                             fullWidth
                                             InputProps={{
@@ -150,6 +155,7 @@ const Signup: NextPage = (props) => {
                                         <label className='mb-2'>Got referral code?</label>
                                         <TextField
                                             {...props} variant="standard"
+                                            className='form-control'
                                             placeholder='Enter referral code (optional)'
                                             fullWidth
                                             InputProps={{
