@@ -53,7 +53,7 @@ const SettingsSupportTickets = ({ open, setVisibilityState }: { open: boolean, s
                                             </div>
                                         </div>
                                         <div className="status">
-                                            <span>Closed</span>
+                                          <span className="dot">&#8226;</span>  <span>Closed</span>
                                         </div>
                                     </div>
 
