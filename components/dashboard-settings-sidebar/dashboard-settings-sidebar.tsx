@@ -2,9 +2,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { IDialogs } from "../../shared/interface/global.interface";
 import BvnUpdate from "../dialogs/settings/bvn-update/bvn-update";
-import { ChevronRightIcon, FilterFilledIcon, GiftBoxIllustration, GuardFilledIcon, NotificationFilledIcon, PeopleFilledIcon, UserFilledIcon, WalletCircleFilledIcon, WalletFilledIcon } from "../icons/icons";
+import { NextRouter, useRouter } from "next/router";
+import { ChevronRightIcon, FilterFilledIcon, GiftBoxIllustration, GuardFilledIcon, NotificationFilledIcon, PeopleFilledIcon, UserFilledIcon, WalletCircleFilledIcon } from "../icons/icons";
 
 const DashboardSettingsSidebar = () => {
+    const router: NextRouter = useRouter();
+
     const DialogsVisibilityInitState: IDialogs = {
         settingsBvnUpdateDialogVisibility: false
     }
@@ -47,9 +50,11 @@ const DashboardSettingsSidebar = () => {
 
             <div className="settings-tab">
                 <Link href='/dashboard/settings' >
-                    <div className="tab active">
+                    <div className={router.pathname == "/dashboard/settings" ? "active tab" : "tab"}>
                         <div className="icon">
-                            <UserFilledIcon color="#1D38E4" fillColor="white"></UserFilledIcon>
+                            <UserFilledIcon
+                                color={router.pathname == "/dashboard/settings" ? "#1D38E4" : "#130F26"}
+                                fillColor={router.pathname == "/dashboard/settings" ? "white" : "#F7FAFC"}></UserFilledIcon>
                         </div>
                         <div className="text">
                             <div>
@@ -60,9 +65,11 @@ const DashboardSettingsSidebar = () => {
                     </div>
                 </Link>
                 <Link href='/dashboard/settings/security'>
-                    <div className="tab ">
+                    <div className={router.pathname.includes("/dashboard/settings/security") ? "active tab" : "tab"}>
                         <div className="icon">
-                            <GuardFilledIcon color="#1D38E4" fillColor="white"></GuardFilledIcon>
+                            <GuardFilledIcon
+                                color={router.pathname.includes("/dashboard/settings/security") ? "#1D38E4" : "#130F26"}
+                                fillColor={router.pathname.includes("/dashboard/settings/security") ? "white" : "#F7FAFC"}></GuardFilledIcon>
                         </div>
                         <div className="text">
                             <div>
@@ -73,9 +80,11 @@ const DashboardSettingsSidebar = () => {
                     </div>
                 </Link>
                 <Link href='/dashboard/settings/preferences'>
-                    <div className="tab ">
+                    <div className={router.pathname.includes("/dashboard/settings/preferences") ? "active tab" : "tab"}>
                         <div className="icon">
-                            <FilterFilledIcon color="#1D38E4" fillColor="white"></FilterFilledIcon>
+                            <FilterFilledIcon
+                                color={router.pathname.includes("/dashboard/settings/preferences") ? "#1D38E4" : "#130F26"}
+                                fillColor={router.pathname.includes("/dashboard/settings/preferences") ? "white" : "#F7FAFC"}></FilterFilledIcon>
                         </div>
                         <div className="text">
                             <div>
@@ -86,9 +95,11 @@ const DashboardSettingsSidebar = () => {
                     </div>
                 </Link>
                 <Link href='/dashboard/settings/banks'>
-                    <div className="tab ">
+                    <div className={router.pathname.includes("/dashboard/settings/banks") ? "active tab" : "tab"}>
                         <div className="icon">
-                            <WalletCircleFilledIcon color="#1D38E4" fillColor="white"></WalletCircleFilledIcon>
+                            <WalletCircleFilledIcon
+                                color={router.pathname.includes("/dashboard/settings/banks") ? "#1D38E4" : "#130F26"}
+                                fillColor={router.pathname.includes("/dashboard/settings/banks") ? "white" : "#F7FAFC"}></WalletCircleFilledIcon>
                         </div>
                         <div className="text">
                             <div>
@@ -99,9 +110,11 @@ const DashboardSettingsSidebar = () => {
                     </div>
                 </Link>
                 <Link href='/dashboard/settings/notifications'>
-                    <div className="tab ">
+                    <div className={router.pathname.includes("/dashboard/settings/notifications") ? "active tab" : "tab"}>
                         <div className="icon">
-                            <NotificationFilledIcon color="#1D38E4" fillColor="white"></NotificationFilledIcon>
+                            <NotificationFilledIcon
+                                color={router.pathname.includes("/dashboard/settings/notifications") ? "#1D38E4" : "#130F26"}
+                                fillColor={router.pathname.includes("/dashboard/settings/notifications") ? "white" : "#F7FAFC"}></NotificationFilledIcon>
                         </div>
                         <div className="text">
                             <div>
@@ -112,9 +125,11 @@ const DashboardSettingsSidebar = () => {
                     </div>
                 </Link>
                 <Link href='/dashboard/settings/support'>
-                    <div className="tab ">
+                    <div className={router.pathname.includes("/dashboard/settings/support") ? "active tab" : "tab"}>
                         <div className="icon">
-                            <PeopleFilledIcon color="#1D38E4" fillColor="white"></PeopleFilledIcon>
+                            <PeopleFilledIcon
+                                color={router.pathname.includes("/dashboard/settings/support") ? "#1D38E4" : "#130F26"}
+                                fillColor={router.pathname.includes("/dashboard/settings/support") ? "white" : "#F7FAFC"}></PeopleFilledIcon>
                         </div>
                         <div className="text">
                             <div>

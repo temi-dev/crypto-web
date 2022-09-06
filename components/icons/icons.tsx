@@ -606,11 +606,11 @@ const GuardFilledIcon = ({ color, fillColor }: { color?: string, fillColor: stri
 const FilterFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
     return (
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="48" height="48" rx="24" fill="#F7FAFC" />
-            <path d="M23.1437 29.8829H16.6711" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path fillRule="evenodd" clipRule="evenodd" d="M27.2051 29.8839C27.2051 31.9257 27.886 32.6057 29.9269 32.6057C31.9678 32.6057 32.6487 31.9257 32.6487 29.8839C32.6487 27.8421 31.9678 27.1621 29.9269 27.1621C27.886 27.1621 27.2051 27.8421 27.2051 29.8839Z" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M26.1768 19.3946H32.6484" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path fillRule="evenodd" clipRule="evenodd" d="M22.1154 19.3937C22.1154 17.3528 21.4345 16.6719 19.3936 16.6719C17.3518 16.6719 16.6709 17.3528 16.6709 19.3937C16.6709 21.4355 17.3518 22.1155 19.3936 22.1155C21.4345 22.1155 22.1154 21.4355 22.1154 19.3937Z" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <rect width="48" height="48" rx="24" fill={fillColor} />
+            <path d="M23.1437 29.8829H16.6711" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M27.2051 29.8839C27.2051 31.9257 27.886 32.6057 29.9269 32.6057C31.9678 32.6057 32.6487 31.9257 32.6487 29.8839C32.6487 27.8421 31.9678 27.1621 29.9269 27.1621C27.886 27.1621 27.2051 27.8421 27.2051 29.8839Z" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M26.1768 19.3946H32.6484" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M22.1154 19.3937C22.1154 17.3528 21.4345 16.6719 19.3936 16.6719C17.3518 16.6719 16.6709 17.3528 16.6709 19.3937C16.6709 21.4355 17.3518 22.1155 19.3936 22.1155C21.4345 22.1155 22.1154 21.4355 22.1154 19.3937Z" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     )
 }
@@ -618,11 +618,11 @@ const FilterFilledIcon = ({ color, fillColor }: { color?: string, fillColor: str
 const WalletCircleFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
     return (
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="48" height="48" rx="24" fill="#F7FAFC" />
-            <path d="M33.1712 26.6755H29.2845C27.8693 26.6755 26.7217 25.5279 26.7217 24.1117C26.7217 22.6964 27.8693 21.5488 29.2845 21.5488H33.1407" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M29.7219 24.0543H29.4248" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M19.6062 20.1442H23.6662" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path fillRule="evenodd" clipRule="evenodd" d="M14.7141 24.2539C14.7141 17.8491 17.0389 15.7148 24.0151 15.7148C30.9903 15.7148 33.3151 17.8491 33.3151 24.2539C33.3151 30.6577 30.9903 32.7929 24.0151 32.7929C17.0389 32.7929 14.7141 30.6577 14.7141 24.2539Z" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <rect width="48" height="48" rx="24" fill={fillColor} />
+            <path d="M33.1712 26.6755H29.2845C27.8693 26.6755 26.7217 25.5279 26.7217 24.1117C26.7217 22.6964 27.8693 21.5488 29.2845 21.5488H33.1407" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M29.7219 24.0543H29.4248" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M19.6062 20.1442H23.6662" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M14.7141 24.2539C14.7141 17.8491 17.0389 15.7148 24.0151 15.7148C30.9903 15.7148 33.3151 17.8491 33.3151 24.2539C33.3151 30.6577 30.9903 32.7929 24.0151 32.7929C17.0389 32.7929 14.7141 30.6577 14.7141 24.2539Z" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     )
 }
@@ -630,9 +630,9 @@ const WalletCircleFilledIcon = ({ color, fillColor }: { color?: string, fillColo
 const NotificationFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
     return (
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="48" height="48" rx="24" fill="#F7FAFC" />
-            <path fillRule="evenodd" clipRule="evenodd" d="M23.9961 14.5137C19.5619 14.5137 17.6352 18.5289 17.6352 21.1832C17.6352 23.167 17.9228 22.5832 16.8247 25.0032C15.4838 28.4518 20.8761 29.8613 23.9961 29.8613C27.1152 29.8613 32.5076 28.4518 31.1676 25.0032C30.0695 22.5832 30.3571 23.167 30.3571 21.1832C30.3571 18.5289 28.4295 14.5137 23.9961 14.5137Z" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M26.306 32.5117C25.0117 33.9574 22.9927 33.9746 21.686 32.5117" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <rect width="48" height="48" rx="24" fill={fillColor} />
+            <path fillRule="evenodd" clipRule="evenodd" d="M23.9961 14.5137C19.5619 14.5137 17.6352 18.5289 17.6352 21.1832C17.6352 23.167 17.9228 22.5832 16.8247 25.0032C15.4838 28.4518 20.8761 29.8613 23.9961 29.8613C27.1152 29.8613 32.5076 28.4518 31.1676 25.0032C30.0695 22.5832 30.3571 23.167 30.3571 21.1832C30.3571 18.5289 28.4295 14.5137 23.9961 14.5137Z" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M26.306 32.5117C25.0117 33.9574 22.9927 33.9746 21.686 32.5117" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     )
 }
@@ -640,13 +640,13 @@ const NotificationFilledIcon = ({ color, fillColor }: { color?: string, fillColo
 const PeopleFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
     return (
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="48" height="48" rx="24" fill="#F7FAFC" />
-            <path fillRule="evenodd" clipRule="evenodd" d="M23.9726 32.3681C20.7336 32.3681 17.9666 31.8781 17.9666 29.9161C17.9666 27.9541 20.7156 26.2461 23.9726 26.2461C27.2116 26.2461 29.9786 27.9381 29.9786 29.8991C29.9786 31.8601 27.2296 32.3681 23.9726 32.3681Z" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path fillRule="evenodd" clipRule="evenodd" d="M23.9726 23.449C26.0986 23.449 27.8226 21.726 27.8226 19.6C27.8226 17.474 26.0986 15.75 23.9726 15.75C21.8466 15.75 20.1226 17.474 20.1226 19.6C20.1166 21.718 21.8266 23.442 23.9456 23.449H23.9726Z" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M30.362 22.391C31.599 22.06 32.511 20.932 32.511 19.589C32.511 18.188 31.518 17.018 30.196 16.748" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M30.9431 25.5449C32.6971 25.5449 34.1951 26.7339 34.1951 27.7959C34.1951 28.4209 33.6781 29.1019 32.8941 29.2859" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M17.5838 22.391C16.3458 22.06 15.4338 20.932 15.4338 19.589C15.4338 18.188 16.4278 17.018 17.7488 16.748" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M17.0018 25.5449C15.2478 25.5449 13.7498 26.7339 13.7498 27.7959C13.7498 28.4209 14.2668 29.1019 15.0518 29.2859" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <rect width="48" height="48" rx="24" fill={fillColor} />
+            <path fillRule="evenodd" clipRule="evenodd" d="M23.9726 32.3681C20.7336 32.3681 17.9666 31.8781 17.9666 29.9161C17.9666 27.9541 20.7156 26.2461 23.9726 26.2461C27.2116 26.2461 29.9786 27.9381 29.9786 29.8991C29.9786 31.8601 27.2296 32.3681 23.9726 32.3681Z" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M23.9726 23.449C26.0986 23.449 27.8226 21.726 27.8226 19.6C27.8226 17.474 26.0986 15.75 23.9726 15.75C21.8466 15.75 20.1226 17.474 20.1226 19.6C20.1166 21.718 21.8266 23.442 23.9456 23.449H23.9726Z" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M30.362 22.391C31.599 22.06 32.511 20.932 32.511 19.589C32.511 18.188 31.518 17.018 30.196 16.748" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M30.9431 25.5449C32.6971 25.5449 34.1951 26.7339 34.1951 27.7959C34.1951 28.4209 33.6781 29.1019 32.8941 29.2859" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M17.5838 22.391C16.3458 22.06 15.4338 20.932 15.4338 19.589C15.4338 18.188 16.4278 17.018 17.7488 16.748" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M17.0018 25.5449C15.2478 25.5449 13.7498 26.7339 13.7498 27.7959C13.7498 28.4209 14.2668 29.1019 15.0518 29.2859" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     )
 }
