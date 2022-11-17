@@ -13,7 +13,7 @@ import 'react-phone-number-input/style.css'
 
 import { createAccount, setupPin } from './service'
 
-import { useSnackbar } from 'nextjs-toast';
+import { useSnackbar } from 'material-ui-snackbar-provider';
 import { useRouter } from 'next/router';
 
 
@@ -116,7 +116,7 @@ const Signup: NextPage = (props) => {
                 snackbar.showMessage(
                     response.data.message,
                     "error",
-                    "filled",
+                    // "filled",
                 );
                 setProcessingSignupHttpRequest(false)
             } else {
@@ -124,7 +124,7 @@ const Signup: NextPage = (props) => {
                 snackbar.showMessage(
                     response.data.message,
                     "success",
-                    "filled",
+                    // "filled",
                 );
             }
 
@@ -140,7 +140,7 @@ const Signup: NextPage = (props) => {
                 snackbar.showMessage(
                     response.data.message,
                     "error",
-                    "filled",
+                    // "filled",
                 );
                 setProcessingSignupHttpRequest(false)
             } else {
@@ -148,7 +148,7 @@ const Signup: NextPage = (props) => {
                 snackbar.showMessage(
                     response.data.message,
                     "success",
-                    "filled",
+                    // "filled",
                 );
             }
 

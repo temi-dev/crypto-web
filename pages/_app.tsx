@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import '../styles/globals.css'
 import 'animate.css';
-import { SnackbarProvider } from "nextjs-toast";
+import { SnackbarProvider } from "material-ui-snackbar-provider";
 
 import type { AppProps } from 'next/app'
 import { useEffect } from 'react';
