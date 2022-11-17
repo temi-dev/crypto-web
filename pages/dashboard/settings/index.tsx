@@ -4,8 +4,15 @@ import { useState } from "react";
 import DashboardHeader from "../../../components/dashboard-header/dashboard-header";
 import DashboardSettingsSidebar from "../../../components/dashboard-settings-sidebar/dashboard-settings-sidebar";
 import DashboardSidebar from "../../../components/dashboard-sidebar/dashboard-sidebar";
+import SettingsAvatar from "../../../components/dialogs/settings/avatar/avatar";
+import { IDialogs } from "../../../shared/interface/global.interface";
 
 const Settings: NextPage = () => {
+    const DialogsVisibilityInitState: IDialogs = {
+        settingsAvatarDialogVisibility: false
+    }
+
+    const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
 
     interface IFormData {
         gender?: string,
@@ -45,7 +52,7 @@ const Settings: NextPage = () => {
                                     <div className="profile-image-placeholder" >
                                         <div style={{ backgroundImage: "url(" + "/images/avatar.png" + ")" }}></div>
                                     </div>
-                                    <a className="avatar-btn">Use Avatar</a>
+                                    <a className="avatar-btn" onClick={()=> setDialogVisibilityState({ settingsAvatarDialogVisibility: true})}>Use Avatar</a>
                                 </div>
                                 <div className="text">
                                     <div>
@@ -201,6 +208,7 @@ const Settings: NextPage = () => {
 
                 </div>
             </div>
+            <SettingsAvatar open={dialogsVisibilityState.settingsAvatarDialogVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsAvatar>
         </div>
     )
 }

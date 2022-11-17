@@ -1,12 +1,13 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
+import { NextApplicationPage } from '../_app';
 
 export async function getStaticProps() {
-    return { props: { blue: "true" } };
+    return { props: {  } };
 }
-const ForgotPassword: NextPage = (props) => {
+const ForgotPassword: NextApplicationPage = (props) => {
     return (
-        <div className='page'>
+        <div className='page blue-bg'>
             <div className='container'>
                 <div className='page-content'>
                     <img className='logo' src={'/logo.svg'} width='195px' height='45px'></img>
@@ -31,5 +32,5 @@ const ForgotPassword: NextPage = (props) => {
         </div>
     )
 }
-
+ForgotPassword.loggedInRedirect = true;
 export default ForgotPassword

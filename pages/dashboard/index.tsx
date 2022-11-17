@@ -50,8 +50,9 @@ import { IDialogs } from "../../shared/interface/global.interface";
 import PriceAlert from "../../components/dialogs/price-alert/price-alert";
 import BuySell from "../../components/dialogs/buy-sell/buy-sell";
 import { useAppContext } from "../../shared/contexts/app.context";
+import { NextApplicationPage } from "../_app";
 
-const Dashboard: NextPage = (props) => {
+const Dashboard: NextApplicationPage = (props) => {
 
     const rows = [
         {
@@ -303,5 +304,6 @@ const Dashboard: NextPage = (props) => {
         </div>
     )
 }
+Dashboard.requireAuth = true;
 
 export default Dashboard

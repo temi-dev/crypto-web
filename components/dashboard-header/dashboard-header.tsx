@@ -9,7 +9,8 @@ import { IDialogs } from "../../shared/interface/global.interface";
 import MobileSideBar from "../dialogs/mobile-side-bar/side-bar";
 import { useAppContext } from "../../shared/contexts/app.context";
 import SendReceive from "../dialogs/send-receive/send-receive";
-
+import { Auth } from "../auth/auth";
+const auth = new Auth();
 
 const DashboardHeader = ({ title }: { title: string }) => {
 
@@ -54,7 +55,7 @@ const DashboardHeader = ({ title }: { title: string }) => {
                             }
                         })
                     }>Buy / Sell</button>
-                    <button className="btn d-none d-lg-block btn-secondary"  onClick={() =>
+                    <button className="btn d-none d-lg-block btn-secondary" onClick={() =>
                         setAppState({
                             dialogStates: {
                                 sendReceive: { visibitlity: true }
@@ -179,7 +180,7 @@ const DashboardHeader = ({ title }: { title: string }) => {
                     <ListItemIcon>
                         <LogoutOutlineIcon color="#A0AEC0"></LogoutOutlineIcon>
                     </ListItemIcon>
-                    <ListItemText><span className="menu-item">Logout</span></ListItemText>
+                    <ListItemText onClick={() => auth.signOut()}><span className="menu-item">Logout</span></ListItemText>
                 </MenuItem>
             </Menu>
 

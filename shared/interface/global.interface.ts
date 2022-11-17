@@ -27,6 +27,7 @@ export interface IDialogs  {
     settingsSupportTicketsDialogVisibility?: boolean,
     settingsCreateTicketDialogVisibility?: boolean
     settingsBvnUpdateDialogVisibility?: boolean
+    settingsAvatarDialogVisibility?: boolean
 }
 
 export interface IAppState{
