@@ -11,7 +11,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 
-import { createAccount, setupPin } from './service'
+import { createAccount, setupPin } from '../../shared/services/signup/signup.service'
 
 import { useSnackbar } from 'material-ui-snackbar-provider';
 import { useRouter } from 'next/router';
