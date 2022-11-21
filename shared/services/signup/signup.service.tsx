@@ -41,12 +41,27 @@ const setupPin = async (pin: string) => {
          data: error.response.data
       }
    }
+}
 
-  
+const verifyEmailAddress = async (token: string): Promise<ICustomHttpResponse> => {
+
+   try {
+      const response = await axios.post(`${process.env.apiUrl}/auth/verify/email`, {token});
+      return {
+         responseCode: 200,
+         data: response.data
+      }
+   } catch (error: any) {
+      return {
+         responseCode: 422,
+         data: error.response.data
+      }
+   }
 
 }
 
 export {
    createAccount,
-   setupPin
+   setupPin,
+   verifyEmailAddress
 }
