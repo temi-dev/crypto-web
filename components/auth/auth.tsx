@@ -1,9 +1,11 @@
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 export type UserCB = (user: User, error: any) => void
 
 const userEmail = `admin@example.com`
 const userPassword = "admin123"
+
 
 export type User = {
     email: string
@@ -66,6 +68,7 @@ export class Auth {
 
     signOut() {
         window.localStorage.removeItem("auth")
+        window.location.href = '/'
         this.user = null
         this.onUserChange(this.user)
     }
