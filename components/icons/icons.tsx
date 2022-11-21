@@ -206,6 +206,7 @@ const UserOutlineIcon = ({ color }: { color?: string }) => {
         </svg>
     )
 }
+
 const LogoutOutlineIcon = ({ color }: { color?: string }) => {
     return (
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -288,14 +289,14 @@ const WalletDebitFilledIcon = ({ color, fillColor }: { color?: string, fillColor
 
 const CheckCircleFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
     return (
-        <svg width="201" height="200" viewBox="0 0 201 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="201" height="200" viewBox="0 0 181 180" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_627_6646)">
                 <rect x="43" y="37" width="115" height="115" rx="56.0976" fill={fillColor} />
                 <path d="M122.939 77.6704L92.0854 108.524L78.061 94.4997" stroke={color ? color : altColor} strokeWidth="7.0122" strokeLinecap="round" strokeLinejoin="round" />
-                <rect x="38.7927" y="32.7927" width="123.415" height="123.415" rx="60.3049" stroke="#2972FF" strokeOpacity="0.05" strokeWidth="8.41463" />
+                <rect x="38.7927" y="32.7927" width="103.415" height="103.415" rx="60.3049" stroke="#2972FF" strokeOpacity="0.05" strokeWidth="8.41463" />
             </g>
             <defs>
-                <filter id="filter0_d_627_6646" x="0.926914" y="0.53667" width="199.146" height="199.146" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                <filter id="filter0_d_627_6646" x="0.926914" y="0.53667" width="179.146" height="179.146" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
                     <feFlood floodOpacity="0" result="BackgroundImageFix" />
                     <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                     <feOffset dy="5.60976" />
@@ -306,6 +307,36 @@ const CheckCircleFilledIcon = ({ color, fillColor }: { color?: string, fillColor
                 </filter>
             </defs>
         </svg>
+    )
+}
+
+const ShieldCircleFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
+    return (
+
+        <svg width="171" height="172" viewBox="10 10 141 142" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g filter="url(#filter0_d_1308_135)">
+                <path d="M86.4495 31.8578H84.1251C58.4495 31.8578 37.6353 52.776 37.6353 78.58V80.916C37.6353 106.72 58.4495 127.638 84.1251 127.638H86.4495C112.125 127.638 132.939 106.72 132.939 80.916V78.58C132.939 52.776 112.125 31.8578 86.4495 31.8578Z" fill={fillColor} />
+                <g clipPath="url(#clip0_1308_135)">
+                    <path d="M101.131 69.371C101.12 68.5506 100.477 67.8729 99.6442 67.798C92.7259 67.1631 87.0799 63.5355 85.2186 62.2087C84.8296 61.9304 84.3025 61.9304 83.9135 62.2087C82.0558 63.5355 76.4099 67.1631 69.4916 67.798C68.6591 67.8729 68.0192 68.5506 68.0047 69.371C67.9211 74.7249 68.7972 92.9016 84.1498 96.9465C84.4225 97.0178 84.7097 97.0178 84.9823 96.9465C100.335 92.9052 101.211 74.7248 101.131 69.371Z" fill={color} />
+                </g>
+            </g>
+            <defs>
+                <filter id="filter0_d_1308_135" x="0.257565" y="0.70963" width="170.059" height="170.536" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                    <feOffset dy="6.22962" />
+                    <feGaussianBlur stdDeviation="18.6889" />
+                    <feColorMatrix type="matrix" values="0 0 0 0 0.160784 0 0 0 0 0.447059 0 0 0 0 1 0 0 0 0.25 0" />
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1308_135" />
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1308_135" result="shape" />
+                </filter>
+                <clipPath id="clip0_1308_135">
+                    <rect width="34" height="35" fill="white" transform="translate(68 62)" />
+                </clipPath>
+            </defs>
+        </svg>
+
+
     )
 }
 
@@ -705,5 +736,6 @@ export {
     FilterFilledIcon,
     WalletCircleFilledIcon,
     NotificationFilledIcon,
-    PeopleFilledIcon
+    PeopleFilledIcon,
+    ShieldCircleFilledIcon
 }

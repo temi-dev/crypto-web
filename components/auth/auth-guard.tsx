@@ -1,6 +1,7 @@
 import { useAuth } from "./auth-provider"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
+import LinearProgress from "@mui/material/LinearProgress"
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const { user, initializing, setRedirect } = useAuth()
@@ -17,7 +18,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   }, [initializing, router, user, setRedirect])
 
   if (initializing) {
-    return <h1>Application Loading</h1>
+    return <LinearProgress />
   }
 
    if (!initializing && user) {

@@ -13,8 +13,9 @@ import 'react-phone-number-input/style.css'
 
 import { createAccount, setupPin } from '../../shared/services/signup/signup.service'
 
-import { useSnackbar } from 'material-ui-snackbar-provider';
 import { useRouter } from 'next/router';
+import useCustomSnackbar from '../../components/snackbar/use-custom-snackbar';
+import { IPasswordFieldsStates } from '../../shared/interface/global.interface';
 
 
 interface ISignupFormValue {
@@ -37,12 +38,7 @@ interface IPinFormValue {
     confirmPin?: string
 }
 
-interface IPasswordFieldsStates {
-    password?: string,
-    repeatPassword?: string
-    pin?: string
-    confirmPin?: string
-}
+
 
 export async function getStaticProps() {
     return {
@@ -51,7 +47,7 @@ export async function getStaticProps() {
 }
 
 const Signup: NextPage = (props) => {
-    const snackbar = useSnackbar();
+    const snackbar = useCustomSnackbar();
     const router = useRouter();
 
     const initData: ISignupFormValue = {
@@ -59,6 +55,7 @@ const Signup: NextPage = (props) => {
         lname: '',
         gender: '',
         dob: null,
+        username: '',
         email: '',
         phone: '',
         password: '',
@@ -113,18 +110,14 @@ const Signup: NextPage = (props) => {
             setProcessingSignupHttpRequest(true)
             const response = await createAccount(formValue);
             if (response.responseCode == 422) {
-                snackbar.showMessage(
+                snackbar.showError(
                     response.data.message,
-                    "error",
-                    // "filled",
                 );
                 setProcessingSignupHttpRequest(false)
             } else {
                 setStep(3)
-                snackbar.showMessage(
-                    response.data.message,
-                    "success",
-                    // "filled",
+                snackbar.showSuccess(
+                    response.data.message
                 );
             }
 
@@ -137,18 +130,14 @@ const Signup: NextPage = (props) => {
             setProcessingPinSetupHttpRequest(true)
             const response = await setupPin(pinFormValue.pin);
             if (response.responseCode == 422) {
-                snackbar.showMessage(
-                    response.data.message,
-                    "error",
-                    // "filled",
+                snackbar.showError(
+                    response.data.message
                 );
-                setProcessingSignupHttpRequest(false)
+                setProcessingPinSetupHttpRequest(false)
             } else {
                 router.push('/dashboard')
-                snackbar.showMessage(
-                    response.data.message,
-                    "success",
-                    // "filled",
+                snackbar.showSuccess(
+                    response.data.message
                 );
             }
 
@@ -360,7 +349,7 @@ const Signup: NextPage = (props) => {
                                             }}
                                         />
                                         {
-                                            ((!formValue.email) && step2FormSubitted) && (
+                                            ((!formValue.password) && step2FormSubitted) && (
                                                 <div className='error-message'>Password is required</div>
                                             )
                                         }

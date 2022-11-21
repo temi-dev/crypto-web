@@ -33,3 +33,15 @@ export interface IDialogs  {
 export interface IAppState{
     dialogStates?: IDialogs
 }
+
+export interface ICustomHttpResponse {
+    responseCode: number,
+    data: any
+ }
+
+export interface IPasswordFieldsStates {
+    password?: string,
+    repeatPassword?: string
+    pin?: string
+    confirmPin?: string
+}

@@ -1,12 +1,10 @@
 import axios from 'axios';
 import moment from 'moment';
+import { ICustomHttpResponse } from '../../interface/global.interface';
 
-interface ICreateAccountResponse {
-   responseCode: number,
-   data: any
-}
 
-const createAccount = async (data: any): Promise<ICreateAccountResponse> => {
+
+const createAccount = async (data: any): Promise<ICustomHttpResponse> => {
    const formData = { ...data }
    delete formData.repeatPassword;
    delete formData.acceptTerms;
@@ -32,7 +30,7 @@ const createAccount = async (data: any): Promise<ICreateAccountResponse> => {
 const setupPin = async (pin: string) => {
    const token = window.localStorage.getItem('auth')
    try {
-      const response = await axios.post(`${process.env.apiUrl}/account/create_pin`, {pin, token});
+      const response = await axios.post(`${process.env.apiUrl}/account/create_pin`, { pin, token });
       return {
          responseCode: 200,
          data: response.data
@@ -43,6 +41,9 @@ const setupPin = async (pin: string) => {
          data: error.response.data
       }
    }
+
+  
+
 }
 
 export {
