@@ -38,14 +38,6 @@ interface IPinFormValue {
     confirmPin?: string
 }
 
-
-
-export async function getStaticProps() {
-    return {
-        props: {  }
-    };
-}
-
 const Signup: NextPage = (props) => {
     const snackbar = useCustomSnackbar();
     const router = useRouter();
@@ -143,6 +135,7 @@ const Signup: NextPage = (props) => {
 
         }
     }
+    
     return (
         <div className='page blue-bg'>
             <div className='container'>
