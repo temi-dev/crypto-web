@@ -1,4 +1,3 @@
-import { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
 import BackButton from "../../../../components/back-button/back-button";
@@ -8,7 +7,8 @@ import DashboardSidebar from "../../../../components/dashboard-sidebar/dashboard
 import SettingsSupportTickets from "../../../../components/dialogs/settings/support-ticket/support-ticket";
 import { ChevronRightIcon } from "../../../../components/icons/icons";
 import { IDialogs } from "../../../../shared/interface/global.interface";
-const Settings: NextPage = () => {
+import { NextApplicationPage } from "../../../_app";
+const Settings: NextApplicationPage = () => {
     const DialogsVisibilityInitState: IDialogs = {
         settingsSupportTicketsDialogVisibility: false
     }
@@ -78,5 +78,5 @@ const Settings: NextPage = () => {
         </div>
     )
 }
-
+Settings.requireAuth = true;
 export default Settings

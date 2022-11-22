@@ -1,10 +1,9 @@
-import { NextPage } from "next";
 import BackButton from "../../../../../components/back-button/back-button";
 import DashboardHeader from "../../../../../components/dashboard-header/dashboard-header";
 import DashboardSettingsSidebar from "../../../../../components/dashboard-settings-sidebar/dashboard-settings-sidebar";
 import DashboardSidebar from "../../../../../components/dashboard-sidebar/dashboard-sidebar";
-import { ChevronRightIcon } from "../../../../../components/icons/icons";
-const Settings: NextPage = () => {
+import { NextApplicationPage } from "../../../../_app";
+const Settings: NextApplicationPage = () => {
     return (
         <div className="dashboard">
             <DashboardSidebar></DashboardSidebar>
@@ -35,7 +34,7 @@ const Settings: NextPage = () => {
                                             </div>
                                         </div>
                                         <div className="action">
-                                            <a>Send mail</a>
+                                            <a href="mailto:hello@kochure.com">Send mail</a>
                                         </div>
 
                                     </div>
@@ -46,7 +45,7 @@ const Settings: NextPage = () => {
                                             </div>
                                         </div>
                                         <div className="action">
-                                            <a>Twitter</a>
+                                            <a href="https://www.twitter.com/kochureglobal" target='_blank'>Twitter</a>
                                         </div>
 
                                     </div>
@@ -57,7 +56,7 @@ const Settings: NextPage = () => {
                                             </div>
                                         </div>
                                         <div className="action">
-                                            <a>Facebook</a>
+                                            <a href="https://web.facebook.com/KochureGlobal" target='_blank'>Facebook</a>
                                         </div>
 
                                     </div>
@@ -68,18 +67,7 @@ const Settings: NextPage = () => {
                                             </div>
                                         </div>
                                         <div className="action">
-                                            <a>Instagram</a>
-                                        </div>
-
-                                    </div>
-                                    <div className="list" >
-                                        <div className="text">
-                                            <div>
-                                                <div className="heading">Follow us on YouTube</div>
-                                            </div>
-                                        </div>
-                                        <div className="action">
-                                            <a>Youtube</a>
+                                            <a href="https://www.instagram.com/kochureglobal/" target='_blank'>Instagram</a>
                                         </div>
 
                                     </div>
@@ -95,5 +83,5 @@ const Settings: NextPage = () => {
         </div>
     )
 }
-
+Settings.requireAuth = true;
 export default Settings

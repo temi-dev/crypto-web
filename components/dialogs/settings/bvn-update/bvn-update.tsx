@@ -22,7 +22,7 @@ const BvnUpdate = ({ open, setVisibilityState }: { open: boolean, setVisibilityS
     };
 
     return (
-        <Dialog fullWidth maxWidth='xs' open={open} onClose={handleDialogClose}>
+        <Dialog fullWidth maxWidth='xs' open={open ? open : false} onClose={handleDialogClose}>
             <div className="animate__animated animate__fadeIn animate__fast">
 
                 {

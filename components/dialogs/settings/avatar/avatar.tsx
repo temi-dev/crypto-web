@@ -27,7 +27,7 @@ const SettingsAvatar = ({ open, setVisibilityState }: { open: boolean, setVisibi
 
     return (
         <div>
-            <Dialog open={open} className="animate__animated animate__slideInRight animate__faster" onClose={handleDialogClose} fullScreen>
+            <Dialog open={open ? open : false} className="animate__animated animate__slideInRight animate__faster" onClose={handleDialogClose} fullScreen>
                 <div className="dashbord-right-dialog">
                     <div className="dashbord-right-dialog-content">
                         <div className="dashbord-right-dialog-header">

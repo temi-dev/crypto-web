@@ -66,48 +66,53 @@ const Signup: NextPage = (props) => {
         pin: 'password',
         confirmPin: 'password',
     }
-    const [formValue, setFormValue] = React.useState(initData);
-    const [pinFormValue, setPinFormValue] = React.useState(initPinformData);
 
-    const [step, setStep] = React.useState(1);
-    const [step1FormSubitted, setStep1FormSubitted] = React.useState(false);
-    const [step2FormSubitted, setStep2FormSubitted] = React.useState(false);
-    const [pinFormSubitted, setPinFormSubitted] = React.useState(false);
-    const [passwordFieldsStates, setPasswordFieldsStates] = React.useState(initPasswordFieldsStates);
-    const [processingSignupHttpRequest, setProcessingSignupHttpRequest] = React.useState(false);
-    const [processingPinSetupHttpRequest, setProcessingPinSetupHttpRequest] = React.useState(false);
+    const initState = {
+        step: 1,
+        formValue: initData,
+        step1FormSubitted: false,
+        step2FormSubitted: false,
+        pinFormSubitted: false,
+        processingSignupHttpRequest: false,
+        processingPinSetupHttpRequest: false,
+        passwordFieldsStates: initPasswordFieldsStates,
+        pinFormValue: initPinformData,
+    }
+    const [state, setState] = React.useState(initState);
 
+    
     const setData = (data: ISignupFormValue) => {
-        setFormValue({ ...formValue, ...data })
+        setState({...state, formValue: { ...state.formValue, ...data} })
     }
 
     const setPinFormData = (data: IPinFormValue) => {
-        setPinFormValue({ ...pinFormValue, ...data })
+        setState({...state, pinFormValue: { ...state.pinFormValue, ...data} })
     }
 
     const next = () => {
-        setStep1FormSubitted(true);
-        if (formValue.fname && formValue.lname && formValue.dob && formValue.gender) {
-            setStep(2)
+        setState({...state, step1FormSubitted: true })
+
+        if (state.formValue.fname && state.formValue.lname && state.formValue.dob && state.formValue.gender) {
+            setState({...state, step: 2 })
         }
     }
 
     const switchPassordFieldState = (data: IPasswordFieldsStates) => {
-        setPasswordFieldsStates({ ...passwordFieldsStates, ...data })
+        setState({...state, passwordFieldsStates: { ...state.passwordFieldsStates, ...data} });
     }
 
     const submit = async () => {
-        setStep2FormSubitted(true);
-        if (formValue.email && formValue.phone && formValue.password && formValue.password == formValue.repeatPassword && formValue.username && formValue.acceptTerms) {
-            setProcessingSignupHttpRequest(true)
-            const response = await createAccount(formValue);
+        setState({...state, step2FormSubitted: true })
+        if (state.formValue.email && state.formValue.phone && state.formValue.password && state.formValue.password == state.formValue.repeatPassword && state.formValue.username && state.formValue.acceptTerms) {
+            setState({...state, processingSignupHttpRequest: true })
+            const response = await createAccount(state.formValue);
             if (response.responseCode == 422) {
                 snackbar.showError(
                     response.data.message,
                 );
-                setProcessingSignupHttpRequest(false)
+                setState({...state, processingSignupHttpRequest: false })
             } else {
-                setStep(3)
+                setState({...state, step: 3 })
                 snackbar.showSuccess(
                     response.data.message
                 );
@@ -117,22 +122,22 @@ const Signup: NextPage = (props) => {
     }
 
     const submitPinForm = async () => {
-        setPinFormSubitted(true);
-        if (pinFormValue.pin && pinFormValue.confirmPin && pinFormValue.pin == pinFormValue.confirmPin) {
-            setProcessingPinSetupHttpRequest(true)
-            const response = await setupPin(pinFormValue.pin);
+        setState({...state, pinFormSubitted: false })
+
+        if (state.pinFormValue.pin && state.pinFormValue.confirmPin && state.pinFormValue.pin == state.pinFormValue.confirmPin) {
+            setState({...state, processingPinSetupHttpRequest: true })
+            const response = await setupPin(state.pinFormValue.pin);
             if (response.responseCode == 422) {
                 snackbar.showError(
                     response.data.message
                 );
-                setProcessingPinSetupHttpRequest(false)
+                setState({...state, processingPinSetupHttpRequest: false })
             } else {
                 router.push('/dashboard')
                 snackbar.showSuccess(
                     response.data.message
                 );
             }
-
         }
     }
     
@@ -142,14 +147,14 @@ const Signup: NextPage = (props) => {
                 <div className='page-content'>
                     <img className='logo' src={'/logo.svg'} width='195px' height='45px'></img>
                     <form>
-                        {step == 1 || step == 2 &&
+                        {(state.step == 1 || state.step == 2) &&
                             <div className='headline'>Create your account</div>
                         }
-                        {step == 3 &&
+                        {state.step == 3 &&
                             <div className='headline'>Setup Pin</div>
                         }
                         <div className='form-content'>
-                            {step == 1 &&
+                            {state.step == 1 &&
                                 <div>
                                     <div className='mt-3'>
                                         <label className='mb-2'>First name*</label>
@@ -157,8 +162,8 @@ const Signup: NextPage = (props) => {
                                             {...props}
                                             variant="standard"
                                             placeholder='First name'
-                                            value={formValue.fname}
-                                            className={`form-control ${(!formValue.fname && step1FormSubitted ? 'error' : '')} `}
+                                            value={state.formValue.fname}
+                                            className={`form-control ${(!state.formValue.fname && state.step1FormSubitted ? 'error' : '')} `}
                                             fullWidth
                                             onChange={(e) => setData({ fname: e.target.value })}
                                             InputProps={{
@@ -166,7 +171,7 @@ const Signup: NextPage = (props) => {
                                             }}
                                         />
                                         {
-                                            (!formValue.fname && step1FormSubitted) && (
+                                            (!state.formValue.fname && state.step1FormSubitted) && (
                                                 <div className='error-message'>First name is required</div>
                                             )
                                         }
@@ -176,8 +181,8 @@ const Signup: NextPage = (props) => {
                                         <TextField
                                             {...props} variant="standard"
                                             placeholder='Last name'
-                                            value={formValue.lname}
-                                            className={`form-control ${(!formValue.lname && step1FormSubitted ? 'error' : '')} `}
+                                            value={state.formValue.lname}
+                                            className={`form-control ${(!state.formValue.lname && state.step1FormSubitted ? 'error' : '')} `}
                                             fullWidth
                                             onChange={(e) => setData({ lname: e.target.value })}
                                             InputProps={{
@@ -185,7 +190,7 @@ const Signup: NextPage = (props) => {
                                             }}
                                         />
                                         {
-                                            (!formValue.lname && step1FormSubitted) && (
+                                            (!state.formValue.lname && state.step1FormSubitted) && (
                                                 <div className='error-message'>Last name is required</div>
                                             )
                                         }
@@ -195,9 +200,9 @@ const Signup: NextPage = (props) => {
                                         <Select disableUnderline
                                             placeholder='Gender'
                                             displayEmpty
-                                            value={formValue.gender || ''}
+                                            value={state.formValue.gender || ''}
                                             onChange={(e) => setData({ gender: e.target.value })}
-                                            className={`form-control ${((!formValue.gender || formValue.gender == '') && step1FormSubitted ? 'error' : '')} `}
+                                            className={`form-control ${((!state.formValue.gender || state.formValue.gender == '') && state.step1FormSubitted ? 'error' : '')} `}
                                             variant='standard'
                                         >
                                             <MenuItem value=''>
@@ -207,7 +212,7 @@ const Signup: NextPage = (props) => {
                                             <MenuItem value='Female'>Female</MenuItem>
                                         </Select>
                                         {
-                                            ((!formValue.gender) && step1FormSubitted) && (
+                                            ((!state.formValue.gender) && state.step1FormSubitted) && (
                                                 <div className='error-message'>Gender is required</div>
                                             )
                                         }
@@ -219,20 +224,20 @@ const Signup: NextPage = (props) => {
                                                 InputProps={{
                                                     disableUnderline: true,
                                                 }}
-                                                value={formValue.dob}
+                                                value={state.formValue.dob}
                                                 onChange={(value) => setData({ dob: value! })}
                                                 renderInput={
                                                     (params) =>
                                                         <TextField
                                                             variant='standard'
                                                             fullWidth
-                                                            className={`form-control ${(!formValue.dob && step1FormSubitted ? 'error' : '')} `}
+                                                            className={`form-control ${(!state.formValue.dob && state.step1FormSubitted ? 'error' : '')} `}
                                                             placeholder='DD/MM/YYY'
                                                             {...params} />
                                                 } />
                                         </LocalizationProvider>
                                         {
-                                            (!formValue.dob && step1FormSubitted) && (
+                                            (!state.formValue.dob && state.step1FormSubitted) && (
                                                 <div className='error-message'>Date of is required</div>
                                             )
                                         }
@@ -243,17 +248,17 @@ const Signup: NextPage = (props) => {
                                 </div>
                             }
 
-                            {step == 2 &&
+                            {state.step == 2 &&
                                 <div>
                                     <div className='mt-4'>
                                         <label className='mb-2'>Username*</label>
                                         <TextField
                                             {...props}
                                             variant="standard"
-                                            className={`form-control ${(!formValue.username && step2FormSubitted ? 'error' : '')} `}
+                                            className={`form-control ${(!state.formValue.username && state.step2FormSubitted ? 'error' : '')} `}
                                             placeholder='Username'
                                             fullWidth
-                                            value={formValue.username}
+                                            value={state.formValue.username}
                                             onChange={(e) => {
                                                 setData({ username: e.target.value })
                                             }}
@@ -262,7 +267,7 @@ const Signup: NextPage = (props) => {
                                             }}
                                         />
                                         {
-                                            ((!formValue.username) && step2FormSubitted) && (
+                                            ((!state.formValue.username) && state.step2FormSubitted) && (
                                                 <div className='error-message'>Username is required</div>
                                             )
                                         }
@@ -272,10 +277,10 @@ const Signup: NextPage = (props) => {
                                         <TextField
                                             {...props}
                                             variant="standard"
-                                            className={`form-control ${(!formValue.email && step2FormSubitted ? 'error' : '')} `}
+                                            className={`form-control ${(!state.formValue.email && state.step2FormSubitted ? 'error' : '')} `}
                                             placeholder='Email address'
                                             fullWidth
-                                            value={formValue.email}
+                                            value={state.formValue.email}
                                             onChange={(e) => {
                                                 setData({ email: e.target.value })
                                             }}
@@ -284,7 +289,7 @@ const Signup: NextPage = (props) => {
                                             }}
                                         />
                                         {
-                                            ((!formValue.email) && step2FormSubitted) && (
+                                            ((!state.formValue.email) && state.step2FormSubitted) && (
                                                 <div className='error-message'>Email address is required</div>
                                             )
                                         }
@@ -292,16 +297,16 @@ const Signup: NextPage = (props) => {
                                     <div className='mt-4'>
                                         <label className='mb-2'>Phone Number*</label>
                                         <PhoneInput
-                                            className={`form-control ${(!formValue.phone && step2FormSubitted ? 'error' : '')} `}
+                                            className={`form-control ${(!state.formValue.phone && state.step2FormSubitted ? 'error' : '')} `}
                                             placeholder="Enter phone number"
-                                            value={formValue.phone}
+                                            value={state.formValue.phone}
                                             defaultCountry='NG'
                                             onChange={(value?: any) => {
                                                 setData({ phone: value })
                                             }}
                                         />
                                         {
-                                            ((!formValue.phone) && step2FormSubitted) && (
+                                            ((!state.formValue.phone) && state.step2FormSubitted) && (
                                                 <div className='error-message'>Phone number is required</div>
                                             )
                                         }
@@ -311,11 +316,11 @@ const Signup: NextPage = (props) => {
                                         <TextField
                                             {...props}
                                             variant="standard"
-                                            className={`form-control ${(!formValue.password && step2FormSubitted ? 'error' : '')} `}
+                                            className={`form-control ${(!state.formValue.password && state.step2FormSubitted ? 'error' : '')} `}
                                             placeholder='Password'
                                             fullWidth
-                                            type={passwordFieldsStates.password}
-                                            value={formValue.password}
+                                            type={state.passwordFieldsStates.password}
+                                            value={state.formValue.password}
                                             onChange={(e) => {
                                                 setData({ password: e.target.value })
                                             }}
@@ -324,14 +329,14 @@ const Signup: NextPage = (props) => {
                                                 endAdornment: (
                                                     <InputAdornment position="end">
                                                         {
-                                                            passwordFieldsStates.password == 'password' && (
+                                                            state.passwordFieldsStates.password == 'password' && (
                                                                 <IconButton edge="end" onClick={() => switchPassordFieldState({ password: 'text' })}>
                                                                     <Visibility className='grey-icon' />
                                                                 </IconButton>
                                                             )
                                                         }
                                                         {
-                                                            passwordFieldsStates.password == 'text' && (
+                                                            state.passwordFieldsStates.password == 'text' && (
                                                                 <IconButton edge="end" onClick={() => switchPassordFieldState({ password: 'password' })}>
                                                                     <VisibilityOff className='grey-icon' />
                                                                 </IconButton>
@@ -342,7 +347,7 @@ const Signup: NextPage = (props) => {
                                             }}
                                         />
                                         {
-                                            ((!formValue.password) && step2FormSubitted) && (
+                                            ((!state.formValue.password) && state.step2FormSubitted) && (
                                                 <div className='error-message'>Password is required</div>
                                             )
                                         }
@@ -352,11 +357,11 @@ const Signup: NextPage = (props) => {
                                         <TextField
                                             {...props}
                                             variant="standard"
-                                            className={`form-control ${((!formValue.repeatPassword || (formValue.repeatPassword != formValue.password)) && step2FormSubitted ? 'error' : '')} `}
+                                            className={`form-control ${((!state.formValue.repeatPassword || (state.formValue.repeatPassword != state.formValue.password)) && state.step2FormSubitted ? 'error' : '')} `}
                                             placeholder='Confirm Password'
                                             fullWidth
-                                            type={passwordFieldsStates.repeatPassword}
-                                            value={formValue.repeatPassword}
+                                            type={state.passwordFieldsStates.repeatPassword}
+                                            value={state.formValue.repeatPassword}
                                             onChange={(e) => {
                                                 setData({ repeatPassword: e.target.value })
                                             }}
@@ -365,14 +370,14 @@ const Signup: NextPage = (props) => {
                                                 endAdornment: (
                                                     <InputAdornment position="end">
                                                         {
-                                                            passwordFieldsStates.repeatPassword == 'password' && (
+                                                            state.passwordFieldsStates.repeatPassword == 'password' && (
                                                                 <IconButton edge="end" onClick={() => switchPassordFieldState({ repeatPassword: 'text' })}>
                                                                     <Visibility className='grey-icon' />
                                                                 </IconButton>
                                                             )
                                                         }
                                                         {
-                                                            passwordFieldsStates.repeatPassword == 'text' && (
+                                                            state.passwordFieldsStates.repeatPassword == 'text' && (
                                                                 <IconButton edge="end" onClick={() => switchPassordFieldState({ repeatPassword: 'password' })}>
                                                                     <VisibilityOff className='grey-icon' />
                                                                 </IconButton>
@@ -384,12 +389,12 @@ const Signup: NextPage = (props) => {
 
                                         />
                                         {
-                                            ((!formValue.repeatPassword) && step2FormSubitted) && (
+                                            ((!state.formValue.repeatPassword) && state.step2FormSubitted) && (
                                                 <div className='error-message'>Re-enter your password</div>
                                             )
                                         }
                                         {
-                                            ((formValue.repeatPassword && formValue.repeatPassword != formValue.password) && step2FormSubitted) && (
+                                            ((state.formValue.repeatPassword && state.formValue.repeatPassword != state.formValue.password) && state.step2FormSubitted) && (
                                                 <div className='error-message'>Password do not match</div>
                                             )
                                         }
@@ -402,7 +407,7 @@ const Signup: NextPage = (props) => {
                                             className='form-control'
                                             placeholder='Enter referral code (optional)'
                                             fullWidth
-                                            value={formValue.referral_code}
+                                            value={state.formValue.referral_code}
                                             onChange={(e) => {
                                                 setData({ referral_code: e.target.value })
                                             }}
@@ -414,31 +419,33 @@ const Signup: NextPage = (props) => {
                                     <div className='mt-3'>
                                         <div className='mt-2'>
                                             <Checkbox
-                                                checked={formValue.acceptTerms}
+                                                checked={state.formValue.acceptTerms}
                                                 onChange={(e) => {
                                                     setData({ acceptTerms: e.target.checked })
                                                 }}
-                                                className={`form-input ${((!formValue.acceptTerms) && step2FormSubitted ? 'error' : '')} `} />
+                                                className={`form-input ${((!state.formValue.acceptTerms) && state.step2FormSubitted ? 'error' : '')} `} />
                                             I agree with the terms & conditions
                                         </div>
                                     </div>
                                     <div className='mt-4'>
-                                        <button className='btn btn-primary-outline me-3' onClick={() => setStep(1)}>Back</button>
-                                        <button disabled={processingSignupHttpRequest} type='button' className='btn btn-primary' onClick={() => submit()}>Sign Up</button>
+                                        <button 
+                                        className='btn btn-primary-outline me-3' 
+                                        onClick={() => setState({...state, step: 1})}>Back</button>
+                                        <button disabled={state.processingSignupHttpRequest} type='button' className='btn btn-primary' onClick={() => submit()}>Sign Up</button>
                                     </div>
                                 </div>
                             }
 
-                            {step == 3 &&
+                            {state.step == 3 &&
                                 <div className='form-content'>
                                     <div className='mt-3'>
                                         <label className='mb-2'>PIN*</label>
                                         <TextField
-                                            className={`form-control ${(!pinFormValue.pin && pinFormSubitted ? 'error' : '')} `}
+                                            className={`form-control ${(!state.pinFormValue.pin && state.pinFormSubitted ? 'error' : '')} `}
                                             variant="standard"
                                             placeholder='Pin'
                                             fullWidth
-                                            type={passwordFieldsStates.pin}
+                                            type={state.passwordFieldsStates.pin}
                                             onChange={(e) => {
                                                 setPinFormData({ pin: e.target.value })
                                             }}
@@ -447,14 +454,14 @@ const Signup: NextPage = (props) => {
                                                 endAdornment: (
                                                     <InputAdornment position="end">
                                                         {
-                                                            passwordFieldsStates.pin == 'password' && (
+                                                            state.passwordFieldsStates.pin == 'password' && (
                                                                 <IconButton edge="end" onClick={() => switchPassordFieldState({ pin: 'text' })}>
                                                                     <Visibility className='grey-icon' />
                                                                 </IconButton>
                                                             )
                                                         }
                                                         {
-                                                            passwordFieldsStates.pin == 'text' && (
+                                                            state.passwordFieldsStates.pin == 'text' && (
                                                                 <IconButton edge="end" onClick={() => switchPassordFieldState({ pin: 'password' })}>
                                                                     <VisibilityOff className='grey-icon' />
                                                                 </IconButton>
@@ -465,7 +472,7 @@ const Signup: NextPage = (props) => {
                                             }}
                                         />
                                         {
-                                            ((!pinFormValue.pin) && pinFormSubitted) && (
+                                            ((!state.pinFormValue.pin) && state.pinFormSubitted) && (
                                                 <div className='error-message'>Enter your pin</div>
                                             )
                                         }
@@ -476,8 +483,8 @@ const Signup: NextPage = (props) => {
                                             variant="standard"
                                             placeholder='Confirm Pin'
                                             fullWidth
-                                            className={`form-control ${((!pinFormValue.confirmPin || (pinFormValue.confirmPin != pinFormValue.pin)) && pinFormSubitted ? 'error' : '')} `}
-                                            type={passwordFieldsStates.confirmPin}
+                                            className={`form-control ${((!state.pinFormValue.confirmPin || (state.pinFormValue.confirmPin != state.pinFormValue.pin)) && state.pinFormSubitted ? 'error' : '')} `}
+                                            type={state.passwordFieldsStates.confirmPin}
                                             onChange={(e) => {
                                                 setPinFormData({ confirmPin: e.target.value })
                                             }}
@@ -486,14 +493,14 @@ const Signup: NextPage = (props) => {
                                                 endAdornment: (
                                                     <InputAdornment position="end">
                                                         {
-                                                            passwordFieldsStates.confirmPin == 'password' && (
+                                                            state.passwordFieldsStates.confirmPin == 'password' && (
                                                                 <IconButton edge="end" onClick={() => switchPassordFieldState({ confirmPin: 'text' })}>
                                                                     <Visibility className='grey-icon' />
                                                                 </IconButton>
                                                             )
                                                         }
                                                         {
-                                                            passwordFieldsStates.confirmPin == 'text' && (
+                                                            state.passwordFieldsStates.confirmPin == 'text' && (
                                                                 <IconButton edge="end" onClick={() => switchPassordFieldState({ confirmPin: 'password' })}>
                                                                     <VisibilityOff className='grey-icon' />
                                                                 </IconButton>
@@ -504,19 +511,19 @@ const Signup: NextPage = (props) => {
                                             }}
                                         />
                                         {
-                                            ((!pinFormValue.confirmPin) && pinFormSubitted) && (
+                                            ((!state.pinFormValue.confirmPin) && state.pinFormSubitted) && (
                                                 <div className='error-message'>Re-enter your pin</div>
                                             )
                                         }
                                         {
-                                            ((pinFormValue.confirmPin && pinFormValue.confirmPin != pinFormValue.pin) && pinFormSubitted) && (
+                                            ((state.pinFormValue.confirmPin && state.pinFormValue.confirmPin != state.pinFormValue.pin) && state.pinFormSubitted) && (
                                                 <div className='error-message'>Pin do not match</div>
                                             )
                                         }
                                     </div>
                                     <div className='mt-4'>
                                         <button
-                                            disabled={processingPinSetupHttpRequest}
+                                            disabled={state.processingPinSetupHttpRequest}
                                             type='button'
                                             className='btn btn-primary'
                                             onClick={() => submitPinForm()}>Create Pin</button>
@@ -525,7 +532,7 @@ const Signup: NextPage = (props) => {
                                 </div>
                             }
 
-                            {step == 1 || step == 2 &&
+                            {(state.step == 1 || state.step == 2) &&
                                 <div className='mt-4'>
                                     <span>Already have an account?</span> <Link href='/'>Sign in now</Link>
                                 </div>
