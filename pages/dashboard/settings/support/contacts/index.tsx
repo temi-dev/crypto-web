@@ -45,7 +45,7 @@ const Settings: NextApplicationPage = () => {
                                             </div>
                                         </div>
                                         <div className="action">
-                                            <a href="https://www.twitter.com/kochureglobal" target='_blank'>Twitter</a>
+                                            <a href="https://www.twitter.com/kochureglobal" rel="noreferrer" target='_blank'>Twitter</a>
                                         </div>
 
                                     </div>
@@ -56,7 +56,7 @@ const Settings: NextApplicationPage = () => {
                                             </div>
                                         </div>
                                         <div className="action">
-                                            <a href="https://web.facebook.com/KochureGlobal" target='_blank'>Facebook</a>
+                                            <a href="https://web.facebook.com/KochureGlobal" rel="noreferrer" target='_blank'>Facebook</a>
                                         </div>
 
                                     </div>
@@ -67,7 +67,7 @@ const Settings: NextApplicationPage = () => {
                                             </div>
                                         </div>
                                         <div className="action">
-                                            <a href="https://www.instagram.com/kochureglobal/" target='_blank'>Instagram</a>
+                                            <a href="https://www.instagram.com/kochureglobal/" rel="noreferrer" target='_blank'>Instagram</a>
                                         </div>
 
                                     </div>
