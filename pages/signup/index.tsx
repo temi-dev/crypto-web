@@ -18,6 +18,7 @@ import useCustomSnackbar from '../../components/snackbar/use-custom-snackbar';
 import { IPasswordFieldsStates } from '../../shared/interface/global.interface';
 
 import moment from 'moment';
+import { NextApplicationPage } from '../_app';
 
 interface ISignupFormValue {
     fname?: string
@@ -39,7 +40,7 @@ interface IPinFormValue {
     confirmPin?: string
 }
 
-const Signup: NextPage = (props) => {
+const Signup: NextApplicationPage = (props) => {
     const snackbar = useCustomSnackbar();
     const router = useRouter();
 
@@ -548,5 +549,5 @@ const Signup: NextPage = (props) => {
         </div>
     )
 }
-
+Signup.loggedInRedirect = true
 export default Signup
