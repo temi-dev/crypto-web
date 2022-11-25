@@ -33,7 +33,7 @@ const DashboardSettingsSidebar = () => {
                 </div>
             </div>
 
-            <div className="settings-invite">
+            {/* <div className="settings-invite">
                 <div className="icon">
                     <GiftBoxIllustration></GiftBoxIllustration>
                 </div>
@@ -46,7 +46,7 @@ const DashboardSettingsSidebar = () => {
                 <div className="icon">
                     <ChevronRightIcon color="white"></ChevronRightIcon>
                 </div>
-            </div>
+            </div> */}
 
             <div className="settings-tab">
                 <Link href='/dashboard/settings' >
