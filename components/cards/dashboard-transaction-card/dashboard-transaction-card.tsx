@@ -12,10 +12,9 @@ const DashboardTransactionCard = ({ status }: { status: string }) => {
                 </div>
             </div>
             <div className={styles.info}>
-                <div className={styles.price}>-₦140,000</div>
                 <div className='mt-2'>
                     <span className={`transaction-status ${status == 'Success' ? 'success' : 'pending'}`}>
-                        {status}
+                        -₦140,000
                     </span>
                 </div>
             </div>

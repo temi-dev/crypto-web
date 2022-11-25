@@ -53,7 +53,7 @@ const Settings: NextPage = () => {
                                     <div className="list">
                                         <div className="text">
                                             <div>
-                                                <div className="heading">Cards <small>(Comming Soon)</small></div>
+                                                <div className="heading">Cards <small>(Coming Soon)</small></div>
                                             </div>
                                         </div>
 

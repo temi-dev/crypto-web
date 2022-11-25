@@ -45,17 +45,15 @@ const DashboardTransactionList = ({ data }: {
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell className='d-flex align-items-center transaction-description' >
-                                        <div style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }} className="transaction-image-placeholder" >
-                                        </div>
+                                        {/* <div style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }} className="transaction-image-placeholder" >
+                                        </div> */}
                                         <div className='ms-3'>{row.description}</div>
                                     </TableCell>
                                     <TableCell>{row.timestamp}</TableCell>
-                                    <TableCell>
-                                        <span className="transaction-amount">{row.amount}</span>
-                                    </TableCell>
+                                 
                                     <TableCell align="right">
                                         <span className={`transaction-status ${row.status == 'Success' ? 'success' : 'pending'}`}>
-                                            {row.status}
+                                        {row.amount}
                                         </span>
                                     </TableCell>
                                 </TableRow>

@@ -62,7 +62,7 @@ const DashboardSidebar = () => {
                                     Having issues ?
                                     Please contact us for more question
                                 </div>
-                                <Link href='/dashboard/settings/support'>Go To Help Center</Link>
+                                <Link href='/dashboard/settings/support/contacts'>Go To Help Center</Link>
                             </div>
                         </div>
                     </div>
