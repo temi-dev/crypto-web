@@ -229,8 +229,6 @@ const Market: NextPage = () => {
                         <div className="market-table">
                             <div className="martket-data-filter">
                                 <button className="active">All</button>
-                                <button>Top Gainers</button>
-                                <button>Top Losers</button>
                             </div>
                             <MUIDataTable
                                 data={data}

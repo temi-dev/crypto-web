@@ -52,7 +52,7 @@ const Settings: NextPage = () => {
                                     <div className="profile-image-placeholder" >
                                         <div style={{ backgroundImage: "url(" + "/images/avatar.png" + ")" }}></div>
                                     </div>
-                                    <a className="avatar-btn" onClick={()=> setDialogVisibilityState({ settingsAvatarDialogVisibility: true})}>Use Avatar</a>
+                                    <a className="avatar-btn">Upload photo</a>
                                 </div>
                                 <div className="text">
                                     <div>

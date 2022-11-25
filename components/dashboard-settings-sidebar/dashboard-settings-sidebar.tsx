@@ -79,7 +79,7 @@ const DashboardSettingsSidebar = () => {
                         </div>
                     </div>
                 </Link>
-                <Link href='/dashboard/settings/preferences'>
+                {/* <Link href='/dashboard/settings/preferences'>
                     <div className={router.pathname.includes("/dashboard/settings/preferences") ? "active tab" : "tab"}>
                         <div className="icon">
                             <FilterFilledIcon
@@ -93,7 +93,7 @@ const DashboardSettingsSidebar = () => {
                             </div>
                         </div>
                     </div>
-                </Link>
+                </Link> */}
                 <Link href='/dashboard/settings/banks'>
                     <div className={router.pathname.includes("/dashboard/settings/banks") ? "active tab" : "tab"}>
                         <div className="icon">
@@ -109,7 +109,7 @@ const DashboardSettingsSidebar = () => {
                         </div>
                     </div>
                 </Link>
-                <Link href='/dashboard/settings/notifications'>
+                {/* <Link href='/dashboard/settings/notifications'>
                     <div className={router.pathname.includes("/dashboard/settings/notifications") ? "active tab" : "tab"}>
                         <div className="icon">
                             <NotificationFilledIcon
@@ -123,8 +123,8 @@ const DashboardSettingsSidebar = () => {
                             </div>
                         </div>
                     </div>
-                </Link>
-                <Link href='/dashboard/settings/support'>
+                </Link> */}
+                <Link href='/dashboard/settings/support/contacts'>
                     <div className={router.pathname.includes("/dashboard/settings/support") ? "active tab" : "tab"}>
                         <div className="icon">
                             <PeopleFilledIcon
