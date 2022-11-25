@@ -10,7 +10,7 @@ const createAccount = async (data: any): Promise<ICustomHttpResponse> => {
    delete formData.acceptTerms;
    formData.country_code = 'NG';
 
-   formData.dob = moment(data.dob, 'YYYY-MM-DD').format('MM-DD-YYYY');
+   formData.dob = moment(data.dob, 'YYYY-MM-DD').format('DD-MM-YYYY');
    try {
       const response = await axios.post(`${process.env.apiUrl}/auth/register`, formData);
       window.localStorage.setItem('auth', response.data.data)

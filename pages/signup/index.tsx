@@ -1,9 +1,9 @@
 import { Checkbox, MenuItem, Select, TextField } from '@mui/material';
 import type { NextPage } from 'next'
 import Link from 'next/link';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import React from 'react';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import useCustomSnackbar from '../../components/snackbar/use-custom-snackbar';
 import { IPasswordFieldsStates } from '../../shared/interface/global.interface';
 
+import moment from 'moment';
 
 interface ISignupFormValue {
     fname?: string
@@ -80,39 +81,39 @@ const Signup: NextPage = (props) => {
     }
     const [state, setState] = React.useState(initState);
 
-    
+
     const setData = (data: ISignupFormValue) => {
-        setState({...state, formValue: { ...state.formValue, ...data} })
+        setState({ ...state, formValue: { ...state.formValue, ...data } })
     }
 
     const setPinFormData = (data: IPinFormValue) => {
-        setState({...state, pinFormValue: { ...state.pinFormValue, ...data} })
+        setState({ ...state, pinFormValue: { ...state.pinFormValue, ...data } })
     }
 
     const next = () => {
-        setState({...state, step1FormSubitted: true })
+        setState({ ...state, step1FormSubitted: true })
 
         if (state.formValue.fname && state.formValue.lname && state.formValue.dob && state.formValue.gender) {
-            setState({...state, step: 2 })
+            setState({ ...state, step: 2 })
         }
     }
 
     const switchPassordFieldState = (data: IPasswordFieldsStates) => {
-        setState({...state, passwordFieldsStates: { ...state.passwordFieldsStates, ...data} });
+        setState({ ...state, passwordFieldsStates: { ...state.passwordFieldsStates, ...data } });
     }
 
     const submit = async () => {
-        setState({...state, step2FormSubitted: true })
+        setState({ ...state, step2FormSubitted: true })
         if (state.formValue.email && state.formValue.phone && state.formValue.password && state.formValue.password == state.formValue.repeatPassword && state.formValue.username && state.formValue.acceptTerms) {
-            setState({...state, processingSignupHttpRequest: true })
+            setState({ ...state, processingSignupHttpRequest: true })
             const response = await createAccount(state.formValue);
             if (response.responseCode == 422) {
                 snackbar.showError(
                     response.data.message,
                 );
-                setState({...state, processingSignupHttpRequest: false })
+                setState({ ...state, processingSignupHttpRequest: false })
             } else {
-                setState({...state, step: 3 })
+                setState({ ...state, step: 3 })
                 snackbar.showSuccess(
                     response.data.message
                 );
@@ -122,16 +123,16 @@ const Signup: NextPage = (props) => {
     }
 
     const submitPinForm = async () => {
-        setState({...state, pinFormSubitted: false })
+        setState({ ...state, pinFormSubitted: false })
 
         if (state.pinFormValue.pin && state.pinFormValue.confirmPin && state.pinFormValue.pin == state.pinFormValue.confirmPin) {
-            setState({...state, processingPinSetupHttpRequest: true })
+            setState({ ...state, processingPinSetupHttpRequest: true })
             const response = await setupPin(state.pinFormValue.pin);
             if (response.responseCode == 422) {
                 snackbar.showError(
                     response.data.message
                 );
-                setState({...state, processingPinSetupHttpRequest: false })
+                setState({ ...state, processingPinSetupHttpRequest: false })
             } else {
                 router.push('/dashboard')
                 snackbar.showSuccess(
@@ -140,7 +141,7 @@ const Signup: NextPage = (props) => {
             }
         }
     }
-    
+
     return (
         <div className='page blue-bg'>
             <div className='container'>
@@ -219,11 +220,13 @@ const Signup: NextPage = (props) => {
                                     </div>
                                     <div className='mt-4'>
                                         <label className='mb-2'>Date of Birth*</label>
-                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                        <LocalizationProvider dateAdapter={AdapterMoment}>
                                             <DatePicker
                                                 InputProps={{
                                                     disableUnderline: true,
                                                 }}
+                                                className={`form-control ${(!state.formValue.dob && state.step1FormSubitted ? 'error' : '')} `}
+                                                inputFormat="DD/MM/YYYY"
                                                 value={state.formValue.dob}
                                                 onChange={(value) => setData({ dob: value! })}
                                                 renderInput={
@@ -232,13 +235,13 @@ const Signup: NextPage = (props) => {
                                                             variant='standard'
                                                             fullWidth
                                                             className={`form-control ${(!state.formValue.dob && state.step1FormSubitted ? 'error' : '')} `}
-                                                            placeholder='DD/MM/YYY'
+                                                            placeholder='DD/MM/YYYY'
                                                             {...params} />
                                                 } />
                                         </LocalizationProvider>
                                         {
                                             (!state.formValue.dob && state.step1FormSubitted) && (
-                                                <div className='error-message'>Date of is required</div>
+                                                <div className='error-message'>Date of birth is required</div>
                                             )
                                         }
                                     </div>
@@ -428,9 +431,9 @@ const Signup: NextPage = (props) => {
                                         </div>
                                     </div>
                                     <div className='mt-4'>
-                                        <button 
-                                        className='btn btn-primary-outline me-3' 
-                                        onClick={() => setState({...state, step: 1})}>Back</button>
+                                        <button
+                                            className='btn btn-primary-outline me-3'
+                                            onClick={() => setState({ ...state, step: 1 })}>Back</button>
                                         <button disabled={state.processingSignupHttpRequest} type='button' className='btn btn-primary' onClick={() => submit()}>Sign Up</button>
                                     </div>
                                 </div>
