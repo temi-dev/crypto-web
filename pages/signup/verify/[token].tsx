@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { ShieldCircleFilledIcon } from '../../../components/icons/icons';
 import { NextApplicationPage } from '../../_app';
 import { useRouter } from 'next/router';
 import { verifyEmailAddress } from '../../../shared/services/signup/signup.service';
@@ -71,5 +70,4 @@ const VerifyEmailAddress: NextApplicationPage = () => {
         </div>
     )
 }
-VerifyEmailAddress.loggedInRedirect = true;
 export default VerifyEmailAddress
