@@ -36,7 +36,6 @@ const Settings: NextApplicationPage = () => {
                                         <div className="action">
                                             <a href="mailto:hello@kochure.com">Send mail</a>
                                         </div>
-
                                     </div>
                                     <div className="list" >
                                         <div className="text">
