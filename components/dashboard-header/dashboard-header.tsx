@@ -176,11 +176,11 @@ const DashboardHeader = ({ title }: { title: string }) => {
                     </ListItemIcon>
                     <ListItemText><span className="menu-item">Account Settings</span></ListItemText>
                 </MenuItem>
-                <MenuItem onClick={closeProfileMenu}>
+                <MenuItem onClick={() => auth.signOut()}>
                     <ListItemIcon>
                         <LogoutOutlineIcon color="#A0AEC0"></LogoutOutlineIcon>
                     </ListItemIcon>
-                    <ListItemText onClick={() => auth.signOut()}><span className="menu-item">Logout</span></ListItemText>
+                    <ListItemText ><span className="menu-item">Logout</span></ListItemText>
                 </MenuItem>
             </Menu>
 
