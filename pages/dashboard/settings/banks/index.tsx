@@ -50,14 +50,11 @@ const Settings: NextPage = () => {
                                         </div>
 
                                     </div>
-                                    <div className="list" onClick={() => setDialogVisibilityState({ settingsCardsDialogVisibility: true })}>
+                                    <div className="list">
                                         <div className="text">
                                             <div>
-                                                <div className="heading">Cards</div>
+                                                <div className="heading">Cards <small>(Comming Soon)</small></div>
                                             </div>
-                                        </div>
-                                        <div className="action">
-                                            <ChevronRightIcon color="black"></ChevronRightIcon>
                                         </div>
 
                                     </div>

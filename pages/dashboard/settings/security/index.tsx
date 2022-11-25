@@ -58,18 +58,6 @@ const Settings: NextPage = () => {
 
                                         </div>
                                     </Link>
-                                    <div className="list">
-                                        <div className="text">
-                                            <div>
-                                                <div className="heading">2FA Authentication</div>
-                                                <div className="heading-note">Enable 2FA authentication whenever you want to sign in</div>
-                                            </div>
-                                        </div>
-                                        <div className="action">
-                                            <Switch defaultChecked />
-                                        </div>
-
-                                    </div>
                                 </div>
                                 <div className="form-submit">
                                     <BackButton></BackButton>

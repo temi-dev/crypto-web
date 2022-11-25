@@ -62,9 +62,9 @@ const DashboardHeader = ({ title }: { title: string }) => {
                             }
                         })
                     }>Send / Receive</button>
-                    <button className="notification-btn" onClick={openNotificationsMenu}>
+                    {/* <button className="notification-btn" onClick={openNotificationsMenu}>
                         <BellIcon color="black"></BellIcon>
-                    </button>
+                    </button> */}
                     <button onClick={openProfileMenu} className="profile-menu align-items-center d-flex">
                         <div className="profile-image " style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }}></div>
                         <div className="profile-name">Oluwayemi</div>
@@ -82,14 +82,14 @@ const DashboardHeader = ({ title }: { title: string }) => {
                             <MenuBarFilledIcon color="#18181B" fillColor="#EEEEEE"></MenuBarFilledIcon>
                         </button>
                     </div>
-                    <div className="d-flex flex-grow-1  align-items-center justify-content-end">
+                    {/* <div className="d-flex flex-grow-1  align-items-center justify-content-end">
                         <button className="notification-btn" onClick={openNotificationsMenu}>
                             <BellIcon color="black"></BellIcon>
                         </button>
                         <button onClick={openProfileMenu} className="profile-menu align-items-center d-flex">
                             <div className="profile-image " style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }}></div>
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
@@ -169,12 +169,6 @@ const DashboardHeader = ({ title }: { title: string }) => {
                         <UserOutlineIcon color="#A0AEC0"></UserOutlineIcon>
                     </ListItemIcon>
                     <ListItemText><span className="menu-item">Your Details</span></ListItemText>
-                </MenuItem>
-                <MenuItem onClick={closeProfileMenu}>
-                    <ListItemIcon>
-                        <SettingsIcon color="#A0AEC0"></SettingsIcon>
-                    </ListItemIcon>
-                    <ListItemText><span className="menu-item">Account Settings</span></ListItemText>
                 </MenuItem>
                 <MenuItem onClick={() => auth.signOut()}>
                     <ListItemIcon>

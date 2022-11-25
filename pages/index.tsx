@@ -62,12 +62,15 @@ const Signin: NextApplicationPage = (props) => {
     const setData = (data: ISigninFormValue) => {
         setState({ ...state, formValue: { ...state.formValue, ...data } })
     }
+    
     const switchPassordFieldState = (data: IPasswordFieldsStates) => {
         setState({ ...state, passwordFieldsStates: { ...state.passwordFieldsStates, ...data } })
     }
+
     const setOtpFormData = (data: IOtpFormValue) => {
         setState({ ...state, otpFormValue: { ...state.otpFormValue, ...data } })
     }
+
     const submit = async () => {
         setState({ ...state, step1FormSubitted: true })
         if (state.formValue.username && state.formValue.password) {
@@ -81,6 +84,7 @@ const Signin: NextApplicationPage = (props) => {
             }
         }
     }
+
     const submitOtpForm = async () => {
         setState({ ...state, otpFormSubitted: true })
         if (state.otpFormValue.otp) {

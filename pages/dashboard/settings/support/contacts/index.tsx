@@ -70,6 +70,17 @@ const Settings: NextApplicationPage = () => {
                                         </div>
 
                                     </div>
+                                    <div className="list" >
+                                        <div className="text">
+                                            <div>
+                                                <div className="heading">Youtube</div>
+                                            </div>
+                                        </div>
+                                        <div className="action">
+                                            <a href="https://youtube.com/kochure" rel="noreferrer" target='_blank'>Instagram</a>
+                                        </div>
+
+                                    </div>
                                 </div>
                                 <div className="form-submit">
                                     <BackButton></BackButton>

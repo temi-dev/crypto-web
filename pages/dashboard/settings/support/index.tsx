@@ -57,7 +57,7 @@ const Settings: NextApplicationPage = () => {
                                     })}>
                                         <div className="text">
                                             <div>
-                                                <div className="heading">Support tickets</div>
+                                                <div className="heading">Open Ticket</div>
                                             </div>
                                         </div>
                                         <div className="action">
