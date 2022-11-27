@@ -52,36 +52,6 @@ const BvnUpdate = ({ open, setVisibilityState }: { open: boolean, setVisibilityS
 
                                     </div>
 
-                                    <div className="mt-3">
-                                        <label className="form-label">Name on BVN</label>
-                                        <TextField
-                                            className="form-control-2"
-                                            variant="standard"
-                                            placeholder="Name"
-                                            fullWidth
-                                            InputProps={{
-                                                disableUnderline: true,
-                                            }}
-                                        />
-
-                                    </div>
-                                    <div className="mt-3">
-                                    <label className="form-label">Select Bank</label>
-                                        <Select
-                                            className="form-control-select w-100"
-                                            disableUnderline
-                                            displayEmpty
-                                            variant='standard'
-                                            value={form.bank}
-                                            onChange={(event) => handleSetFormData({ bank: event.target.value })}>
-                                            <MenuItem value="" className="ui-select-menu">
-                                                <em>Select bank</em>
-                                            </MenuItem>
-                                            <MenuItem value="uba" className="ui-select-menu">
-                                                Uba
-                                            </MenuItem>
-                                        </Select>
-                                    </div>
                                     <div className="mt-4 mb-4">
                                         <button onClick={() => setForm({ step: 2 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
                                     </div>

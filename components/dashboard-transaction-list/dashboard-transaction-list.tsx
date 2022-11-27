@@ -52,7 +52,7 @@ const DashboardTransactionList = ({ data }: {
                                     <TableCell>{row.timestamp}</TableCell>
                                  
                                     <TableCell align="right">
-                                        <span className={`transaction-status ${row.status == 'Success' ? 'success' : 'pending'}`}>
+                                        <span className={`transaction-status ${row.status == 'Success' ? 'credit' : 'debit'}`}>
                                         {row.amount}
                                         </span>
                                     </TableCell>

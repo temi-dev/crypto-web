@@ -1,5 +1,4 @@
 import { Checkbox, MenuItem, Select, TextField } from '@mui/material';
-import type { NextPage } from 'next'
 import Link from 'next/link';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -17,7 +16,6 @@ import { useRouter } from 'next/router';
 import useCustomSnackbar from '../../components/snackbar/use-custom-snackbar';
 import { IPasswordFieldsStates } from '../../shared/interface/global.interface';
 
-import moment from 'moment';
 import { NextApplicationPage } from '../_app';
 
 interface ISignupFormValue {

@@ -51,8 +51,12 @@ import PriceAlert from "../../components/dialogs/price-alert/price-alert";
 import BuySell from "../../components/dialogs/buy-sell/buy-sell";
 import { useAppContext } from "../../shared/contexts/app.context";
 import { NextApplicationPage } from "../_app";
+import VerificationCta from "../../components/verification-cta/verification-cta";
+import { useAuth } from "../../components/auth/auth-provider";
 
 const Dashboard: NextApplicationPage = (props) => {
+
+    const {user} = useAuth();
 
     const rows = [
         {
@@ -123,12 +127,13 @@ const Dashboard: NextApplicationPage = (props) => {
                                 <div className="title">Crypto For Better</div>
                                 <div className="note">Experience kochure on mobile app</div>
                                 <div className="cta">
-                                    <picture>
+                                    <VerificationCta user={user!}/>
+                                    {/* <picture>
                                         <img alt="google play" src="/icons/google-play.svg"></img>
                                     </picture>
                                     <picture>
                                         <img alt="apple store" className="d-inline-block ms-2" src="/icons/apple-store.svg"></img>
-                                    </picture>
+                                    </picture> */}
                                 </div>
                             </div>
                             <div className="d-none d-lg-flex flex-grow-1 justify-content-end">

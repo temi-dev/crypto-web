@@ -8,9 +8,16 @@ const userPassword = "admin123"
 
 
 export type User = {
+    email_verified_at: any;
+    nin_verified_at: string | undefined;
+    bvn_verified_at: string | undefined;
+    idc_verified_at: string | undefined;
+    phone_verified_at: string | undefined;
     email: string
-    name: string
-    token: string
+    fname: string
+    lname: string
+    token: string,
+    bank_accounts?: Array<string>
 }
 
 export class Auth {
@@ -53,11 +60,11 @@ export class Auth {
             }
 
             setTimeout(() => {
-                this.user = {
-                    name: "Ivan",
-                    email,
-                    token: "dfasdfadsf.asdfasdf.afsdfasd",
-                }
+                // this.user = {
+                //     name: "Ivan",
+                //     email,
+                //     token: "dfasdfadsf.asdfasdf.afsdfasd",
+                // }
 
                 window.sessionStorage.setItem("user", JSON.stringify(this.user))
                 this.onUserChange(this.user)

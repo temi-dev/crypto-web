@@ -1,32 +1,60 @@
 import { MenuItem, Select, TextField } from "@mui/material";
 import { NextPage } from "next";
 import { useState } from "react";
+import { useAuth } from "../../../components/auth/auth-provider";
 import DashboardHeader from "../../../components/dashboard-header/dashboard-header";
 import DashboardSettingsSidebar from "../../../components/dashboard-settings-sidebar/dashboard-settings-sidebar";
 import DashboardSidebar from "../../../components/dashboard-sidebar/dashboard-sidebar";
 import SettingsAvatar from "../../../components/dialogs/settings/avatar/avatar";
 import { IDialogs } from "../../../shared/interface/global.interface";
+import { NextApplicationPage } from "../../_app";
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { updateProfile } from "../../../shared/services/dashboard/settings/profile/profile.service";
 
-const Settings: NextPage = () => {
+const Settings: NextApplicationPage = () => {
+    const { user } = useAuth()
+
+
     const DialogsVisibilityInitState: IDialogs = {
-        settingsAvatarDialogVisibility: false
+        settingsAvatarDialogVisibility: false,
     }
 
     const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
 
-    interface IFormData {
+    interface IData {
         gender?: string,
         country?: string,
-        state?: string,
+        city?: string,
+        fname?: string,
+        lname?: string,
+        dob?: string,
+        email?: string,
+        phone?: string,
+        phone_verified_at?: string,
+        nin_verified_at?: string,
+        bvn_verified_at?: string,
+        idc_verified_at?: string,
     }
 
-    const formData: IFormData = {
-        gender: 'male',
+    const data: IData = {
         country: 'nigeria',
-        state: 'lagos'
+        ...user
     }
 
-    const [form, setFormData] = useState(formData);
+    const [componentData, setComponentData] = useState(data);
+
+    const saveProfile = () => {
+        let data = {
+            email: componentData.email,
+            dob: componentData.dob,
+            // city: componentData.city,
+            pin: '126969'
+        };
+
+        const request = updateProfile(data)
+    }
 
     return (
         <div className="dashboard">
@@ -41,7 +69,7 @@ const Settings: NextPage = () => {
                             Account Settings
                         </div>
 
-                        <DashboardSettingsSidebar></DashboardSettingsSidebar>
+                        <DashboardSettingsSidebar user={user!}></DashboardSettingsSidebar>
 
                     </div>
                     <div className="col-lg-8">
@@ -56,8 +84,8 @@ const Settings: NextPage = () => {
                                 </div>
                                 <div className="text">
                                     <div>
-                                        <div className="fullname">Oluwayemi Akin</div>
-                                        <div className="email">akinolayemi100@gmail.com</div>
+                                        <div className="fullname">{`${user?.fname} ${user?.lname}`}</div>
+                                        <div className="email">{user?.email}</div>
                                     </div>
                                 </div>
 
@@ -68,89 +96,140 @@ const Settings: NextPage = () => {
                                     <label className="form-label">First Name</label>
 
                                     <TextField
-                                        className="form-control"
+                                        className={`form-control ${(!componentData.fname ? 'error' : '')} `}
                                         variant="standard"
                                         placeholder="First Name"
+                                        value={componentData.fname || ''}
                                         fullWidth
+                                        disabled={componentData.bvn_verified_at || componentData.nin_verified_at || componentData.idc_verified_at ? true : false}
+                                        onChange={(e) => setComponentData({ ...componentData, fname: e.target.value })}
                                         InputProps={{
                                             disableUnderline: true,
                                         }}
                                     />
+                                    {
+                                        !componentData.fname && (
+                                            <div className='error-message'>First name is required</div>
+                                        )
+                                    }
                                 </div>
 
                                 <div className="col-lg-6">
                                     <label className="form-label">Last Name</label>
 
                                     <TextField
-                                        className="form-control"
+                                        className={`form-control ${(!componentData.lname ? 'error' : '')} `}
                                         variant="standard"
                                         placeholder="Last Name"
                                         fullWidth
+                                        value={componentData.lname || ''}
+                                        disabled={componentData.bvn_verified_at || componentData.nin_verified_at || componentData.idc_verified_at ? true : false}
+                                        onChange={(e) => setComponentData({ ...componentData, lname: e.target.value })}
                                         InputProps={{
                                             disableUnderline: true,
                                         }}
                                     />
+                                    {
+                                        !componentData.lname && (
+                                            <div className='error-message'>Last name is required</div>
+                                        )
+                                    }
                                 </div>
 
                                 <div className="col-lg-6">
                                     <label className="form-label">Email address</label>
 
                                     <TextField
-                                        className="form-control"
+                                        className={`form-control ${(!componentData.email ? 'error' : '')} `}
                                         variant="standard"
                                         placeholder="Email address"
                                         fullWidth
+                                        onChange={(e) => setComponentData({ ...componentData, email: e.target.value })}
+                                        value={componentData.email || ''}
                                         InputProps={{
                                             disableUnderline: true,
                                         }}
                                     />
+                                    {
+                                        !componentData.email && (
+                                            <div className='error-message'>Email is required</div>
+                                        )
+                                    }
                                 </div>
 
                                 <div className="col-lg-6">
                                     <label className="form-label">Phone Number</label>
 
                                     <TextField
-                                        className="form-control"
+                                        className={`form-control ${(!componentData.phone ? 'error' : '')} `}
                                         variant="standard"
                                         placeholder="Phone Number"
                                         fullWidth
+                                        disabled={componentData.phone_verified_at ? true : false}
+                                        value={componentData.phone || ''}
+                                        onChange={(e) => setComponentData({ ...componentData, phone: e.target.value })}
                                         InputProps={{
                                             disableUnderline: true,
                                         }}
                                     />
+                                    {
+                                        !componentData.phone && (
+                                            <div className='error-message'>Phone number is required</div>
+                                        )
+                                    }
                                 </div>
 
                                 <div className="col-lg-6">
                                     <label className="form-label">Gender</label>
                                     <Select
-                                        className="form-control w-100"
+                                        className={`form-control ${(!componentData.gender ? 'error' : '')} `}
                                         disableUnderline
                                         displayEmpty
-                                        value={form.gender}
+                                        onChange={(e) => setComponentData({ ...componentData, gender: e.target.value })}
+                                        value={componentData.gender || ''}
                                         variant='standard'
                                     >
-                                        <MenuItem value='male' className="ui-select-menu">
+                                        <MenuItem value='Male' className="ui-select-menu">
                                             Male
                                         </MenuItem>
-                                        <MenuItem value='female' className="ui-select-menu">
+                                        <MenuItem value='Female' className="ui-select-menu">
                                             Female
                                         </MenuItem>
                                     </Select>
+                                    {
+                                        !componentData.gender && (
+                                            <div className='error-message'>Gender is required</div>
+                                        )
+                                    }
                                 </div>
 
                                 <div className="col-lg-6">
                                     <label className="form-label">Date of Birth</label>
 
-                                    <TextField
-                                        type='date'
-                                        className="form-control"
-                                        variant="standard"
-                                        placeholder="Phone Number"
-                                        fullWidth
-                                        InputProps={{
-                                            disableUnderline: true,
-                                        }}
-                                    />
+                                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                                        <DatePicker
+                                            InputProps={{
+                                                disableUnderline: true,
+                                            }}
+                                            className={`form-control ${(!componentData.dob ? 'error' : '')} `}
+                                            inputFormat="DD/MM/YYYY"
+                                            value={componentData.dob || ''}
+                                            onChange={(value) => setComponentData({ ...componentData, dob: value! })}
+                                            renderInput={
+                                                (params) =>
+                                                    <TextField
+                                                        variant='standard'
+                                                        fullWidth
+                                                        className={`form-control ${(!componentData.dob ? 'error' : '')} `}
+                                                        placeholder='DD/MM/YYYY'
+                                                        {...params} />
+                                            } />
+                                    </LocalizationProvider>
+                                    {
+                                        !componentData.dob && (
+                                            <div className='error-message'>Date of birth is required</div>
+                                        )
+                                    }
                                 </div>
 
                                 <div className="col-lg-6">
@@ -160,7 +239,7 @@ const Settings: NextPage = () => {
                                         className="form-control w-100"
                                         disableUnderline
                                         displayEmpty
-                                        value={form.country}
+                                        value={componentData.country || ''}
                                         variant='standard'
                                     >
                                         <MenuItem value='nigeria' className="ui-select-menu">
@@ -170,38 +249,23 @@ const Settings: NextPage = () => {
                                 </div>
 
                                 <div className="col-lg-6">
-                                    <label className="form-label">State</label>
-                                    <Select
-                                        className="form-control w-100"
-                                        disableUnderline
-                                        displayEmpty
-                                        value={form.state}
-                                        variant='standard'
-                                    >
-                                        <MenuItem value='lagos' className="ui-select-menu">
-                                            Lagos
-                                        </MenuItem>
-                                    </Select>
-                                </div>
-
-                                <div>
-                                    <label className="form-label">Address</label>
-
+                                    <label className="form-label">City</label>
                                     <TextField
                                         className="form-control"
                                         variant="standard"
-                                        placeholder="Address"
+                                        placeholder="City"
                                         fullWidth
+                                        onChange={(e) => setComponentData({ ...componentData, city: e.target.value })}
+                                        value={componentData.city || ''}
                                         InputProps={{
                                             disableUnderline: true,
                                         }}
                                     />
                                 </div>
 
-
                             </div>
                             <div className="form-submit">
-                                <button className="btn btn-primary btn-radius">Save Changes</button>
+                                <button onClick={saveProfile} className="btn btn-primary btn-radius">Save Changes</button>
                             </div>
                         </div>
                     </div>
@@ -213,4 +277,5 @@ const Settings: NextPage = () => {
     )
 }
 
+Settings.requireAuth = true
 export default Settings

@@ -2,12 +2,13 @@ import { RemoveRedEye } from "@mui/icons-material";
 import { IconButton, InputAdornment, MenuItem, Select, TextField } from "@mui/material";
 import { NextPage } from "next";
 import { useState } from "react";
+import { useAuth } from "../../../../../components/auth/auth-provider";
 import BackButton from "../../../../../components/back-button/back-button";
 import DashboardHeader from "../../../../../components/dashboard-header/dashboard-header";
 import DashboardSettingsSidebar from "../../../../../components/dashboard-settings-sidebar/dashboard-settings-sidebar";
 import DashboardSidebar from "../../../../../components/dashboard-sidebar/dashboard-sidebar";
 const Settings: NextPage = () => {
-
+    const { user } = useAuth();
     interface IFormData {
     }
 
@@ -29,7 +30,7 @@ const Settings: NextPage = () => {
                             Account Settings
                         </div>
 
-                        <DashboardSettingsSidebar></DashboardSettingsSidebar>
+                        <DashboardSettingsSidebar user={user!}></DashboardSettingsSidebar>
 
                     </div>
                     <div className="col-lg-8">

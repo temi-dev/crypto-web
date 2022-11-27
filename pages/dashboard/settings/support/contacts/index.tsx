@@ -1,9 +1,12 @@
+import { useAuth } from "../../../../../components/auth/auth-provider";
 import BackButton from "../../../../../components/back-button/back-button";
 import DashboardHeader from "../../../../../components/dashboard-header/dashboard-header";
 import DashboardSettingsSidebar from "../../../../../components/dashboard-settings-sidebar/dashboard-settings-sidebar";
 import DashboardSidebar from "../../../../../components/dashboard-sidebar/dashboard-sidebar";
 import { NextApplicationPage } from "../../../../_app";
 const Settings: NextApplicationPage = () => {
+    const { user } = useAuth();
+
     return (
         <div className="dashboard">
             <DashboardSidebar></DashboardSidebar>
@@ -17,7 +20,7 @@ const Settings: NextApplicationPage = () => {
                             Account Settings
                         </div>
 
-                        <DashboardSettingsSidebar></DashboardSettingsSidebar>
+                        <DashboardSettingsSidebar user={user!}></DashboardSettingsSidebar>
 
                     </div>
 

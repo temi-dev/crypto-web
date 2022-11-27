@@ -1,18 +1,11 @@
 import Link from "next/link";
-import { useState } from "react";
-import { IDialogs } from "../../shared/interface/global.interface";
-import BvnUpdate from "../dialogs/settings/bvn-update/bvn-update";
 import { NextRouter, useRouter } from "next/router";
-import { ChevronRightIcon, FilterFilledIcon, GiftBoxIllustration, GuardFilledIcon, NotificationFilledIcon, PeopleFilledIcon, UserFilledIcon, WalletCircleFilledIcon } from "../icons/icons";
+import { GuardFilledIcon, PeopleFilledIcon, UserFilledIcon, WalletCircleFilledIcon } from "../icons/icons";
+import { User } from "../auth/auth";
+import VerificationCta from "../verification-cta/verification-cta";
 
-const DashboardSettingsSidebar = () => {
+const DashboardSettingsSidebar = ({ user }: { user?: User }) => {
     const router: NextRouter = useRouter();
-
-    const DialogsVisibilityInitState: IDialogs = {
-        settingsBvnUpdateDialogVisibility: false
-    }
-
-    const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
 
     return (
         <div>
@@ -29,7 +22,7 @@ const DashboardSettingsSidebar = () => {
                     </div>
                 </div>
                 <div className="bottom">
-                    <button onClick={() => setDialogVisibilityState({ settingsBvnUpdateDialogVisibility: true })}>Verify BVN</button>
+                    <VerificationCta user={user!}/>
                 </div>
             </div>
 
@@ -140,7 +133,7 @@ const DashboardSettingsSidebar = () => {
                     </div>
                 </Link>
             </div>
-            <BvnUpdate open={dialogsVisibilityState.settingsBvnUpdateDialogVisibility!} setVisibilityState={setDialogVisibilityState}></BvnUpdate>
+            
         </div>
     )
 }

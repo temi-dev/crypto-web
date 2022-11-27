@@ -38,10 +38,10 @@ const SettingsSupportTickets = ({ open, setVisibilityState }: { open: boolean, s
     }
 
     const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
- 
+
     useEffect(() => {
         if (open) fetchTickets()
-    }, [open,dialogsVisibilityState.settingsCreateTicketDialogVisibility ]);
+    }, [open, dialogsVisibilityState.settingsCreateTicketDialogVisibility]);
 
     return (
         <div>
@@ -60,7 +60,7 @@ const SettingsSupportTickets = ({ open, setVisibilityState }: { open: boolean, s
                             <div className="form-container">
                                 <div className="support-tickets-list">
                                     {
-                                       !componentData.fetchingTickets && componentData.tickets?.map((element) => {
+                                        !componentData.fetchingTickets && componentData.tickets?.map((element) => {
                                             return (
                                                 <div className="list" key={element.id}>
                                                     <div className="text">
@@ -68,16 +68,16 @@ const SettingsSupportTickets = ({ open, setVisibilityState }: { open: boolean, s
                                                             <div className="heading">{element.category}</div>
                                                             <div className="heading-note">
                                                                 <div className="ticket-id">#{element.id}</div>
-                                                            <div className="timestamp">
-                                                             <DateFormatElement date={element.created_at} format='DD-MMM-yyyy'></DateFormatElement>   
-                                                            </div>
+                                                                <div className="timestamp">
+                                                                    <DateFormatElement date={element.created_at} format='DD-MMM-yyyy'></DateFormatElement>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div className="status">
-                                                        <span className="dot">&#8226;</span>  
+                                                        <span className="dot">&#8226;</span>
                                                         {
-                                                            element.status == 0 && 
+                                                            element.status == 0 &&
                                                             <span>Open</span>
                                                         }
                                                     </div>
@@ -87,7 +87,7 @@ const SettingsSupportTickets = ({ open, setVisibilityState }: { open: boolean, s
                                     }
 
                                     {
-                                      !componentData.fetchingTickets &&  componentData.tickets?.length == 0 &&
+                                        !componentData.fetchingTickets && componentData.tickets?.length == 0 &&
                                         <div className="text-center">
                                             <PeopleFilledIcon
                                                 color='white'

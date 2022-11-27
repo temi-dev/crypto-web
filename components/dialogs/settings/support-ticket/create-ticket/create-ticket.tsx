@@ -62,7 +62,6 @@ const SettingsCreateTicket = ({ open, setVisibilityState }: { open: boolean, set
     };
 
 
-
     useEffect(() => {
         if (open) getData()
     }, [open]);

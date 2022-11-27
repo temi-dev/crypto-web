@@ -115,7 +115,7 @@ const Signin: NextApplicationPage = (props) => {
                                         <TextField
                                             variant="standard"
                                             className={`form-control ${(!state.formValue.username && state.step1FormSubitted ? 'error' : '')} `}
-                                            placeholder='Username'
+                                            placeholder='Email or Username'
                                             fullWidth
                                             value={state.formValue.username}
                                             onChange={(e) => {

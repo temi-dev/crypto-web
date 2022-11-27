@@ -1,18 +1,23 @@
-import { Dialog, MenuItem, Select, TextField } from "@mui/material"
-import Image from "next/image";
-import { useState } from "react";
+import { Dialog } from "@mui/material"
+import { useEffect, useState } from "react";
 import { IDialogs } from "../../../../shared/interface/global.interface"
-import { CancelIcon, CopyIcon, HometownLogo } from "../../../icons/icons"
+import { User } from "../../../auth/auth";
+import { CancelIcon, WalletCircleFilledIcon, } from "../../../icons/icons"
 import SettingsAddBank from "../add-new-bank/add-new-bank";
 import SettingsBankDetails from "../bank-details/bank-details";
 
-const SettingsBanks = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
+
+
+const SettingsBanks = ({ open, setVisibilityState, user }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>>, user: User }) => {
 
     interface IData {
+        bankAccounts?: Array<any>
     }
 
     const initData: IData = {
+        bankAccounts: user.bank_accounts,
     }
+
     const [componentData, setComponentData] = useState(initData);
 
     const setData = (data: IData) => {
@@ -27,7 +32,12 @@ const SettingsBanks = ({ open, setVisibilityState }: { open: boolean, setVisibil
         settingsBankDetailsDialogVisibility: false,
     }
 
+
     const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
+
+    useEffect(() => {
+
+    }, [open]);
 
     return (
         <div>
@@ -45,39 +55,38 @@ const SettingsBanks = ({ open, setVisibilityState }: { open: boolean, setVisibil
                         <div className="dashbord-right-dialog-inner-content">
                             <div className="form-container">
                                 <div className="banks-list">
-                                    <div className="list" onClick={() => setDialogVisibilityState({ settingsBankDetailsDialogVisibility: true })}>
-                                        <div className="text">
-                                            <div>
-                                                <div className="heading">AKIN OLAYEMI</div>
-                                                <div className="heading-note">
-                                                    <span>***8189</span>
-                                                    <span> . </span>
-                                                    <span>United Bank for Africa</span>
+                                    {
+                                        componentData.bankAccounts?.map(element => {
+                                            return (
+                                                <div className="list" onClick={() => setDialogVisibilityState({ settingsBankDetailsDialogVisibility: true })}>
+                                                    <div className="text">
+                                                        <div>
+                                                            <div className="heading">AKIN OLAYEMI</div>
+                                                            <div className="heading-note">
+                                                                <span>***8189</span>
+                                                                <span> . </span>
+                                                                <span>United Bank for Africa</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="image">
+                                                        <div className="bank-logo" style={{ backgroundImage: "url(" + "/images/uba.svg" + ")" }}>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className="image">
-                                            <div className="bank-logo" style={{ backgroundImage: "url(" + "/images/uba.svg" + ")" }}>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            )
+                                        })
+                                    }
 
-                                    <div className="list" onClick={() => setDialogVisibilityState({ settingsBankDetailsDialogVisibility: true })}>
-                                        <div className="text">
-                                            <div>
-                                                <div className="heading">AKIN OLAYEMI</div>
-                                                <div className="heading-note">
-                                                    <span>***8189</span>
-                                                    <span> . </span>
-                                                    <span>Hometown</span>
-                                                </div>
-                                            </div>
+                                    {
+                                        componentData.bankAccounts?.length == 0 &&
+                                        <div className="text-center">
+                                            <WalletCircleFilledIcon
+                                                color='white'
+                                                fillColor='#1D38E4' />
+                                            <div className="mt-3">No Banks</div>
                                         </div>
-                                        <div className="image">
-                                            <div className="bank-logo" style={{ backgroundImage: "url(" + "/images/hometown2.svg" + ")" }}>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    }
 
                                 </div>
                                 <div className="mt-4">
@@ -89,8 +98,8 @@ const SettingsBanks = ({ open, setVisibilityState }: { open: boolean, setVisibil
                 </div>
             </Dialog >
             <SettingsAddBank open={dialogsVisibilityState.settingsAddBankDialogVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsAddBank>
-            
-            <SettingsBankDetails  open={dialogsVisibilityState.settingsBankDetailsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsBankDetails>
+
+            <SettingsBankDetails open={dialogsVisibilityState.settingsBankDetailsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsBankDetails>
         </div>
     )
 }

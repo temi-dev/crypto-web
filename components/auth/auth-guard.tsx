@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import LinearProgress from "@mui/material/LinearProgress"
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
-  const { user, initializing, setRedirect } = useAuth()
+    const { user, initializing, setRedirect } = useAuth()
   const router = useRouter()
 
   useEffect(() => {

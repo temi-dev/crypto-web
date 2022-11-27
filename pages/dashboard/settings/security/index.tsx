@@ -6,8 +6,10 @@ import DashboardSidebar from "../../../../components/dashboard-sidebar/dashboard
 import { ChevronRightIcon } from "../../../../components/icons/icons";
 import Link from "next/link";
 import BackButton from "../../../../components/back-button/back-button";
+import { useAuth } from "../../../../components/auth/auth-provider";
 
 const Settings: NextPage = () => {
+    const { user } = useAuth();
     return (
         <div className="dashboard">
             <DashboardSidebar></DashboardSidebar>
@@ -21,7 +23,7 @@ const Settings: NextPage = () => {
                             Account Settings
                         </div>
 
-                        <DashboardSettingsSidebar></DashboardSettingsSidebar>
+                        <DashboardSettingsSidebar user={user!}></DashboardSettingsSidebar>
 
                     </div>
                     <div className="col-lg-8">

@@ -66,8 +66,8 @@ a {
   box-shadow: none;
 }
 
-.MuiSnackbarContent-root{
-background-color: var(--primaryColor) !important;
+.MuiSnackbarContent-root {
+  background-color: var(--primaryColor) !important;
 }
 
 .MuiPaper-root {
@@ -154,16 +154,17 @@ a.grey {
   border-radius: 10px;
 }
 
-.form-control.error{
+.form-control.error {
   border: 1px solid #EF1E1E !important;
 }
 
-.form-input.error svg{
-  color:  #EF1E1E !important;
+.form-input.error svg {
+  color: #EF1E1E !important;
 }
 
 .form-control.error input::placeholder,
-.form-control.error .MuiInput-input, .form-control.error::placeholder {
+.form-control.error .MuiInput-input,
+.form-control.error::placeholder {
   color: #EF1E1E !important;
   opacity: 1;
 }
@@ -369,17 +370,17 @@ label+.css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   color: #ffffff;
 }
 
-.password-reset{
+.password-reset {
   padding: 20px;
   border-radius: 12px;
 }
 
-.password-reset > svg{
+.password-reset>svg {
   width: 180px;
   height: 180px;
 }
 
-.password-reset .heading-note{
+.password-reset .heading-note {
   color: #718096;
 }
 
@@ -927,14 +928,14 @@ label+.css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   border-radius: 8px;
 }
 
-.transaction-status.success {
+.transaction-status.credit {
   background: #f6fdf9;
   color: #22c55e;
 }
 
-.transaction-status.pending {
-  background: #fefae6;
-  color: #facc15;
+.transaction-status.debit {
+  background: #FFF2F2;
+  color: #FF1818;
 }
 
 .transaction-amount {
@@ -1744,16 +1745,19 @@ label+.css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   margin-top: 15px;
 }
 
-.settings-complete-profile .bottom button {
+.white-btn {
   color: var(--primaryColor);
   background: var(--secondaryColor);
   outline: none;
   border: 0;
   font-size: 14px;
   font-weight: 800;
-  width: 100%;
-  padding: 10px;
+  padding: 10px 25px;
   border-radius: 12px;
+}
+
+.settings-complete-profile .bottom button {
+  width: 100%;
 }
 
 .settings-invite {

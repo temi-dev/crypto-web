@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { useState } from "react";
+import { useAuth } from "../../../../components/auth/auth-provider";
 import BackButton from "../../../../components/back-button/back-button";
 import DashboardHeader from "../../../../components/dashboard-header/dashboard-header";
 import DashboardSettingsSidebar from "../../../../components/dashboard-settings-sidebar/dashboard-settings-sidebar";
@@ -8,7 +9,9 @@ import SettingsBanks from "../../../../components/dialogs/settings/banks/banks";
 import SettingsCards from "../../../../components/dialogs/settings/cards/cards";
 import { ChevronRightIcon } from "../../../../components/icons/icons";
 import { IDialogs } from "../../../../shared/interface/global.interface";
+
 const Settings: NextPage = () => {
+    const { user } = useAuth();
 
     const DialogsVisibilityInitState: IDialogs = {
         settingsBanksDialogVisibility: false,
@@ -30,7 +33,7 @@ const Settings: NextPage = () => {
                             Account Settings
                         </div>
 
-                        <DashboardSettingsSidebar></DashboardSettingsSidebar>
+                        <DashboardSettingsSidebar user={user!}></DashboardSettingsSidebar>
 
                     </div>
                     <div className="col-lg-8">
@@ -67,7 +70,7 @@ const Settings: NextPage = () => {
                     </div>
                 </div>
             </div>
-            <SettingsBanks open={dialogsVisibilityState.settingsBanksDialogVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsBanks>
+            <SettingsBanks open={dialogsVisibilityState.settingsBanksDialogVisibility!} setVisibilityState={setDialogVisibilityState} user={user!}></SettingsBanks>
             <SettingsCards  open={dialogsVisibilityState.settingsCardsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsCards>
         </div>
     )
