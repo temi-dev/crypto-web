@@ -17,7 +17,6 @@ export function LoggedInAuthGuard({ children }: { children: JSX.Element }) {
 
   if (initializing) {
     return  <LinearProgress />
-
   }
 
   if (!initializing && !user) {

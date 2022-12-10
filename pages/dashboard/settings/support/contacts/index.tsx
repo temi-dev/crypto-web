@@ -1,12 +1,23 @@
+import { useState } from "react";
 import { useAuth } from "../../../../../components/auth/auth-provider";
 import BackButton from "../../../../../components/back-button/back-button";
 import DashboardHeader from "../../../../../components/dashboard-header/dashboard-header";
 import DashboardSettingsSidebar from "../../../../../components/dashboard-settings-sidebar/dashboard-settings-sidebar";
 import DashboardSidebar from "../../../../../components/dashboard-sidebar/dashboard-sidebar";
+import SettingsMobileMenu from "../../../../../components/dialogs/settings/mobile-menu/mobile-menu";
+import SettingsMenuCta from "../../../../../components/setting-menu-cta/settings-menu-cta";
+import { IDialogs } from "../../../../../shared/interface/global.interface";
 import { NextApplicationPage } from "../../../../_app";
 const Settings: NextApplicationPage = () => {
     const { user } = useAuth();
+    const DialogsVisibilityInitState: IDialogs = {
+    }
 
+    const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
+
+    const openMobileMenu = () =>{
+        setDialogVisibilityState({ ...dialogsVisibilityState, settingsMobileMenuVisibility: true })
+    }
     return (
         <div className="dashboard">
             <DashboardSidebar></DashboardSidebar>
@@ -16,16 +27,12 @@ const Settings: NextApplicationPage = () => {
                 <DashboardHeader title="Account Settings"></DashboardHeader>
                 <div className="row m-auto dashboard-inner-content pb-4">
                     <div className="col-lg-4 settings-left">
-                        <div className="mobile-dashboard-page-title">
-                            Account Settings
-                        </div>
-
-                        <DashboardSettingsSidebar user={user!}></DashboardSettingsSidebar>
-
+                        <DashboardSettingsSidebar></DashboardSettingsSidebar>
                     </div>
 
                     <div className="col-lg-8">
-                        <div className="container">
+                        <div className="settings-container">
+                        <SettingsMenuCta cta={openMobileMenu}></SettingsMenuCta>
                             <div className="setting-page-header">Get in Touch</div>
 
                             <div className="setting-page-content">
@@ -93,6 +100,7 @@ const Settings: NextApplicationPage = () => {
                     </div>
                 </div>
             </div>
+            <SettingsMobileMenu open={dialogsVisibilityState.settingsMobileMenuVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsMobileMenu>
         </div>
     )
 }

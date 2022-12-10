@@ -77,7 +77,7 @@ const Signin: NextApplicationPage = (props) => {
             setState({ ...state, processingLoginRequest: true })
             const response = await signin(state.formValue);
             if (response.responseCode == 422) {
-                snackbar.showError(response.data.message)
+                snackbar.showError(response.data? response.data.message : "Error occured")
                 setState({ ...state, processingLoginRequest: false })
             } else {
                 setState({ ...state, step: 2, formValue: { ...state.formValue, email: response.data.data } })
@@ -111,7 +111,7 @@ const Signin: NextApplicationPage = (props) => {
                             {state.step == 1 &&
                                 <div>
                                     <div className='mt-3'>
-                                        <label className='mb-2'>Username*</label>
+                                        <label className='mb-2'>Email or Username*</label>
                                         <TextField
                                             variant="standard"
                                             className={`form-control ${(!state.formValue.username && state.step1FormSubitted ? 'error' : '')} `}

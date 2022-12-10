@@ -2,20 +2,20 @@ import { Dialog } from "@mui/material"
 import { useEffect, useState } from "react";
 import { IDialogs } from "../../../../shared/interface/global.interface"
 import { User } from "../../../auth/auth";
+import { useAuth } from "../../../auth/auth-provider";
 import { CancelIcon, WalletCircleFilledIcon, } from "../../../icons/icons"
 import SettingsAddBank from "../add-new-bank/add-new-bank";
 import SettingsBankDetails from "../bank-details/bank-details";
 
 
 
-const SettingsBanks = ({ open, setVisibilityState, user }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>>, user: User }) => {
+const SettingsBanks = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
+    const { user } = useAuth();
 
     interface IData {
-        bankAccounts?: Array<any>
     }
 
     const initData: IData = {
-        bankAccounts: user.bank_accounts,
     }
 
     const [componentData, setComponentData] = useState(initData);
@@ -36,8 +36,8 @@ const SettingsBanks = ({ open, setVisibilityState, user }: { open: boolean, setV
     const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
 
     useEffect(() => {
-
-    }, [open]);
+        console.log(user)
+    }, [user]);
 
     return (
         <div>
@@ -55,23 +55,24 @@ const SettingsBanks = ({ open, setVisibilityState, user }: { open: boolean, setV
                         <div className="dashbord-right-dialog-inner-content">
                             <div className="form-container">
                                 <div className="banks-list">
+                                {/* onClick={() => setDialogVisibilityState({ settingsBankDetailsDialogVisibility: true })} */}
                                     {
-                                        componentData.bankAccounts?.map(element => {
+                                        user?.bank_accounts?.map(element => {
                                             return (
-                                                <div className="list" onClick={() => setDialogVisibilityState({ settingsBankDetailsDialogVisibility: true })}>
+                                                <div className="list" key={element.id} >
                                                     <div className="text">
                                                         <div>
-                                                            <div className="heading">AKIN OLAYEMI</div>
+                                                            <div className="heading">{element.account_name}</div>
                                                             <div className="heading-note">
-                                                                <span>***8189</span>
+                                                                <span>{element.account_number}</span>
                                                                 <span> . </span>
-                                                                <span>United Bank for Africa</span>
+                                                                <span>{element.bank_name}</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div className="image">
-                                                        <div className="bank-logo" style={{ backgroundImage: "url(" + "/images/uba.svg" + ")" }}>
-                                                        </div>
+                                                        {/* <div className="bank-logo" style={{ backgroundImage: "url(" + "/images/uba.svg" + ")" }}>
+                                                        </div> */}
                                                     </div>
                                                 </div>
                                             )
@@ -79,7 +80,7 @@ const SettingsBanks = ({ open, setVisibilityState, user }: { open: boolean, setV
                                     }
 
                                     {
-                                        componentData.bankAccounts?.length == 0 &&
+                                        user?.bank_accounts?.length == 0 &&
                                         <div className="text-center">
                                             <WalletCircleFilledIcon
                                                 color='white'

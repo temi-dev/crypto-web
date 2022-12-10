@@ -4,10 +4,15 @@ import { useEffect, useState } from "react";
 import { IDialogs } from "../../../../shared/interface/global.interface"
 import { getAppData } from "../../../../shared/services/app/app.service";
 import { saveBankAccount } from "../../../../shared/services/dashboard/settings/banks-cards/banks-cards.service";
+import { getUser } from "../../../../shared/services/dashboard/settings/profile/profile.service";
+import { useAuth } from "../../../auth/auth-provider";
 import { CancelIcon, CopyIcon, HometownLogo } from "../../../icons/icons"
 import useCustomSnackbar from "../../../snackbar/use-custom-snackbar";
 
+
+
 const SettingsAddBank = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
+    const { user, setUser } = useAuth();
 
     const snackbar = useCustomSnackbar();
 
@@ -45,7 +50,7 @@ const SettingsAddBank = ({ open, setVisibilityState }: { open: boolean, setVisib
         if (open) getData()
     }, [open]);
 
-    const submit = async() => {
+    const submit = async () => {
         setData({ formSubmitted: true })
         if (componentData.form?.bank_code && componentData.form.account_number) {
             setData({ submittingForm: true });
@@ -54,12 +59,23 @@ const SettingsAddBank = ({ open, setVisibilityState }: { open: boolean, setVisib
                 snackbar.showError(request.data.message)
                 setData({ submittingForm: false })
             } else {
+                await refreshUser();
                 snackbar.showSuccess(request.data.message);
                 setData({ form: {}, formSubmitted: false })
                 handleDialogClose()
             }
         }
     }
+
+    const refreshUser = async () => {
+        const request = await getUser();
+        if (request.responseCode == 422) {
+        } else {
+            setUser(request.data.data)
+        }
+
+    }
+
     return (
         <Dialog open={open ? open : false} className="animate__animated animate__slideInRight animate__faster" onClose={handleDialogClose} fullScreen>
             <div className="dashbord-right-dialog">
@@ -107,7 +123,7 @@ const SettingsAddBank = ({ open, setVisibilityState }: { open: boolean, setVisib
                                     {
                                         componentData.banks?.map(element => {
                                             return (
-                                                <MenuItem value={element.id} className="ui-select-menu">
+                                                <MenuItem key={element.id} value={element.code} className="ui-select-menu">
                                                     {element.name}
                                                 </MenuItem>
                                             )

@@ -4,15 +4,14 @@ import { useEffect } from "react"
 import LinearProgress from "@mui/material/LinearProgress"
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
-    const { user, initializing, setRedirect } = useAuth()
+  const { user, initializing, setRedirect } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
     if (!initializing) {
       if (!user) {
         setRedirect(router.route)
-        window.location.href = '/'
-        // router.push("/signup")
+        router.push("/signup")
       }
     }
   }, [initializing, router, user, setRedirect])
@@ -21,7 +20,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     return <LinearProgress />
   }
 
-   if (!initializing && user) {
+  if (!initializing && user) {
     return <>{children}</>
   }
 

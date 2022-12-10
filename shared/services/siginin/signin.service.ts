@@ -13,7 +13,7 @@ const signin = async (data: any): Promise<ICustomHttpResponse> => {
    } catch (error: any) {
       return {
          responseCode: 422,
-         data: error.response.data
+         data: error.response?.data
       }
    }
 
@@ -29,7 +29,7 @@ const sendOtp = async (email: string) => {
    } catch (error: any) {
       return {
          responseCode: 422,
-         data: error.response.data
+         data: error.response?.data
       }
    }
 }
@@ -45,7 +45,7 @@ const verifyAuthOtp = async (email: string, code: string) => {
    } catch (error: any) {
       return {
          responseCode: 422,
-         data: error.response.data
+         data: error.response?.data
       }
    }
 }

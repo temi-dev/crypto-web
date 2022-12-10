@@ -11,6 +11,7 @@ export const AuthContext = React.createContext<
         initializing: boolean
         user: User | null
         error: { message: string } | null
+        setUser: (user: User) => void
         setRedirect: (redirect: string) => void
         getRedirect: () => string | null
         clearRedirect: () => void
@@ -72,6 +73,7 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
 
     const value = {
         user,
+        setUser,
         error,
         auth,
         initializing,

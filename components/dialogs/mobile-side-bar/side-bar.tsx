@@ -47,7 +47,7 @@ const MobileSideBar = ({ open, setVisibilityState }: { open: boolean, setVisibil
                             </Link>
                         </li>
                         <li>
-                            <Link href='/dashboard'>
+                            <Link href='/dashboard/settings'>
                                 <a className="d-flex">
                                     <SettingsIcon></SettingsIcon>
                                     <span>Settings</span>

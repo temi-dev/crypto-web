@@ -11,17 +11,27 @@ import { NextApplicationPage } from "../../_app";
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { updateProfile } from "../../../shared/services/dashboard/settings/profile/profile.service";
+import { updateProfile, updateProfilePicture } from "../../../shared/services/dashboard/settings/profile/profile.service";
+import SettingsMobileMenu from "../../../components/dialogs/settings/mobile-menu/mobile-menu";
+import { ChevronLeftIcon } from "../../../components/icons/icons";
+import SettingsMenuCta from "../../../components/setting-menu-cta/settings-menu-cta";
+import useCustomSnackbar from "../../../components/snackbar/use-custom-snackbar";
+import ProfilePin from "../../../components/dialogs/settings/profile-pin/profile-pin";
 
 const Settings: NextApplicationPage = () => {
-    const { user } = useAuth()
-
-
+    const { user } = useAuth();
+    const snackbar = useCustomSnackbar();
     const DialogsVisibilityInitState: IDialogs = {
         settingsAvatarDialogVisibility: false,
+        settingsMobileMenuVisibility: false,
+        profilePinVisibility: false
     }
 
     const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
+
+    const openMobileMenu = () => {
+        setDialogVisibilityState({ ...dialogsVisibilityState, settingsMobileMenuVisibility: true })
+    }
 
     interface IData {
         gender?: string,
@@ -36,24 +46,68 @@ const Settings: NextApplicationPage = () => {
         nin_verified_at?: string,
         bvn_verified_at?: string,
         idc_verified_at?: string,
+        email_verified_at?: string,
+        profile_pics?: any,
+        selectedProfilePicture?: any,
+        processingRequest?: boolean
     }
 
     const data: IData = {
+        processingRequest: false,
         country: 'nigeria',
+        profile_pics: user!.dp_uploaded_at?  `${process.env.apiUrl}/static/profile_pics/${user!.username}/dp.png` : '',
         ...user
     }
 
     const [componentData, setComponentData] = useState(data);
 
-    const saveProfile = () => {
+    const saveProfile = async (pin: number) => {
         let data = {
             email: componentData.email,
             dob: componentData.dob,
-            // city: componentData.city,
-            pin: '126969'
+            fname: componentData.fname,
+            lname: componentData.lname,
+            gender: componentData.gender,
+            city: componentData.city,
+            phone: componentData.phone,
+            pin
         };
+        setComponentData({ ...componentData, processingRequest: true })
+        const request = await updateProfile(data)
+        if (request.responseCode == 422) {
+            snackbar.showError(
+                request.data.message
+            );
+        } else {
+            user!.fname = componentData.fname!
+            user!.lname = componentData.lname!
+            user!.email = componentData.email!
+            user!.pin_exists = true
+            snackbar.showSuccess(
+                request.data.message
+            );
+        }
+        setComponentData({ ...componentData, processingRequest: false })
+    }
 
-        const request = updateProfile(data)
+    const encodeImageFileAsURL = (element: any) => {
+        var file = element.target.files[0];
+        var reader = new FileReader();
+        reader.onloadend = async function () {
+            setComponentData({ ...componentData, selectedProfilePicture: null,  profile_pics: reader.result })
+          
+            const request = await updateProfilePicture(reader.result)
+            if (request.responseCode == 422) {
+                snackbar.showError(
+                    request.data.message
+                );
+            } else {
+                snackbar.showSuccess(
+                    request.data.message
+                );
+            }
+        }
+        reader.readAsDataURL(file);
     }
 
     return (
@@ -65,23 +119,27 @@ const Settings: NextApplicationPage = () => {
                 <DashboardHeader title="Account Settings"></DashboardHeader>
                 <div className="row m-auto dashboard-inner-content pb-4">
                     <div className="col-lg-4 settings-left">
-                        <div className="mobile-dashboard-page-title">
-                            Account Settings
-                        </div>
 
                         <DashboardSettingsSidebar user={user!}></DashboardSettingsSidebar>
 
                     </div>
                     <div className="col-lg-8">
-                        <div className="container">
+                        <div className="settings-container">
+                            <SettingsMenuCta cta={openMobileMenu}></SettingsMenuCta>
+
                             <div className="setting-page-header">Personal Information</div>
                             <div className="settings-profile-details">
                                 <div className="text-center" >
                                     <div className="profile-image-placeholder" >
-                                        <div style={{ backgroundImage: "url(" + "/images/avatar.png" + ")" }}></div>
+                                        <div style={{ backgroundImage: "url(" + componentData.profile_pics + ")" }}></div>
                                     </div>
-                                    <a className="avatar-btn">Upload photo</a>
+                                    <label className="avatar-btn" htmlFor="fileInput">Upload photo
+                                        <input value={componentData.selectedProfilePicture} className="custom-file-input" id="fileInput" type="file" accept="image/png,image/jpg,image/jpeg" onChange={(e) => encodeImageFileAsURL(e)} />
+                                    </label>
+
                                 </div>
+
+
                                 <div className="text">
                                     <div>
                                         <div className="fullname">{`${user?.fname} ${user?.lname}`}</div>
@@ -145,6 +203,7 @@ const Settings: NextApplicationPage = () => {
                                         placeholder="Email address"
                                         fullWidth
                                         onChange={(e) => setComponentData({ ...componentData, email: e.target.value })}
+                                        disabled={componentData.email_verified_at ? true : false}
                                         value={componentData.email || ''}
                                         InputProps={{
                                             disableUnderline: true,
@@ -265,7 +324,7 @@ const Settings: NextApplicationPage = () => {
 
                             </div>
                             <div className="form-submit">
-                                <button onClick={saveProfile} className="btn btn-primary btn-radius">Save Changes</button>
+                                <button onClick={() => setDialogVisibilityState({profilePinVisibility : true})} disabled={componentData.processingRequest} className="btn btn-primary btn-radius">Save Changes</button>
                             </div>
                         </div>
                     </div>
@@ -273,6 +332,10 @@ const Settings: NextApplicationPage = () => {
                 </div>
             </div>
             <SettingsAvatar open={dialogsVisibilityState.settingsAvatarDialogVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsAvatar>
+
+            <SettingsMobileMenu user={user!} open={dialogsVisibilityState.settingsMobileMenuVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsMobileMenu>
+
+            <ProfilePin user={user!} open={dialogsVisibilityState.profilePinVisibility!} setVisibilityState={setDialogVisibilityState} snackbar={snackbar} next={saveProfile}></ProfilePin>
         </div>
     )
 }

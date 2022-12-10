@@ -615,6 +615,14 @@ const ChevronRightIcon = ({ color }: { color?: string }) => {
     )
 }
 
+const ChevronLeftIcon = ({ color }: { color?: string }) => {
+    return (
+        <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.44229 1.52881L0.956291 4.99981L4.44229 8.47081" stroke={color ? color : altColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    )
+}
+
 const UserFilledIcon = ({ color, fillColor }: { color?: string, fillColor: string }) => {
     return (
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -737,5 +745,6 @@ export {
     WalletCircleFilledIcon,
     NotificationFilledIcon,
     PeopleFilledIcon,
-    ShieldCircleFilledIcon
+    ShieldCircleFilledIcon,
+    ChevronLeftIcon
 }

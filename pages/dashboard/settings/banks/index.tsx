@@ -7,10 +7,13 @@ import DashboardSettingsSidebar from "../../../../components/dashboard-settings-
 import DashboardSidebar from "../../../../components/dashboard-sidebar/dashboard-sidebar";
 import SettingsBanks from "../../../../components/dialogs/settings/banks/banks";
 import SettingsCards from "../../../../components/dialogs/settings/cards/cards";
+import SettingsMobileMenu from "../../../../components/dialogs/settings/mobile-menu/mobile-menu";
 import { ChevronRightIcon } from "../../../../components/icons/icons";
+import SettingsMenuCta from "../../../../components/setting-menu-cta/settings-menu-cta";
 import { IDialogs } from "../../../../shared/interface/global.interface";
+import { NextApplicationPage } from "../../../_app";
 
-const Settings: NextPage = () => {
+const Settings: NextApplicationPage = () => {
     const { user } = useAuth();
 
     const DialogsVisibilityInitState: IDialogs = {
@@ -20,6 +23,10 @@ const Settings: NextPage = () => {
 
     const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
 
+    const openMobileMenu = () =>{
+        setDialogVisibilityState({ ...dialogsVisibilityState, settingsMobileMenuVisibility: true })
+    }
+    
     return (
         <div className="dashboard">
             <DashboardSidebar></DashboardSidebar>
@@ -29,15 +36,14 @@ const Settings: NextPage = () => {
                 <DashboardHeader title="Account Settings"></DashboardHeader>
                 <div className="row m-auto dashboard-inner-content pb-4">
                     <div className="col-lg-4 settings-left">
-                        <div className="mobile-dashboard-page-title">
-                            Account Settings
-                        </div>
 
-                        <DashboardSettingsSidebar user={user!}></DashboardSettingsSidebar>
+
+                        <DashboardSettingsSidebar></DashboardSettingsSidebar>
 
                     </div>
                     <div className="col-lg-8">
-                        <div className="container">
+                        <div className="settings-container">
+                            <SettingsMenuCta cta={openMobileMenu}></SettingsMenuCta>
                             <div className="setting-page-header">Banks &#38; Cards</div>
 
                             <div className="setting-page-content">
@@ -70,10 +76,11 @@ const Settings: NextPage = () => {
                     </div>
                 </div>
             </div>
-            <SettingsBanks open={dialogsVisibilityState.settingsBanksDialogVisibility!} setVisibilityState={setDialogVisibilityState} user={user!}></SettingsBanks>
-            <SettingsCards  open={dialogsVisibilityState.settingsCardsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsCards>
+            <SettingsBanks open={dialogsVisibilityState.settingsBanksDialogVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsBanks>
+            <SettingsCards open={dialogsVisibilityState.settingsCardsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsCards>
+            <SettingsMobileMenu open={dialogsVisibilityState.settingsMobileMenuVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsMobileMenu>
         </div>
     )
 }
-
+Settings.requireAuth = true;
 export default Settings

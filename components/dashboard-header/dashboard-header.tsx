@@ -82,14 +82,14 @@ const DashboardHeader = ({ title }: { title: string }) => {
                             <MenuBarFilledIcon color="#18181B" fillColor="#EEEEEE"></MenuBarFilledIcon>
                         </button>
                     </div>
-                    {/* <div className="d-flex flex-grow-1  align-items-center justify-content-end">
-                        <button className="notification-btn" onClick={openNotificationsMenu}>
+                    <div className="d-flex flex-grow-1  align-items-center justify-content-end">
+                        {/* <button className="notification-btn" onClick={openNotificationsMenu}>
                             <BellIcon color="black"></BellIcon>
-                        </button>
+                        </button> */}
                         <button onClick={openProfileMenu} className="profile-menu align-items-center d-flex">
                             <div className="profile-image " style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }}></div>
                         </button>
-                    </div> */}
+                    </div>
                 </div>
             </div>
 

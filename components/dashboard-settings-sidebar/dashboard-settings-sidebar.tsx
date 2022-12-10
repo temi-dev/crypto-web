@@ -1,14 +1,20 @@
 import Link from "next/link";
 import { NextRouter, useRouter } from "next/router";
 import { GuardFilledIcon, PeopleFilledIcon, UserFilledIcon, WalletCircleFilledIcon } from "../icons/icons";
-import { User } from "../auth/auth";
+
+import { IDialogs } from "../../shared/interface/global.interface";
 import VerificationCta from "../verification-cta/verification-cta";
 
-const DashboardSettingsSidebar = ({ user }: { user?: User }) => {
+const DashboardSettingsSidebar = ({isMobile, setVisibility }: { isMobile?: boolean, setVisibility?:  React.Dispatch<React.SetStateAction<IDialogs>> }) => {
     const router: NextRouter = useRouter();
+    const handleClick = () =>{
+        if(isMobile){
+           if(setVisibility) setVisibility({settingsMobileMenuVisibility: false})
+        }
 
+    }
     return (
-        <div>
+        <div className={isMobile ? 'd-block': "d-none d-md-block"}>
             <div className="settings-complete-profile">
                 <div className="top">
                     <div className="chart">
@@ -22,7 +28,7 @@ const DashboardSettingsSidebar = ({ user }: { user?: User }) => {
                     </div>
                 </div>
                 <div className="bottom">
-                    <VerificationCta user={user!}/>
+                    <VerificationCta />
                 </div>
             </div>
 
@@ -43,7 +49,7 @@ const DashboardSettingsSidebar = ({ user }: { user?: User }) => {
 
             <div className="settings-tab">
                 <Link href='/dashboard/settings' >
-                    <div className={router.pathname == "/dashboard/settings" ? "active tab" : "tab"}>
+                    <div onClick={handleClick} className={router.pathname == "/dashboard/settings" ? "active tab" : "tab"}>
                         <div className="icon">
                             <UserFilledIcon
                                 color={router.pathname == "/dashboard/settings" ? "#1D38E4" : "#130F26"}

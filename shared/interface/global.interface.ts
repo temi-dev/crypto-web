@@ -26,8 +26,10 @@ export interface IDialogs  {
     settingsBankDetailsDialogVisibility?: boolean,
     settingsSupportTicketsDialogVisibility?: boolean,
     settingsCreateTicketDialogVisibility?: boolean
-    settingsBvnUpdateDialogVisibility?: boolean
-    settingsAvatarDialogVisibility?: boolean
+    bvnNinUpdateDialogVisibility?: boolean
+    settingsAvatarDialogVisibility?: boolean,
+    settingsMobileMenuVisibility?: boolean,
+    profilePinVisibility?: boolean
 }
 
 export interface IAppState{
@@ -40,6 +42,7 @@ export interface ICustomHttpResponse {
  }
 
 export interface IPasswordFieldsStates {
+    currentPassword?: string,
     password?: string,
     repeatPassword?: string
     pin?: string

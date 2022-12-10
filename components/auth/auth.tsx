@@ -1,23 +1,21 @@
 import axios from 'axios';
-import { useRouter } from 'next/router';
-
+import { useAuth } from './auth-provider';
 export type UserCB = (user: User, error: any) => void
-
-const userEmail = `admin@example.com`
-const userPassword = "admin123"
-
 
 export type User = {
     email_verified_at: any;
-    nin_verified_at: string | undefined;
-    bvn_verified_at: string | undefined;
+    nin_verified_at: Date | undefined;
+    bvn_verified_at: Date | undefined;
     idc_verified_at: string | undefined;
     phone_verified_at: string | undefined;
     email: string
     fname: string
     lname: string
     token: string,
-    bank_accounts?: Array<string>
+    username: string,
+    dp_uploaded_at: string,
+    pin_exists: boolean,
+    bank_accounts?: Array<any>
 }
 
 export class Auth {
@@ -41,36 +39,8 @@ export class Auth {
     }
 
     protected onUserChange(user: User | null, error?: { message: string }) {
-
         console.log(this.user)
         this.cb && this.cb(user!, error)
-    }
-
-    signIn(email: string, password: string, delay = 2000) {
-        console.log(`Sign in with email: ${email} password: ${password}`)
-
-        return new Promise((resolve, reject) => {
-            if (email !== userEmail || password !== userPassword) {
-                const error = { message: "Wrong email or password" }
-                this.error = error
-                reject(error)
-                this.onUserChange(null, this.error)
-
-                return
-            }
-
-            setTimeout(() => {
-                // this.user = {
-                //     name: "Ivan",
-                //     email,
-                //     token: "dfasdfadsf.asdfasdf.afsdfasd",
-                // }
-
-                window.sessionStorage.setItem("user", JSON.stringify(this.user))
-                this.onUserChange(this.user)
-                resolve(this.user)
-            }, delay)
-        })
     }
 
     signOut() {
@@ -90,15 +60,15 @@ export class Auth {
                 } catch (error) {
 
                 }
-                
             }
         } else {
             this.user = null
         }
 
-
         this.onUserChange(this.user)
 
         return this.user
     }
+
+    
 }
