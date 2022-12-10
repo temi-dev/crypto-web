@@ -6,8 +6,8 @@ export type User = {
     email_verified_at: any;
     nin_verified_at: Date | undefined;
     bvn_verified_at: Date | undefined;
-    idc_verified_at: string | undefined;
-    phone_verified_at: string | undefined;
+    idc_verified_at: Date | undefined;
+    phone_verified_at: Date | undefined;
     email: string
     fname: string
     lname: string

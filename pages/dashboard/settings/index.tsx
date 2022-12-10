@@ -42,11 +42,11 @@ const Settings: NextApplicationPage = () => {
         dob?: string,
         email?: string,
         phone?: string,
-        phone_verified_at?: string,
-        nin_verified_at?: string,
-        bvn_verified_at?: string,
-        idc_verified_at?: string,
-        email_verified_at?: string,
+        phone_verified_at?: Date,
+        nin_verified_at?: Date,
+        bvn_verified_at?: Date,
+        idc_verified_at?: Date,
+        email_verified_at?: Date,
         profile_pics?: any,
         selectedProfilePicture?: any,
         processingRequest?: boolean
@@ -120,7 +120,7 @@ const Settings: NextApplicationPage = () => {
                 <div className="row m-auto dashboard-inner-content pb-4">
                     <div className="col-lg-4 settings-left">
 
-                        <DashboardSettingsSidebar user={user!}></DashboardSettingsSidebar>
+                        <DashboardSettingsSidebar></DashboardSettingsSidebar>
 
                     </div>
                     <div className="col-lg-8">
@@ -333,7 +333,7 @@ const Settings: NextApplicationPage = () => {
             </div>
             <SettingsAvatar open={dialogsVisibilityState.settingsAvatarDialogVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsAvatar>
 
-            <SettingsMobileMenu user={user!} open={dialogsVisibilityState.settingsMobileMenuVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsMobileMenu>
+            <SettingsMobileMenu open={dialogsVisibilityState.settingsMobileMenuVisibility!} setVisibilityState={setDialogVisibilityState}></SettingsMobileMenu>
 
             <ProfilePin user={user!} open={dialogsVisibilityState.profilePinVisibility!} setVisibilityState={setDialogVisibilityState} snackbar={snackbar} next={saveProfile}></ProfilePin>
         </div>

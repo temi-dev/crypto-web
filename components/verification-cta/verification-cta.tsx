@@ -12,11 +12,11 @@ const VerificationCta = () => {
     const { user, setUser } = useAuth();
 
     interface IData {
-        email_verified_at?: string,
-        phone_verified_at?: string,
+        email_verified_at?: Date,
+        phone_verified_at?: Date,
         nin_verified_at?: Date,
         bvn_verified_at?: Date,
-        idc_verified_at?: string,
+        idc_verified_at?: Date,
         activeVerificationStep?: number,
         sendingVerificationEmail?: boolean
     }
