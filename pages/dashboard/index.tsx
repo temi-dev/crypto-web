@@ -127,7 +127,7 @@ const Dashboard: NextApplicationPage = (props) => {
                                 <div className="title">Crypto For Better</div>
                                 <div className="note">Experience kochure on mobile app</div>
                                 <div className="cta">
-                                    <VerificationCta user={user!}/>
+                                    <VerificationCta/>
                                     {/* <picture>
                                         <img alt="google play" src="/icons/google-play.svg"></img>
                                     </picture>
