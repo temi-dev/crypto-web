@@ -13,7 +13,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { updateProfile, updateProfilePicture } from "../../../shared/services/dashboard/settings/profile/profile.service";
 import SettingsMobileMenu from "../../../components/dialogs/settings/mobile-menu/mobile-menu";
-import { ChevronLeftIcon } from "../../../components/icons/icons";
+import moment from 'moment';
 import SettingsMenuCta from "../../../components/setting-menu-cta/settings-menu-cta";
 import useCustomSnackbar from "../../../components/snackbar/use-custom-snackbar";
 import ProfilePin from "../../../components/dialogs/settings/profile-pin/profile-pin";
@@ -55,8 +55,9 @@ const Settings: NextApplicationPage = () => {
     const data: IData = {
         processingRequest: false,
         country: 'nigeria',
+        
         profile_pics: user!.dp_uploaded_at?  `${process.env.apiUrl}/static/profile_pics/${user!.username}/dp.png` : '',
-        ...user
+        ...user,
     }
 
     const [componentData, setComponentData] = useState(data);
@@ -271,8 +272,8 @@ const Settings: NextApplicationPage = () => {
                                                 disableUnderline: true,
                                             }}
                                             className={`form-control ${(!componentData.dob ? 'error' : '')} `}
-                                            inputFormat="DD/MM/YYYY"
-                                            value={componentData.dob || ''}
+                                            inputFormat="DD-MM-YYYY"
+                                            value={componentData.dob}
                                             onChange={(value) => setComponentData({ ...componentData, dob: value! })}
                                             renderInput={
                                                 (params) =>
@@ -280,7 +281,7 @@ const Settings: NextApplicationPage = () => {
                                                         variant='standard'
                                                         fullWidth
                                                         className={`form-control ${(!componentData.dob ? 'error' : '')} `}
-                                                        placeholder='DD/MM/YYYY'
+                                                        placeholder='DD-MM-YYYY'
                                                         {...params} />
                                             } />
                                     </LocalizationProvider>

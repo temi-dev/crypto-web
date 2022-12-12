@@ -5,7 +5,8 @@ import moment from 'moment';
 const updateProfile = async (data: any): Promise<ICustomHttpResponse> => {
    try {
       const token = window.localStorage.getItem('auth')
-      data.dob = moment(data.dob, 'YYYY-MM-DD').format('DD-MM-YYYY');
+      console.log(data.dob)
+      data.dob = moment(data.dob).format('DD-MM-YYYY');
       const response = await axios.patch(`${process.env.apiUrl}/account`, { ...data, token });
       return {
          responseCode: 200,
