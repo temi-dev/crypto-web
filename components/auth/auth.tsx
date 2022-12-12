@@ -3,7 +3,7 @@ import { useAuth } from './auth-provider';
 export type UserCB = (user: User, error: any) => void
 
 export type User = {
-    dob?: Date;
+    dob?: any;
     email_verified_at: any;
     nin_verified_at: Date | undefined;
     bvn_verified_at: Date | undefined;

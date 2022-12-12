@@ -13,7 +13,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { updateProfile, updateProfilePicture } from "../../../shared/services/dashboard/settings/profile/profile.service";
 import SettingsMobileMenu from "../../../components/dialogs/settings/mobile-menu/mobile-menu";
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import SettingsMenuCta from "../../../components/setting-menu-cta/settings-menu-cta";
 import useCustomSnackbar from "../../../components/snackbar/use-custom-snackbar";
 import ProfilePin from "../../../components/dialogs/settings/profile-pin/profile-pin";
@@ -39,7 +39,7 @@ const Settings: NextApplicationPage = () => {
         city?: string,
         fname?: string,
         lname?: string,
-        dob?: string,
+        dob?: any,
         email?: string,
         phone?: string,
         phone_verified_at?: Date,
@@ -52,13 +52,18 @@ const Settings: NextApplicationPage = () => {
         processingRequest?: boolean
     }
 
+    let dob = user?.dob?.split('-');
+    dob[1] = moment().month(dob[1]-1).format('MMM');
+
     const data: IData = {
         processingRequest: false,
         country: 'nigeria',
-        
         profile_pics: user!.dp_uploaded_at?  `${process.env.apiUrl}/static/profile_pics/${user!.username}/dp.png` : '',
         ...user,
+        dob: dob.join('-')
     }
+
+    
 
     const [componentData, setComponentData] = useState(data);
 
@@ -272,7 +277,7 @@ const Settings: NextApplicationPage = () => {
                                                 disableUnderline: true,
                                             }}
                                             className={`form-control ${(!componentData.dob ? 'error' : '')} `}
-                                            inputFormat="DD-MM-YYYY"
+                                            inputFormat="DD-MMM-YYYY"
                                             value={componentData.dob}
                                             onChange={(value) => setComponentData({ ...componentData, dob: value! })}
                                             renderInput={
@@ -281,7 +286,7 @@ const Settings: NextApplicationPage = () => {
                                                         variant='standard'
                                                         fullWidth
                                                         className={`form-control ${(!componentData.dob ? 'error' : '')} `}
-                                                        placeholder='DD-MM-YYYY'
+                                                        placeholder='DD-MMM-YYYY'
                                                         {...params} />
                                             } />
                                     </LocalizationProvider>
