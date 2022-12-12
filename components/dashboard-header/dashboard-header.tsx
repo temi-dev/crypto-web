@@ -10,10 +10,11 @@ import MobileSideBar from "../dialogs/mobile-side-bar/side-bar";
 import { useAppContext } from "../../shared/contexts/app.context";
 import SendReceive from "../dialogs/send-receive/send-receive";
 import { Auth } from "../auth/auth";
+import { useAuth } from "../auth/auth-provider";
 const auth = new Auth();
 
 const DashboardHeader = ({ title }: { title: string }) => {
-
+    const { user } = useAuth()
     const [profileMenu, setProfileMenu] = React.useState<null | HTMLElement>(null);
     const profileMenuState = Boolean(profileMenu);
 
@@ -42,6 +43,11 @@ const DashboardHeader = ({ title }: { title: string }) => {
 
     const [appState, setAppState] = useAppContext()
 
+    const data = {
+        profilePicture: user!.dp_uploaded_at?  `${process.env.apiUrl}/static/profile_pics/${user!.username}/dp.png` : '/images/placeholder-profile.png'
+    }
+    const [state, setState] = useState(data);
+
     return (
         <div>
 
@@ -66,8 +72,8 @@ const DashboardHeader = ({ title }: { title: string }) => {
                         <BellIcon color="black"></BellIcon>
                     </button> */}
                     <button onClick={openProfileMenu} className="profile-menu align-items-center d-flex">
-                        <div className="profile-image " style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }}></div>
-                        <div className="profile-name">Oluwayemi</div>
+                        <div className="profile-image " style={{ backgroundImage: "url(" + state.profilePicture + ")" }}></div>
+                        <div className="profile-name">{user?.fname}</div>
                         <div className="profile-menu-nav ms-2">
                             <ChevronDownIcon color="#718096"></ChevronDownIcon>
                         </div>

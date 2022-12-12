@@ -58,7 +58,7 @@ const Settings: NextApplicationPage = () => {
     const data: IData = {
         processingRequest: false,
         country: 'nigeria',
-        profile_pics: user!.dp_uploaded_at?  `${process.env.apiUrl}/static/profile_pics/${user!.username}/dp.png` : '',
+        profile_pics: user!.dp_uploaded_at?  `${process.env.apiUrl}/static/profile_pics/${user!.username}/dp.png` : '/images/placeholder-profile.png',
         ...user,
         dob: dob.join('-')
     }
