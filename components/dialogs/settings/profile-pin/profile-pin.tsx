@@ -61,11 +61,11 @@ const ProfilePin = ({ open, setVisibilityState, user, snackbar, next }: { open: 
                 <div>
                     <div className="dialog-page">
                         <div className="dialog-header">
-                            {
-                                !user.pin_exists && (
-                                    <div className="title">Create Pin</div>
-                                )
-                            }
+                                {
+                                    !user.pin_exists && (
+                                        <div className="title">Create Pin</div>
+                                    )
+                                }
                             {
                                 user.pin_exists && (
                                     <div className="title">Enter Pin</div>
