@@ -5,7 +5,8 @@ import BvnNinUpdate from "../dialogs/settings/bvn-nin-update/bvn-nin-update";
 import ProfilePin from "../dialogs/settings/profile-pin/profile-pin";
 import useCustomSnackbar from "../snackbar/use-custom-snackbar";
 import { useAuth } from "../auth/auth-provider";
-import { resendEmailVerification } from "../../shared/services/dashboard/settings/profile/profile.service";
+import { resendEmailVerification, sendPhoneNumberVerificationCode } from "../../shared/services/dashboard/settings/profile/profile.service";
+import VerifyPhoneNumber from "../dialogs/settings/verify-phone-number/verify-phone-number";
 
 const VerificationCta = () => {
     const snackbar = useCustomSnackbar();
@@ -18,7 +19,8 @@ const VerificationCta = () => {
         bvn_verified_at?: Date,
         idc_verified_at?: Date,
         activeVerificationStep?: number,
-        sendingVerificationEmail?: boolean
+        sendingVerificationEmail?: boolean,
+        sendingPhoneVerificationCode?: boolean
     }
 
     const data: IData = {
@@ -27,7 +29,8 @@ const VerificationCta = () => {
         nin_verified_at: user!.nin_verified_at,
         bvn_verified_at: user!.bvn_verified_at,
         idc_verified_at: user!.idc_verified_at,
-        sendingVerificationEmail: false
+        sendingVerificationEmail: false,
+        sendingPhoneVerificationCode: false
     }
 
     const [componentData, setComponentData] = useState(data);
@@ -38,6 +41,8 @@ const VerificationCta = () => {
 
     const DialogsVisibilityInitState: IDialogs = {
     }
+
+    const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
 
     const pinCreated = () => {
         setUser({ ...user!, pin_exists: true })
@@ -54,6 +59,18 @@ const VerificationCta = () => {
         setData({ sendingVerificationEmail: false })
     }
 
+    const verifyPhonenumber = async () => {
+        setData({ sendingPhoneVerificationCode: true })
+        const request = await sendPhoneNumberVerificationCode(user!.phone);
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+            snackbar.showSuccess(request.data.message)
+            setDialogVisibilityState({ verifyPhoneNumberDialogVisibility: true })
+        }
+        setData({ sendingPhoneVerificationCode: false })
+    }
+
     useEffect(() => {
         if (user && !user.email_verified_at) return setData({ activeVerificationStep: 1 })
         if (user && !user.pin_exists) return setData({ activeVerificationStep: 2 })
@@ -61,7 +78,6 @@ const VerificationCta = () => {
         if (user && !user.phone_verified_at) return setData({ activeVerificationStep: 4 })
     }, [user])
 
-    const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
 
     return (
         <div>
@@ -77,9 +93,14 @@ const VerificationCta = () => {
                 componentData.activeVerificationStep == 3 &&
                 <button className="white-btn" onClick={() => setDialogVisibilityState({ bvnNinUpdateDialogVisibility: true })}>Verify NIN / BVN</button>
             }
+            {
+                componentData.activeVerificationStep == 4 &&
+                <button className="white-btn" disabled={componentData.sendingPhoneVerificationCode} onClick={verifyPhonenumber}>Verify Phone Number</button>
+            }
 
             <BvnNinUpdate open={dialogsVisibilityState.bvnNinUpdateDialogVisibility!} setVisibilityState={setDialogVisibilityState}></BvnNinUpdate>
             <ProfilePin user={user!} open={dialogsVisibilityState.profilePinVisibility!} setVisibilityState={setDialogVisibilityState} snackbar={snackbar} next={pinCreated}></ProfilePin>
+            <VerifyPhoneNumber open={dialogsVisibilityState.verifyPhoneNumberDialogVisibility!} setVisibilityState={setDialogVisibilityState} ></VerifyPhoneNumber>
         </div>
     )
 }

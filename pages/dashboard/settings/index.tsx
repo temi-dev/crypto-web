@@ -63,8 +63,6 @@ const Settings: NextApplicationPage = () => {
         dob: dob.join('-')
     }
 
-    
-
     const [componentData, setComponentData] = useState(data);
 
     const saveProfile = async (pin: number) => {

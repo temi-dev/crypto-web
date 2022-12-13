@@ -30,6 +30,7 @@ export interface IDialogs  {
     settingsAvatarDialogVisibility?: boolean,
     settingsMobileMenuVisibility?: boolean,
     profilePinVisibility?: boolean
+    verifyPhoneNumberDialogVisibility?: boolean
 }
 
 export interface IAppState{

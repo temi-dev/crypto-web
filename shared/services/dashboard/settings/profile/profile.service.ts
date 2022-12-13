@@ -5,7 +5,6 @@ import moment from 'moment';
 const updateProfile = async (data: any): Promise<ICustomHttpResponse> => {
    try {
       const token = window.localStorage.getItem('auth')
-      console.log(data.dob)
       data.dob = moment(data.dob).format('DD-MM-YYYY');
       const response = await axios.patch(`${process.env.apiUrl}/account`, { ...data, token });
       return {
@@ -101,6 +100,39 @@ const resendEmailVerification = async (): Promise<ICustomHttpResponse> => {
    }
 }
 
+const sendPhoneNumberVerificationCode = async (phone: string): Promise<ICustomHttpResponse> => {
+   try {
+      const token = window.localStorage.getItem('auth')
+      const response = await axios.post(`${process.env.apiUrl}/account/send_phone_verf_otp`, { token, phone, country_code: '+234' });
+      return {
+         responseCode: 200,
+         data: response.data
+      }
+   } catch (error: any) {
+      return {
+         responseCode: 422,
+         data: error.response?.data
+      }
+   }
+}
+
+const confirmPhoneNumberVerificationCode = async (code: string, phone: string): Promise<ICustomHttpResponse> => {
+   try {
+      const token = window.localStorage.getItem('auth')
+      const response = await axios.post(`${process.env.apiUrl}/account/verify_phone`, { 
+         token, code, phone, country_code: '+234' });
+      return {
+         responseCode: 200,
+         data: response.data
+      }
+   } catch (error: any) {
+      return {
+         responseCode: 422,
+         data: error.response?.data
+      }
+   }
+}
+
 const verifyBvn = async (bvn: string): Promise<ICustomHttpResponse> => {
    try {
       const token = window.localStorage.getItem('auth')
@@ -159,5 +191,7 @@ export {
    resendEmailVerification,
    verifyBvn,
    verifyNin,
-   getUser
+   getUser,
+   sendPhoneNumberVerificationCode,
+   confirmPhoneNumberVerificationCode
 }

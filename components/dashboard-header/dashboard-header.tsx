@@ -44,7 +44,7 @@ const DashboardHeader = ({ title }: { title: string }) => {
     const [appState, setAppState] = useAppContext()
 
     const data = {
-        profilePicture: user!.dp_uploaded_at?  `${process.env.apiUrl}/static/profile_pics/${user!.username}/dp.png` : '/images/placeholder-profile.png'
+        profilePicture: user!.dp_uploaded_at ? `${process.env.apiUrl}/static/profile_pics/${user!.username}/dp.png` : '/images/placeholder-profile.png'
     }
     const [state, setState] = useState(data);
 
@@ -89,11 +89,8 @@ const DashboardHeader = ({ title }: { title: string }) => {
                         </button>
                     </div>
                     <div className="d-flex flex-grow-1  align-items-center justify-content-end">
-                        {/* <button className="notification-btn" onClick={openNotificationsMenu}>
-                            <BellIcon color="black"></BellIcon>
-                        </button> */}
                         <button onClick={openProfileMenu} className="profile-menu align-items-center d-flex">
-                            <div className="profile-image " style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }}></div>
+                            <div className="profile-image " style={{ backgroundImage: "url(" + state.profilePicture + ")" }}></div>
                         </button>
                     </div>
                 </div>
@@ -167,14 +164,18 @@ const DashboardHeader = ({ title }: { title: string }) => {
                 }}
                 onClose={closeProfileMenu}>
                 <div className="profile-menu-name">
-                    <div className="name">Oluwayemi Akin</div>
-                    <div className="email">akinolayemi100@gmail.com</div>
+                    <div className="name">{user?.fname} {user?.lname}</div>
+                    <div className="email">{user?.email}</div>
                 </div>
                 <MenuItem onClick={closeProfileMenu}>
                     <ListItemIcon>
                         <UserOutlineIcon color="#A0AEC0"></UserOutlineIcon>
                     </ListItemIcon>
-                    <ListItemText><span className="menu-item">Your Details</span></ListItemText>
+                    <ListItemText>
+                        <Link href='/dashboard/settings'>
+                            <span className="menu-item">Your Details</span>
+                        </Link>
+                    </ListItemText>
                 </MenuItem>
                 <MenuItem onClick={() => auth.signOut()}>
                     <ListItemIcon>

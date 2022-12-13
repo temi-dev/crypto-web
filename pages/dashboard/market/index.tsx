@@ -1,14 +1,17 @@
 import { NextPage } from "next";
 import DashboardHeader from "../../../components/dashboard-header/dashboard-header";
 import DashboardSidebar from "../../../components/dashboard-sidebar/dashboard-sidebar";
-import { ReactChild, ReactFragment, ReactPortal, useState } from "react";
+import { ReactChild, ReactFragment, ReactPortal, useEffect, useState } from "react";
 import MUIDataTable from "mui-datatables";
 import { BitCoinFilledIcon, EtherumFilledIcon, GraphDown, GraphUp } from "../../../components/icons/icons";
 import { IDialogs } from "../../../shared/interface/global.interface";
 import PortfolioDetails from "../../../components/dialogs/portfolio/details/details";
 import { Typography } from "@mui/material";
+import { NextApplicationPage } from "../../_app";
+import { getMarketData } from "../../../shared/services/dashboard/market/market";
+import useCustomSnackbar from "../../../components/snackbar/use-custom-snackbar";
 
-const Market: NextPage = () => {
+const Market: NextApplicationPage = () => {
 
     const DialogsVisibilityInitState: IDialogs = {
         portfolioDetailsDialogVisibility: false
@@ -48,7 +51,6 @@ const Market: NextPage = () => {
             label: "Coin",
             options: {
                 filter: true,
-
             }
         },
         {
@@ -72,42 +74,6 @@ const Market: NextPage = () => {
         {
             name: "hoursChange",
             label: "24 Hours Change",
-            options: {
-                filter: false,
-                sort: false,
-                setCellProps: () => ({
-                    style: {
-                        minWidth: "150px"
-                    }
-                }),
-                setCellHeaderProps: () => ({
-                    style: {
-                        minWidth: "150px"
-                    }
-                })
-            }
-        },
-        {
-            name: "high24Hours",
-            label: "High 24 Hours",
-            options: {
-                filter: false,
-                sort: false,
-                setCellProps: () => ({
-                    style: {
-                        minWidth: "150px"
-                    }
-                }),
-                setCellHeaderProps: () => ({
-                    style: {
-                        minWidth: "150px"
-                    }
-                })
-            }
-        },
-        {
-            name: "low24Hours",
-            label: "Low 24 Hours",
             options: {
                 filter: false,
                 sort: false,
@@ -159,60 +125,85 @@ const Market: NextPage = () => {
         search: true,
         download: false,
         onTableChange: (action: any, state: any) => {
-            console.log(action);
-            console.dir(state);
         },
         onRowClick: (rowData: any[], rowMeta: { dataIndex: number, rowIndex: number }) => {
             setDialogVisibilityState({ portfolioDetailsDialogVisibility: true })
         }
     };
 
-    const data = [
-        {
-            coinPair: () => {
-                return (
-                    <div>
-                        <BitCoinFilledIcon color="white" fillColor="#F7931A"></BitCoinFilledIcon>
-                        <span className="coin-pair">BTC / <span>USD</span></span>
-                    </div>
-                )
-            },
-            coin: 'Bitcoin',
-            key: 1,
-            lastPrice: '$680.000',
-            hoursChange: () => {
-                return (
-                    <span>+0.37%</span>
-                )
-            },
-            high24Hours: '$680.000',
-            low24Hours: '$680.000',
-            marketTrend: <GraphUp></GraphUp>
+    const data: any = [
 
-        },
-        {
-            coinPair: () => {
-                return (
-                    <div>
-                        <EtherumFilledIcon color="white" fillColor="#627EEA"></EtherumFilledIcon>
-                        <span className="coin-pair">ETH / <span>USD</span></span>
-                    </div>
-                )
-            },
-            coin: 'Etherum',
-            key: 2,
-            lastPrice: '$80.000',
-            hoursChange: () => {
-                return (
-                    <span>+0.37%</span>
-                )
-            },
-            high24Hours: '$80.000',
-            low24Hours: '$80.000',
-            marketTrend: <GraphDown></GraphDown>
-
-        }
     ];
+
+    const [state, setState] = useState({ data })
+
+    const snackbar = useCustomSnackbar();
+
+    const getData = async () => {
+        const request = await getMarketData();
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+            let rows: { coinPair: () => JSX.Element; coin: any; key: any; lastPrice: any; hoursChange: () => JSX.Element; marketTrend: JSX.Element; }[] = []
+            request.data.data.forEach((element: any) => {
+                rows.push({
+                    coinPair: () => {
+                        return (
+                            <div>
+                                {/* <BitCoinFilledIcon color="white" fillColor="#F7931A"></BitCoinFilledIcon> */}
+                                <span className="coin-pair">{element.coin} / <span>USD</span></span>
+                            </div>
+                        )
+                    },
+                    coin: element.name,
+                    key: element.coin,
+                    lastPrice: element.price,
+                    hoursChange: () => {
+                        return (
+                            <div>
+                                {
+                                    element._24hrs >= 0 &&
+                                    (
+                                        <span className="market-green">{element._24hrs}</span>
+                                    )
+                                }
+                                {
+                                    element._24hrs < 0 &&
+                                    (
+                                        <span className="market-red">{element._24hrs}</span>
+                                    )
+                                }
+                            </div>
+
+                        )
+                    },
+                    marketTrend: () => {
+                        return (
+                            <div>
+                                {
+                                    element._24hrs >= 0 &&
+                                    (
+                                        <GraphUp></GraphUp>
+                                    )
+                                }
+                                {
+                                    element._24hrs < 0 &&
+                                    (
+                                        <GraphDown></GraphDown>
+                                    )
+                                }
+                            </div>
+                        )
+                    }
+                })
+            })
+            setState({ data: rows })
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
 
     return (
         <div className="dashboard">
@@ -231,7 +222,7 @@ const Market: NextPage = () => {
                                 <button className="active">All</button>
                             </div>
                             <MUIDataTable
-                                data={data}
+                                data={state.data}
                                 columns={columns}
                                 options={options}
                                 title={undefined} />
@@ -244,4 +235,5 @@ const Market: NextPage = () => {
     )
 }
 
+Market.requireAuth = true
 export default Market
