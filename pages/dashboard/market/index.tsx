@@ -13,6 +13,15 @@ import useCustomSnackbar from "../../../components/snackbar/use-custom-snackbar"
 
 const Market: NextApplicationPage = () => {
 
+    interface IMarketRowData {
+        coinPair: () => JSX.Element;
+        coin: string;
+        key: string;
+        lastPrice: number;
+        hoursChange: () => JSX.Element;
+        marketTrend: () => JSX.Element
+    }
+
     const DialogsVisibilityInitState: IDialogs = {
         portfolioDetailsDialogVisibility: false
     }
@@ -144,7 +153,7 @@ const Market: NextApplicationPage = () => {
         if (request.responseCode == 422) {
             snackbar.showError(request.data ? request.data.message : "Error occured");
         } else {
-            let rows: { coinPair: () => JSX.Element; coin: any; key: any; lastPrice: any; hoursChange: () => JSX.Element; marketTrend: JSX.Element; }[] = []
+            let rows: IMarketRowData[] = []
             request.data.data.forEach((element: any) => {
                 rows.push({
                     coinPair: () => {
