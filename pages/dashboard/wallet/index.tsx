@@ -7,30 +7,39 @@ import AmountInputField from "../../../components/amount-field/amount-field";
 import { BankCircleFilledIcon, CancelIcon, HometownLogo, RavenLogo, WalletPeerToPeerIcon } from "../../../components/icons/icons";
 import DepositConfirmation from "../../../components/dialogs/deposit-confirmation/deposit-confirmation";
 import { IDialogs } from "../../../shared/interface/global.interface";
+import { NextApplicationPage } from "../../_app";
+import { useAuth } from "../../../components/auth/auth-provider";
+import { getBankPeer2PeerDepositChannels } from "../../../shared/services/dashboard/wallet/wallet.service";
+import useCustomSnackbar from "../../../components/snackbar/use-custom-snackbar";
+import WithdrawDialog from "../../../components/dialogs/withdraw/withdraw";
 
-const Wallet: NextPage = () => {
+const Wallet: NextApplicationPage = () => {
+    const { user } = useAuth();
     const size = useWindowSize();
+    const snackbar = useCustomSnackbar();
 
     interface IData {
         network?: string,
         currency?: string,
-        amount?: number,
+        amount?: number | null | string,
         action?: string,
         depositChannel?: string
-        showDepositChannel?: boolean,
         showWithdrawChannel?: boolean
-        mobileHidden?: boolean
+        mobileHidden?: boolean,
+        bankPeer2PeerDepositUsers?: Array<any>,
+        flowStep?: number | null,
+        bankPeer2PeerSelectedUser?: any
+        peer2peerWallet?: string
     }
 
     const initData: IData = {
         network: '',
         currency: 'naira',
         action: 'deposit',
-        amount: 0.00,
-        depositChannel: 'peer',
-        showDepositChannel: false,
+        flowStep: null,
         showWithdrawChannel: false,
-        mobileHidden: false
+        mobileHidden: false,
+        bankPeer2PeerDepositUsers: []
     }
 
     const [componentData, setComponentData] = useState(initData);
@@ -40,14 +49,66 @@ const Wallet: NextPage = () => {
     };
 
     const showChannel = () => {
-
-        if (componentData.action == 'deposit') setData({ showDepositChannel: true, mobileHidden: size.width < 992 ? true : false })
-        if (componentData.action == 'withdraw') setData({ showWithdrawChannel: true, mobileHidden: size.width < 992 ? true : false })
-
+        if (componentData.amount! <= 0) {
+            snackbar.showError("Enter an amount to " + componentData.action);
+            return
+        }
+        if (componentData.action == 'deposit') setData({
+            flowStep: 1,
+            mobileHidden: size.width < 992 ? true : false
+        })
+        if (componentData.action == 'withdraw') setData({
+            flowStep: 1,
+            mobileHidden: size.width < 992 ? true : false
+        })
     }
 
     const DialogsVisibilityInitState: IDialogs = {
-        depositConfirmationDialogVisibility: false
+        depositConfirmationDialogVisibility: false,
+        WithdrawDialogDialogVisibility: false
+    }
+
+    const fetchBankPeer2PeerChannels = async () => {
+        const request = await getBankPeer2PeerDepositChannels(componentData.action!);
+        if (request.responseCode == 422) {
+            snackbar.showError(
+                request.data.message
+            );
+        } else {
+            setData({
+                depositChannel: 'bank',
+                flowStep: 2,
+                bankPeer2PeerDepositUsers: request.data.data
+            })
+        }
+    }
+
+    const completePeer2PeerDeposit = () => {
+        snackbar.showMessage('This transaction will be automatically marked completed once transfer is confirmed by user.')
+        setData({
+            flowStep: null,
+            amount: ''
+        })
+    }
+
+    const completeWithdraw = () => {
+        snackbar.showMessage('Withdraw successful')
+        setData({
+            flowStep: null,
+            amount: ''
+        })
+    }
+ 
+    const continueWalletSelection = () => {
+        if(componentData.action == 'deposit'){
+            setDialogVisibilityState({
+                depositConfirmationDialogVisibility: true
+            })
+        }else{
+            setDialogVisibilityState({
+                WithdrawDialogDialogVisibility: true
+            })
+        }
     }
 
     const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
@@ -68,60 +129,41 @@ const Wallet: NextPage = () => {
                             !componentData.mobileHidden && (
                                 <div className="ui-custom-tab">
                                     <div className="ui-custom-tab-header">
-                                        <div className={componentData.action == 'deposit' ? 'active' : ''} onClick={() => setData({ action: 'deposit' })}>Add Money</div>
-                                        <div className={componentData.action == 'withdraw' ? 'active' : ''} onClick={() => setData({ action: 'withdraw' })}>Withdraw</div>
+                                        <div className={componentData.action == 'deposit' ? 'active' : ''} onClick={() => setData({ action: 'deposit', flowStep: null })}>Add Money</div>
+                                        <div className={componentData.action == 'withdraw' ? 'active' : ''} onClick={() => setData({ action: 'withdraw', flowStep: null })}>Withdraw</div>
                                     </div>
 
                                     <div className="ui-custom-tab-content">
 
-                                        <div className="add-money-currency-picker">
-                                            <div>
-                                                <button onClick={() => setData({ currency: 'naira' })} className={componentData.currency == 'naira' ? 'active' : ''}>₦</button>
-                                            </div>
-                                            <div>
-                                                <button onClick={() => setData({ currency: 'usd' })} className={componentData.currency == 'usd' ? 'active' : ''}>$</button>
-                                            </div>
-                                        </div>
                                         <div className="money-amount-field">
                                             <TextField
                                                 className="input mt-3"
                                                 variant="standard"
                                                 placeholder="0.00"
                                                 fullWidth
-                                                type='text'
+                                                type='number'
                                                 InputProps={{
-                                                    disableUnderline: true,
-                                                    // startAdornment: (
-                                                    //     <div className="d-flex currency">
-                                                    //         {
-                                                    //             componentData.currency == 'usd' && (
-                                                    //                 <span>$</span>
-                                                    //             )
-                                                    //         }
-                                                    //         {
-                                                    //             componentData.currency == 'naira' && (
-                                                    //                 <span>₦</span>
-                                                    //             )
-                                                    //         }
-                                                    //     </div>
-                                                    // )
+                                                    disableUnderline: true
                                                 }}
+                                                value={componentData.amount || ''}
+                                                onChange={(e) =>
+                                                    setData({
+                                                        amount: e.target.value ? Number(e.target.value) : null
+                                                    })}
                                             />
-
                                         </div>
 
                                         <div className="wallet-balance">
-                                            <span className="wallet-balance-chip">Balance: ₦ 100,000.00</span>
+                                            <span className="wallet-balance-chip">Balance: ₦ {user?.available_bal}</span>
                                         </div>
 
                                         <div className="mt-5 mb-4">
-                                            <button className='btn btn-radius py-3 w-100 btn-primary' onClick={showChannel}>Confirm</button>
+                                            <button disabled={componentData.flowStep != null || !componentData.amount || componentData.amount <= 0} className='btn btn-radius py-3 w-100 btn-primary' onClick={showChannel}>Confirm</button>
                                         </div>
                                     </div>
                                 </div>
                             )
                         }
-
                         <div className="dashoard-overview-banner d-none transparent mt-5 d-lg-flex">
                             <div className="content">
                                 <div className="title pe-3">Experience Kochure Mobile</div>
@@ -139,65 +181,163 @@ const Wallet: NextPage = () => {
                             </div>
                         </div>
                     </div>
+
                     <div className="col-lg-5 py-4 py-xl-0">
-                        {componentData.action == 'deposit' && componentData.showDepositChannel && (
+                        {componentData.flowStep == 1 && (
                             <div className="ui-option-picker animate__animated animate__pulse" >
                                 <div className="close">
-                                    <button onClick={() => setData({ showDepositChannel: false, mobileHidden: false })}><CancelIcon color="#194BFB"></CancelIcon></button>
+                                    <button onClick={() => setData({
+                                        flowStep: null,
+                                        mobileHidden: false
+                                    })}><CancelIcon color="#194BFB"></CancelIcon></button>
                                 </div>
 
-                                <div className="heading">Deposit Channel</div>
-                                <div className="heading-note">How would you like to deposit?</div>
+                                <div className="heading">{componentData.action} Channel</div>
+                                <div className="heading-note">How would you like to {componentData.action}?</div>
 
                                 <div className="content">
                                     <div onClick={() => {
-                                        setData({ depositChannel: 'peer' })
-                                        setDialogVisibilityState({ depositConfirmationDialogVisibility: true })
-                                    }} className={componentData.depositChannel == 'peer' ? ' ui-option active' : 'ui-option'}>
+                                        setData({
+                                            depositChannel: 'peer',
+                                            flowStep: 4
+                                        })
+                                    }}
+                                        className="ui-option">
                                         <div className="icon">
                                             <WalletPeerToPeerIcon></WalletPeerToPeerIcon>
                                         </div>
                                         <div className="title">Wallet Peer to Peer</div>
                                     </div>
-                                    <div onClick={() => {
-                                        setData({ depositChannel: 'bank' })
-                                        setDialogVisibilityState({ depositConfirmationDialogVisibility: true })
-                                    }} className={componentData.depositChannel == 'bank' ? ' ui-option active' : 'ui-option'}>
-                                        <div className="icon">
-                                            <BankCircleFilledIcon></BankCircleFilledIcon>
-                                        </div>
-                                        <div className="title">Bank Peer</div>
-                                    </div>
+                                    {
+                                        componentData.action == 'deposit' && (
+                                            <div
+                                                onClick={() => {
+                                                    fetchBankPeer2PeerChannels()
+                                                }}
+                                                className="ui-option">
+                                                <div className="icon">
+                                                    <BankCircleFilledIcon></BankCircleFilledIcon>
+                                                </div>
+                                                <div className="title">Bank Peer</div>
+                                            </div>
+                                        )
+                                    }
                                 </div>
                             </div>
                         )}
-                        {componentData.action == 'withdraw' && componentData.showWithdrawChannel && (
+
+                        {componentData.flowStep == 2 && (
                             <div className="ui-option-picker animate__animated animate__pulse" >
                                 <div className="close">
-                                    <button onClick={() => setData({ showWithdrawChannel: false, mobileHidden: false })}><CancelIcon color="#194BFB"></CancelIcon></button>
+                                    <button onClick={() => setData({
+                                        flowStep: 1,
+                                        mobileHidden: false
+                                    })}><CancelIcon color="#194BFB"></CancelIcon></button>
+                                </div>
+
+                                <div className="heading">Select User</div>
+                                <div className="heading-note">Select a user to complete transaction</div>
+
+                                <div className="content">
+                                    {
+                                        componentData.bankPeer2PeerDepositUsers?.map((user: any) => {
+                                            return (
+                                                <div className={user.id == componentData.bankPeer2PeerSelectedUser?.id ? "active p2p-user" : "p2p-user"} onClick={() => setData({
+                                                    bankPeer2PeerSelectedUser: user
+                                                })}>
+                                                    @{user.account}
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                                <div>
+                                    <button type='button' disabled={!componentData.bankPeer2PeerSelectedUser} className='btn btn-primary w-100' onClick={() =>
+                                        setData({
+                                            flowStep: 3,
+                                        })}>
+                                        Continue
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {componentData.action == 'deposit' && componentData.flowStep == 3 && (
+                            <div className="ui-option-picker animate__animated animate__pulse" >
+
+                                <div className="content">
+                                    <div className="deposit-note-header">Awaiting credit on user's bank account</div>
+
+                                    <div className="deposit-info transaction-details">
+                                        <div className="data">
+                                            <div className="item">
+                                                <div className="title">Amount</div>
+                                                <div className="value">{componentData.amount}</div>
+                                            </div>
+                                            <div className="item">
+                                                <div className="title">Bank</div>
+                                                <div className="value">{componentData.bankPeer2PeerSelectedUser?.bank_name}</div>
+                                            </div>
+                                            <div className="item">
+                                                <div className="title">Account name</div>
+                                                <div className="value">{componentData.bankPeer2PeerSelectedUser?.account_name}</div>
+                                            </div>
+                                            <div className="item">
+                                                <div className="title">Account number</div>
+                                                <div className="value">{componentData.bankPeer2PeerSelectedUser?.account_number}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <p className="deposit-note-footer">
+
+                                        This transaction will be automatically marked completed once transfer is confirmed by user.
+                                        Where you did not receive agreed amount, kindly contact us via support!.
+                                    </p>
+
+                                </div>
+                                <div className="my-4">
+                                    <button type='button' className='btn btn-primary w-100' onClick={() =>
+                                        completePeer2PeerDeposit()
+                                    }>
+                                        I have completed transfer
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {componentData.flowStep == 4 && (
+                            <div className="ui-option-picker animate__animated animate__pulse" >
+                                <div className="close">
+                                    <button onClick={() => setData({
+                                        flowStep: 1,
+                                        mobileHidden: false
+                                    })}><CancelIcon color="#194BFB"></CancelIcon></button>
                                 </div>
 
                                 <div className="heading">Select  wallet</div>
 
                                 <div className="content">
-                                    <div onClick={() => setData({ depositChannel: 'peer' })} className={componentData.depositChannel == 'peer' ? ' ui-option active' : 'ui-option'}>
+                                    <div
+                                        onClick={() => {
+                                            setData({
+                                                peer2peerWallet: 'hometown'
+                                            });
+                                           continueWalletSelection()
+                                        }} className="ui-option">
                                         <div className="icon">
                                             <HometownLogo></HometownLogo>
                                         </div>
                                         <div className="title">Home Town</div>
-                                    </div>
-                                    <div onClick={() => setData({ depositChannel: 'bank' })} className={componentData.depositChannel == 'bank' ? ' ui-option active' : 'ui-option'}>
-                                        <div className="icon">
-                                            <RavenLogo></RavenLogo>
-                                        </div>
-                                        <div className="title">Raven</div>
                                     </div>
                                 </div>
                             </div>
                         )}
                     </div>
                 </div>
-                <DepositConfirmation open={dialogsVisibilityState.depositConfirmationDialogVisibility!} setVisibilityState={setDialogVisibilityState}></DepositConfirmation>
+                <DepositConfirmation open={dialogsVisibilityState.depositConfirmationDialogVisibility!} setVisibilityState={setDialogVisibilityState} amount={componentData.amount} wallet={componentData.peer2peerWallet!} complete={completePeer2PeerDeposit}></DepositConfirmation>
+
+                <WithdrawDialog open={dialogsVisibilityState.WithdrawDialogDialogVisibility!} setVisibilityState={setDialogVisibilityState} amount={componentData.amount} complete={completeWithdraw}></WithdrawDialog>
             </div>
         </div >
     )
@@ -226,5 +366,5 @@ function useWindowSize() {
     }, []);
     return windowSize;
 }
-
+Wallet.requireAuth = true;
 export default Wallet

@@ -17,7 +17,8 @@ export type User = {
     dp_uploaded_at: string,
     pin_exists: boolean,
     bank_accounts?: Array<any>
-    phone: string
+    phone: string,
+    available_bal?: number
 }
 
 export class Auth {

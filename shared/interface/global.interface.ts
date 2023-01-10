@@ -31,6 +31,7 @@ export interface IDialogs  {
     settingsMobileMenuVisibility?: boolean,
     profilePinVisibility?: boolean
     verifyPhoneNumberDialogVisibility?: boolean
+    WithdrawDialogDialogVisibility?: boolean
 }
 
 export interface IAppState{

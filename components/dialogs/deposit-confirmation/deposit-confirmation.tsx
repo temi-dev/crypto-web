@@ -1,13 +1,46 @@
 import { Dialog } from "@mui/material"
 import { IDialogs } from "../../../shared/interface/global.interface"
+import { generateDepositWalletAddress } from "../../../shared/services/dashboard/wallet/wallet.service";
 import { CancelIcon, HometownLogo } from "../../icons/icons";
+import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
+import { useEffect, useState } from "react";
 
-const DepositConfirmation = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
+const DepositConfirmation = ({ open, setVisibilityState, amount, wallet, complete }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>>, amount: any, wallet: string, complete: any }) => {
+   const snackbar = useCustomSnackbar()
     const handleDialogClose = () => {
         setVisibilityState({ depositConfirmationDialogVisibility: false });
     };
+
+    interface IWallet {
+        account_id?: string,
+        amount?: number,
+        name?: string
+    }
+    const data : IWallet = {
+    }
+    const [walletDetails, setWalletDetails] = useState(data);
+    const getWalletInfo = async () => {
+        const request = await generateDepositWalletAddress(Number(amount), wallet);
+        if (request.responseCode == 422) {
+            snackbar.showError(
+                request.data.message ? request.data.message : "An error occured"
+            );
+        } else {
+            setWalletDetails(request.data.data);
+        }
+    }
+
+    const completed = () =>{
+        complete();
+        handleDialogClose();
+    }
+
+    useEffect(() => {
+        if (open) getWalletInfo()
+    }, [open]);
+
     return (
-        <Dialog fullWidth maxWidth='xs'  open={open} onClose={handleDialogClose}>
+        <Dialog fullWidth maxWidth='xs' open={open} onClose={handleDialogClose}>
             <div className="transaction-confirmation animate__animated animate__fadeIn animate__fast p-4">
                 <div className="mb-3 dialog-close" onClick={handleDialogClose}>
                     <button onClick={handleDialogClose}>
@@ -17,10 +50,6 @@ const DepositConfirmation = ({ open, setVisibilityState }: { open: boolean, setV
                 <div className="heading">Deposit Merchant</div>
                 <div className="content">
                     <div className="text-center">
-                        <div>
-                            <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/img.png" + ")" }}></div>
-                            <div className="contact-name text-truncate">Miliano</div>
-                        </div>
 
                     </div>
                     <div className="transaction-details">
@@ -41,7 +70,7 @@ const DepositConfirmation = ({ open, setVisibilityState }: { open: boolean, setV
                                     Name
                                 </div>
                                 <div className="value">
-                                    John Doe
+                                    {walletDetails.name}
                                 </div>
                             </div>
                             <div className="item">
@@ -49,22 +78,22 @@ const DepositConfirmation = ({ open, setVisibilityState }: { open: boolean, setV
                                     Username
                                 </div>
                                 <div className="value">
-                                    Owk
+                                    {walletDetails.account_id}
                                 </div>
                             </div>
-                            <div className="item">
+                            <div className="item"   >
                                 <div className="title">
                                     Amount
                                 </div>
                                 <div className="value">
-                                    NGN 5000.00
+                                    NGN {walletDetails.amount}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="mt-5">
-                    <button className='btn btn-radius w-100 btn-primary' onClick={handleDialogClose}>Done</button>
+                    <button className='btn btn-radius w-100 btn-primary' onClick={completed}>Done</button>
                 </div>
             </div>
         </Dialog>

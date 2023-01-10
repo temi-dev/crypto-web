@@ -29,7 +29,7 @@ const createSupportTicket = async (data: any): Promise<ICustomHttpResponse> => {
    } catch (error: any) {
       return {
          responseCode: 422,
-         data: error.response.data
+         data: error.response
       }
    }
 

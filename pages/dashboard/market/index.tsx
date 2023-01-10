@@ -141,7 +141,6 @@ const Market: NextApplicationPage = () => {
     };
 
     const data: any = [
-
     ];
 
     const [state, setState] = useState({ data })
