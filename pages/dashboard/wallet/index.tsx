@@ -242,7 +242,7 @@ const Wallet: NextApplicationPage = () => {
                                     {
                                         componentData.bankPeer2PeerDepositUsers?.map((user: any) => {
                                             return (
-                                                <div className={user.id == componentData.bankPeer2PeerSelectedUser?.id ? "active p2p-user" : "p2p-user"} onClick={() => setData({
+                                                <div key={user.id} className={user.id == componentData.bankPeer2PeerSelectedUser?.id ? "active p2p-user" : "p2p-user"} onClick={() => setData({
                                                     bankPeer2PeerSelectedUser: user
                                                 })}>
                                                     @{user.account}
@@ -266,7 +266,7 @@ const Wallet: NextApplicationPage = () => {
                             <div className="ui-option-picker animate__animated animate__pulse" >
 
                                 <div className="content">
-                                    <div className="deposit-note-header">Awaiting credit on user's bank account</div>
+                                    <div className="deposit-note-header">Awaiting credit on user&apos;s bank account</div>
 
                                     <div className="deposit-info transaction-details">
                                         <div className="data">

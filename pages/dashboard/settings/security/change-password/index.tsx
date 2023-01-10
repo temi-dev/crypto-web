@@ -63,6 +63,7 @@ const Settings: NextApplicationPage = () => {
         setState({ ...state, processingRequest: true })
         const request = await changeAccountPassword({ pin, password: state.formValue.password })
         if (request.responseCode == 422) {
+            setState({ ...state, processingRequest: false })
             snackbar.showError(request.data ? request.data.message : "Error occured");
         } else {
             setState(formData)
