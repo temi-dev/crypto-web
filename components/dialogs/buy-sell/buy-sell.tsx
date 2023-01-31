@@ -175,7 +175,7 @@ const BuySell = () => {
 
     useEffect(() => {
         if (initAction) getData(initAction)
-    }, [appState.dialogStates?.buySellDialog?.visibitlity!])
+    }, [appState?.dialogStates?.buySellDialog?.visibitlity!])
 
     return (
         <Dialog fullWidth maxWidth='xs' open={appState.dialogStates?.buySellDialog?.visibitlity! || false} onClose={handleDialogClose}>

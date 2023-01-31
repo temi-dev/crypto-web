@@ -1,5 +1,5 @@
 import { BellIcon, CheckFilledIcon, ChevronDownIcon, LogoutOutlineIcon, MenuBarFilledIcon, SettingsIcon, UserOutlineIcon } from "../icons/icons"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, ListItemIcon, ListItemText } from "@mui/material";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -43,11 +43,18 @@ const DashboardHeader = ({ title }: { title: string }) => {
 
     const [appState, setAppState] = useAppContext()
 
-    const data = {
-        profilePicture: user!.dp_uploaded_at ? `${process.env.apiUrl}/static/profile_pics/${user!.username}/dp.png` : '/images/placeholder-profile.png'
-    }
-    const [state, setState] = useState(data);
+    let d: any
+    const [state, setState] = useState(d);
 
+    useEffect(() =>{
+        if(user){
+            const data = {
+                profilePicture: user!.dp_uploaded_at ? `${process.env.apiUrl}/static/profile_pics/${user!.username}/dp.png` : '/images/placeholder-profile.png'
+            }
+            
+        setState(data)
+        }
+    },[user])
     return (
         <div>
 
@@ -64,7 +71,7 @@ const DashboardHeader = ({ title }: { title: string }) => {
                     }>Buy / Sell</button>
                     
                     <button onClick={openProfileMenu} className="profile-menu align-items-center d-flex">
-                        <div className="profile-image " style={{ backgroundImage: "url(" + state.profilePicture + ")" }}></div>
+                        <div className="profile-image " style={{ backgroundImage: "url(" + state?.profilePicture + ")" }}></div>
                         <div className="profile-name">{user?.fname}</div>
                         <div className="profile-menu-nav ms-2">
                             <ChevronDownIcon color="#718096"></ChevronDownIcon>
@@ -82,7 +89,7 @@ const DashboardHeader = ({ title }: { title: string }) => {
                     </div>
                     <div className="d-flex flex-grow-1  align-items-center justify-content-end">
                         <button onClick={openProfileMenu} className="profile-menu align-items-center d-flex">
-                            <div className="profile-image " style={{ backgroundImage: "url(" + state.profilePicture + ")" }}></div>
+                            <div className="profile-image " style={{ backgroundImage: "url(" + state?.profilePicture + ")" }}></div>
                         </button>
                     </div>
                 </div>
