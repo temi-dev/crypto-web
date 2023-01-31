@@ -35,3 +35,9 @@
   font-weight: 800;
   font-size: 13px;
 }
+
+.info{
+  min-width: 125px;
+  display: flex;
+  justify-content: right;
+}

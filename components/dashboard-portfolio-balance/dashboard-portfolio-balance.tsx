@@ -3,8 +3,8 @@ import { IDialogs } from "../../shared/interface/global.interface";
 import PortfolioDetails from "../dialogs/portfolio/details/details";
 
 const DashboardPortfolioBalance = (
-    { coinIcon, coinName, percentageChange, coinBalance, fiatBalance }:
-        { coinIcon: any, coinName: string, percentageChange: string, coinBalance: number, fiatBalance: string }
+    {  coinName, percentageChange, coinBalance, fiatBalance }:
+        { coinName: string, percentageChange: number, coinBalance: number, fiatBalance: string }
 ) => {
     const DialogsVisibilityInitState: IDialogs = {
         portfolioDetailsDialogVisibility: false
@@ -15,22 +15,22 @@ const DashboardPortfolioBalance = (
     const openDialog = (data: IDialogs) => {
         setDialogVisibilityState({ ...dialogsVisibilityState, ...data });
     };
+    // onClick={() => openDialog({ portfolioDetailsDialogVisibility: true })}
     return (
         <div>
-            <div className="portfolio-list d-flex" onClick={() => openDialog({ portfolioDetailsDialogVisibility: true })}>
+            <div className="portfolio-list d-flex" >
                 <div className="d-flex">
                     <div className="me-2">
-                        {coinIcon}
+                      
                     </div>
                     <div>
                         <div className="coin-name">{coinName}</div>
-                        <div className="percentage-change green">{percentageChange}</div>
+                        <div className={`percentage-change ${percentageChange > 0 ? 'green' : 'red'}`}>{percentageChange}</div>
                     </div>
                 </div>
                 <div className="d-flex justify-content-end flex-grow-1">
                     <div className="right">
-                        <div className="coin-balance">{coinBalance}</div>
-                        <div className="fiat-balance">{fiatBalance}</div>
+                        <div className="coin-balance text-truncate">{coinBalance}</div>
                     </div>
                 </div>
 

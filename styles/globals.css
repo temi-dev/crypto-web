@@ -154,6 +154,20 @@ a.grey {
   border-radius: 10px;
 }
 
+.css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+  border: 1px solid #edf2f7 !important; 
+}
+
+.css-viou3o-MuiAutocomplete-root .MuiOutlinedInput-root {
+  padding: 5px;
+}
+
+.MuiAutocomplete-input, .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+  font-size: 14px;
+}
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+  top: 2px;
+}
 .form-control.error {
   border: 1px solid #EF1E1E !important;
 }
@@ -181,6 +195,11 @@ a.grey {
   border: 1px solid #edf2f7 !important;
   border-radius: 12px;
   outline: none;
+}
+
+input.pincode-input-text{
+  width: 34px !important;
+  height: 34px !important;
 }
 
 .form-control-select .MuiSelect-select {
@@ -223,10 +242,6 @@ a.grey {
   border-bottom: 1px solid #e2e8f0;
 }
 
-.input-focus {
-  /* border-color: rgba(43, 89, 255, 0.8) !important;
-  box-shadow: 0 0 0 0.2rem rgba(43, 89, 255, 0.8) !important; */
-}
 
 .PhoneInputInput {
   outline: none;
@@ -2100,7 +2115,12 @@ label+.css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 
 
 /* Large screens */
-@media (min-width: 992px) {}
+@media (min-width: 992px) {
+  input.pincode-input-text{
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
 
 /* Small screens */
 

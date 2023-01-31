@@ -1,7 +1,10 @@
-import { Dialog, MenuItem, Select, TextField } from "@mui/material"
-import React from "react";
+import { Autocomplete, Dialog, TextField } from "@mui/material"
+import React, { useEffect, useState } from "react";
+import PinInput from "react-pin-input";
 import { IDialogs } from "../../../shared/interface/global.interface";
-import { ArrowLeftIcon, BitCoinFilledIcon, CancelIcon, CheckCircleFilledIcon, CoinSwapIcon, EtherumFilledIcon } from "../../icons/icons";
+import { getPortfolioList, swapCoin } from "../../../shared/services/dashboard/transactions/transaction";
+import { ArrowLeftIcon, CancelIcon, CheckCircleFilledIcon, CoinSwapIcon } from "../../icons/icons";
+import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
 
 const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
 
@@ -9,22 +12,76 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
         fromCoin?: string,
         from?: number,
         to?: string,
-        toCoin?: string,
-        step: number
+        toCoin?: string | null,
+        step?: number,
+        assets?: any[]
+        toAssets?: any[]
+        amount?: number
+        pin?: string
+        processingRequest?: boolean
     }
     const formData: IFormData = {
-        fromCoin: 'bitcoin',
         step: 1,
-        toCoin: 'etherum'
+        assets: [],
+        toAssets: []
     }
-    const [form, setForm] = React.useState({ ...formData });
-    const handleSetFormData = (data: object) => {
-        setForm({ ...formData, ...data });
+    const snackbar = useCustomSnackbar();
+    const [form, setForm] = useState({ ...formData });
+
+    const handleSetFormData = (data: IFormData) => {
+        if (data.fromCoin) {
+            const toAssets = form.assets!.filter((element) => element.label != data.fromCoin);
+            setForm({ ...form, toAssets, toCoin: null, ...data });
+        } else {
+            setForm(form => ({ ...form, ...data }));
+        }
     };
+
     const handleDialogClose = () => {
-        if (form.step == 3) handleSetFormData({ step: 1 })
+        setForm(formData);
         setVisibilityState({ coinSwapDialogVisibitlity: false });
     };
+
+    const getData = async () => {
+        const request = await getPortfolioList();
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+            return
+        } else {
+            let assets: object[] = [];
+            request.data.data.forEach((element: any) => {
+                assets.push({
+                    label: element.name,
+                    asset: element.coin
+                })
+            })
+            handleSetFormData({ assets })
+        }
+    }
+
+    const submit = async () => {
+        handleSetFormData({ processingRequest: true })
+        const asset = form.assets!.find((x) => x.label == form.fromCoin).asset
+        const swap_asset = form.assets!.find((x) => x.label == form.toCoin).asset
+        const data = {
+            pin: form.pin,
+            amount: form.amount,
+            asset,
+            swap_asset
+        }
+        const request = await swapCoin(data);
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+            handleSetFormData({ processingRequest: false })
+            return
+        } else {
+        }
+    }
+
+    useEffect(() => {
+        if (open) getData()
+    }, [open])
+
     return (
         <Dialog fullWidth maxWidth='xs' open={open} onClose={handleDialogClose}>
             <div className="animate__animated animate__fadeIn animate__fast">
@@ -43,46 +100,20 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                 <div className="content padding">
                                     <div >
                                         <label className="form-label">From</label>
-                                        <TextField
-                                            className="amount-field"
-                                            variant="standard"
-                                            placeholder="0.00"
-                                            fullWidth
-                                            InputProps={{
-                                                disableUnderline: true,
-                                                endAdornment: (
-                                                    <Select
-                                                        disableUnderline
-                                                        displayEmpty
-                                                        variant='standard'
-                                                        value={form.fromCoin}
-                                                        className="currency-selector"
-                                                        label="Currency">
-                                                        <MenuItem value='bitcoin' className="ui-select-menu">
-                                                            <div className="flex-select-menu-item">
-                                                                <div>
-                                                                    <BitCoinFilledIcon fillColor="#F7931A" color="white"></BitCoinFilledIcon>
-                                                                </div>
-                                                                <div className="text">
-                                                                    <span className="">BTC</span>
-                                                                </div>
-                                                            </div>
-                                                        </MenuItem>
-                                                        <MenuItem value='etherum' className="ui-select-menu">
-                                                            <div className="flex-select-menu-item">
-                                                                <div>
-                                                                    <EtherumFilledIcon color="white" fillColor="#627EEA"></EtherumFilledIcon>
-                                                                </div>
-                                                                <div className="text">
-                                                                    <span className="">ETH</span>
-                                                                </div>
-                                                            </div>
-                                                        </MenuItem>
-                                                    </Select>
-                                                ),
+                                        <Autocomplete
+                                            disablePortal
+                                            className="mt-2 w-100"
+                                            options={form.assets!}
+                                            value={form.fromCoin}
+                                            onChange={(event: any, newValue: any) => {
+                                                if (newValue) handleSetFormData({ fromCoin: newValue.label });
                                             }}
+                                            renderInput={(params) => <TextField
+                                                {...params}
+                                                value={form.fromCoin}
+                                                label="Coin"
+                                            />}
                                         />
-
                                     </div>
 
                                     <div className="text-center mt-3 mb-2">
@@ -93,69 +124,42 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
 
                                     <div >
                                         <label className="form-label">To</label>
-                                        <TextField
-                                            className="amount-field"
-                                            variant="standard"
-                                            placeholder="0.00"
-                                            fullWidth
-                                            InputProps={{
-                                                disableUnderline: true,
-                                                endAdornment: (
-                                                    <Select
-                                                        disableUnderline
-                                                        displayEmpty
-                                                        variant='standard'
-                                                        value={form.fromCoin}
-                                                        className="currency-selector"
-                                                        label="Currency">
-                                                        <MenuItem value='bitcoin' className="ui-select-menu">
-                                                            <div className="flex-select-menu-item">
-                                                                <div>
-                                                                    <BitCoinFilledIcon fillColor="#F7931A" color="white"></BitCoinFilledIcon>
-                                                                </div>
-                                                                <div className=" text">
-                                                                    <span className="">BTC</span>
-                                                                </div>
-                                                            </div>
-                                                        </MenuItem>
-                                                        <MenuItem value='etherum' className="ui-select-menu">
-                                                            <div className="flex-select-menu-item">
-                                                                <div>
-                                                                    <EtherumFilledIcon color="white" fillColor="#627EEA"></EtherumFilledIcon>
-                                                                </div>
-                                                                <div className="text">
-                                                                    <span className="">ETH</span>
-                                                                </div>
-                                                            </div>
-                                                        </MenuItem>
-                                                    </Select>
-                                                ),
+                                        <Autocomplete
+                                            disablePortal
+                                            className="mt-2 w-100"
+                                            options={form.toAssets!}
+                                            value={form.toCoin || ''}
+                                            onChange={(event: any, newValue: any) => {
+                                                if (newValue) handleSetFormData({ toCoin: newValue.label });
                                             }}
+                                            renderInput={(params) => <TextField
+                                                {...params}
+                                                value={form.toCoin}
+                                                label="Coin"
+                                            />}
                                         />
 
                                     </div>
 
-                                    <div className="transaction-fee">
-                                        <span>Fee: 0.03</span>
-                                    </div>
-
-                                    <div className="form-coin-wallet-balance">
-                                        <div className="balance-header">Total Balance</div>
-                                        <div className="content">
-                                            <div className="fiat-balance">
-                                                <div>
-                                                    <div className="naira-balance">₦200,000.00</div>
-                                                    <div className="usd-balance">USD 500</div>
-                                                </div>
-                                            </div>
-                                            <div className="coin-balance">
-                                                <span>0.01074701</span>
-                                            </div>
-                                        </div>
+                                    <div className="mt-3">
+                                        <TextField
+                                            className="amount-field"
+                                            variant="standard"
+                                            placeholder={`Enter amount`}
+                                            fullWidth
+                                            value={form.amount || ''}
+                                            type='number'
+                                            InputProps={{
+                                                disableUnderline: true,
+                                            }}
+                                            onChange={(e) => {
+                                                handleSetFormData({ amount: Number(e.target.value) })
+                                            }}
+                                        />
                                     </div>
 
                                     <div className="mt-4 mb-4">
-                                        <button onClick={() => setForm({ step: 2 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                        <button disabled={!form.fromCoin || !form.toCoin || !form.amount} onClick={() => handleSetFormData({ step: 2 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
                                     </div>
                                 </div>
                             </div>
@@ -170,44 +174,27 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                             </div>
                             <div className="heading">Enter your pin</div>
                             <div className="content text-center">
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
+                                <PinInput
+                                    length={6}
+                                    initialValue=""
+                                    secret
+                                    onChange={(value, index) => { 
+                                        handleSetFormData({ pin: value })
                                     }}
-                                    variant="standard"
-                                />
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
+                                    type="numeric"
+                                    inputMode="number"
+                                    style={{ padding: '10px' }}
+                                    inputStyle={{ borderColor: '#ececec', borderRadius: '10px' }}
+                                    inputFocusStyle={{ borderColor: 'blue' }}
+                                    onComplete={(value, index) => {
+                                        handleSetFormData({ pin: value })
                                     }}
-                                    variant="standard"
-                                />
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                    variant="standard"
-                                />
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                    variant="standard"
-                                />
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                    variant="standard"
+                                    autoSelect={true}
+                                    regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
                                 />
                             </div>
                             <div className="mt-5">
-                                <button onClick={() => setForm({ step: 3 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                <button disabled={!form.pin || form.processingRequest} onClick={submit} className='btn btn-radius w-100 btn-primary'>Continue</button>
                             </div>
                         </div>
                     )

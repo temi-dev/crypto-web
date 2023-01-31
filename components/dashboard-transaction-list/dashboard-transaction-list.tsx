@@ -7,31 +7,35 @@ import TableRow from '@mui/material/TableRow';
 import Link from 'next/link';
 import DashboardTransactionCard from '../cards/dashboard-transaction-card/dashboard-transaction-card';
 
-const DashboardTransactionList = ({ data }: {
+const DashboardTransactionList = ({ data, mode }: {
     data: Array<{
         id: string;
         description: string;
         timestamp: string;
         amount: string;
-        status: string
-    }>
+        direction: string
+    }>,
+    mode: string
 }) => {
     return (
         <div>
-            <div className="head d-flex">
-                <div className="title">Recent Transactions</div>
-                <div className="d-flex flex-grow-1 justify-content-end">
-                    <Link href="/dashboard">
-                        <a className="view-all">View all</a>
-                    </Link>
+            {
+                mode == 'recent' &&
+                <div className="head d-flex">
+                    <div className="title">Recent Transactions</div>
+                    <div className="d-flex flex-grow-1 justify-content-end">
+                        <Link href="/dashboard/transactions">
+                            <a className="view-all">View all</a>
+                        </Link>
+                    </div>
                 </div>
-            </div>
+            }
 
             <div className="mt-2">
 
                 <div className='d-block d-lg-none'>
                     {data.map((row) => (
-                        <DashboardTransactionCard key={row.id} status={row.status} ></DashboardTransactionCard>
+                        <DashboardTransactionCard key={row.id} amount={row.amount} description={row.description} direction={row.direction} ></DashboardTransactionCard>
                     ))}
                 </div>
 
@@ -47,13 +51,21 @@ const DashboardTransactionList = ({ data }: {
                                     <TableCell className='d-flex align-items-center transaction-description' >
                                         {/* <div style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }} className="transaction-image-placeholder" >
                                         </div> */}
-                                        <div className='ms-3'>{row.description}</div>
+                                        <div className=''>{row.description}</div>
                                     </TableCell>
                                     <TableCell>{row.timestamp}</TableCell>
-                                 
+
                                     <TableCell align="right">
-                                        <span className={`transaction-status ${row.status == 'Success' ? 'credit' : 'debit'}`}>
-                                        {row.amount}
+                                        <span className={`transaction-status ${row.direction}`}>
+                                            {
+                                                row.direction == 'debit' &&
+                                                '-'
+                                            }
+                                            {
+                                                row.direction == 'credit' &&
+                                                '+'
+                                            }
+                                            <span>{row.amount}</span>
                                         </span>
                                     </TableCell>
                                 </TableRow>

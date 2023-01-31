@@ -1,47 +1,181 @@
-import { Dialog, Select, MenuItem, TextField, FormGroup, FormControl } from "@mui/material";
-import React, { useState } from "react";
+import { Dialog, Select, MenuItem, TextField, FormGroup, FormControl, Autocomplete } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import PinInput from "react-pin-input";
 import { useAppContext } from "../../../shared/contexts/app.context";
+import { getMarketData } from "../../../shared/services/dashboard/market/market";
+import { completeBuySellTransaction, getPortfolioList, getTransactionBreakdown } from "../../../shared/services/dashboard/transactions/transaction";
+import { Auth } from "../../auth/auth";
+import { useAuth } from "../../auth/auth-provider";
 import { WalletDepositFilledIcon, WalletDebitFilledIcon, ArrowLeftIcon, BitCoinFilledIcon, EtherumFilledIcon, CheckCircleFilledIcon } from "../../icons/icons";
+import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
+const auth = new Auth();
 
 const BuySell = () => {
 
+    const { user, setUser } = useAuth();
+    const snackbar = useCustomSnackbar();
+
     const [appState, setAppState] = useAppContext()
 
-    const action = appState.dialogStates!.buySellDialog?.action!
+    const initAction = appState.dialogStates!.buySellDialog?.action!
     const step = appState.dialogStates!.buySellDialog?.step! || 1
 
     interface IFormData {
+        coins?: any,
+        breakdown?: any,
         coin?: string,
         step?: number,
-        currency?: string
+        currency?: string,
+        amount?: number,
+        pin?: string,
+        gettingBreakdown?: boolean
+        completingTransaction?: boolean
+        action?: string,
+        loadingCoins?: boolean
     }
 
     const formData: IFormData = {
-        coin: 'bitcoin',
-        step: action ? 2 : 1,
-        currency: 'NGN'
+        step: initAction ? 2 : 1,
+        currency: 'NGN',
+        coins: []
     }
 
-    const [buyForm, setBuyForm] = useState({ ...formData });
+    const [form, setForm] = useState({ ...formData });
+    const [action, setAction] = useState(initAction);
 
-    const handleSetBuyForm = (data: object) => {
-        setBuyForm({ ...buyForm, ...data });
+    const handleSetForm = (data: IFormData) => {
+        setForm({ ...form, ...data });
+        return
     };
 
     const handleDialogClose = () => {
-        setAppState({ dialogStates: { buySellDialog: { visibitlity: false } } });
+        setAppState({
+            ...appState,
+            dialogStates: {
+                ...appState.dialogStates,
+                buySellDialog: { visibitlity: false }
+            }
+        });
+        setForm(formData)
     };
 
     const navigate = (step: number) => {
         setAppState({
+            ...appState,
             dialogStates: {
                 buySellDialog: {
                     ...appState.dialogStates?.buySellDialog,
-                    step
+                    step,
+                    action
                 }
             }
         })
     }
+
+    const getData = async (action: string) => {
+        const request = await getMarketData();
+        setAction(action)
+
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+            return
+        } else {
+            let assets: string[] = [];
+            let rows: any[] = [];
+            setForm({ loadingCoins: true })
+            if (action == 'sell') {
+                const portfolio = await getPortfolioList();
+                if (portfolio.responseCode == 422) {
+                    snackbar.showError(request.data ? request.data.message : "Error occured");
+                    return
+                } else {
+                    portfolio.data.data.forEach((element: any) => {
+                        assets.push(element.coin)
+                    })
+                    request.data.data.forEach((element: any) => {
+                        if (assets.includes(element.coin)) {
+                            rows.push({
+                                label: element.name,
+                                asset: element.coin
+                            })
+                        }
+                    })
+                }
+            } else if (action == 'buy') {
+                request.data.data.forEach((element: any) => {
+                    rows.push({
+                        label: element.name,
+                        asset: element.coin
+                    })
+                })
+            }
+            handleSetForm({ coins: rows, loadingCoins: false })
+        }
+    }
+
+    const getBreakdown = async () => {
+
+        if (!form.coin) {
+            return snackbar.showError(`Select a coin you want to ${action}`)
+        }
+        if (!form.amount) {
+            return snackbar.showError(`Enter the amount you want to ${action}`)
+        }
+        if (user && user.available_bal && form.amount > user.available_bal && action == 'buy') {
+            return snackbar.showError(`Amount is higher than available balance.`)
+        }
+        if (user && user.available_bal && action == 'buy' && form.amount < 200 && form.currency == 'NGN') {
+            return snackbar.showError(`Minimum amount you can buy is NGN200.`)
+        }
+        if (user && user.available_bal && action == 'sell' && form.amount < 300 && form.currency == 'NGN') {
+            return snackbar.showError(`Minimum amount you can sell is NGN300.`)
+        }
+        const assetInfo = form.coins.find((x: any) => x.label.toLowerCase() == form.coin?.toLowerCase())
+        const data = {
+            amount_in: form.currency,
+            type: action,
+            amount: form.amount,
+            asset: assetInfo.asset
+        }
+        handleSetForm({ gettingBreakdown: true })
+        const request = await getTransactionBreakdown(data);
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+            handleSetForm({ breakdown: request.data.data, gettingBreakdown: false })
+            navigate(3)
+        }
+    }
+
+    const completeTransaction = async () => {
+        if (!form.pin) {
+            return snackbar.showError(`Enter your pin`)
+        }
+        const assetInfo = form.coins.find((x: any) => x.label.toLowerCase() == form.coin?.toLowerCase())
+        const data = {
+            amount_in: form.currency,
+            amount: form.amount,
+            asset: assetInfo.asset,
+            pin: form.pin
+        }
+        handleSetForm({ completingTransaction: true })
+        const request = await completeBuySellTransaction(data, action);
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+            handleSetForm({ completingTransaction: false })
+        } else {
+            const updatedUserInfo = await auth.resolveUser();
+            if (updatedUserInfo) setUser(updatedUserInfo);
+
+            snackbar.showSuccess(request.data.message)
+            navigate(5)
+            handleSetForm({ completingTransaction: false })
+        }
+    }
+
+    useEffect(() => {
+        if (initAction) getData(initAction)
+    }, [appState.dialogStates?.buySellDialog?.visibitlity!])
 
     return (
         <Dialog fullWidth maxWidth='xs' open={appState.dialogStates?.buySellDialog?.visibitlity! || false} onClose={handleDialogClose}>
@@ -50,15 +184,8 @@ const BuySell = () => {
                     step == 1 && (
                         <div className="dailog-action-picker">
                             <div className="buy" onClick={() => {
-                                setAppState({
-                                    dialogStates: {
-                                        buySellDialog: {
-                                            ...appState.dialogStates?.buySellDialog,
-                                            action: 'buy',
-                                            step: 2
-                                        }
-                                    }
-                                })
+                                navigate(2);
+                                getData('buy')
                             }}>
                                 <div className="my-2">
                                     <WalletDepositFilledIcon fillColor='#FAFAFA' color='#194BFB'></WalletDepositFilledIcon>
@@ -66,15 +193,8 @@ const BuySell = () => {
                                 <div>Buy</div>
                             </div>
                             <div className="sell" onClick={() => {
-                                setAppState({
-                                    dialogStates: {
-                                        buySellDialog: {
-                                            ...appState.dialogStates?.buySellDialog,
-                                            action: 'sell',
-                                            step: 2
-                                        }
-                                    }
-                                })
+                                navigate(2);
+                                getData('sell')
                             }}>
                                 <div className="my-2">
                                     <WalletDebitFilledIcon fillColor='#FAFAFA' color='#194BFB'></WalletDebitFilledIcon>
@@ -91,37 +211,22 @@ const BuySell = () => {
                                 <ArrowLeftIcon color="black"></ArrowLeftIcon>
                             </div>
 
-                            <div>
+                            <div className="">
                                 <label className="form-label">Select a digital currency to {action}</label>
-                                <Select
-                                    className="form-control-select w-100"
-                                    disableUnderline
-                                    displayEmpty
-                                    variant='standard'
-                                    value={buyForm.coin}
-                                    label="Coin"
-                                    onChange={(event) => handleSetBuyForm({ coin: event.target.value })}>
-                                    <MenuItem value='bitcoin' className="ui-select-menu">
-                                        <div className="d-flex">
-                                            <div>
-                                                <BitCoinFilledIcon fillColor="#F7931A" color="white"></BitCoinFilledIcon>
-                                            </div>
-                                            <div className="mx-2">
-                                                <span className="">Bitcoin</span>
-                                            </div>
-                                        </div>
-                                    </MenuItem>
-                                    <MenuItem value='etherum' className="ui-select-menu">
-                                        <div className="d-flex">
-                                            <div>
-                                                <EtherumFilledIcon color="white" fillColor="#627EEA"></EtherumFilledIcon>
-                                            </div>
-                                            <div className="mx-2">
-                                                <span className="">Etherum</span>
-                                            </div>
-                                        </div>
-                                    </MenuItem>
-                                </Select>
+                                <Autocomplete
+                                    disablePortal
+                                    className="mt-2 w-100"
+                                    options={form.coins}
+                                    value={form.coin}
+                                    onChange={(event: any, newValue: any) => {
+                                        if (newValue) handleSetForm({ coin: newValue.label });
+                                    }}
+                                    renderInput={(params) => <TextField
+                                        {...params}
+                                        value={form.coin}
+                                        label="Coin"
+                                    />}
+                                />
                             </div>
 
                             <div className="mt-3">
@@ -130,8 +235,15 @@ const BuySell = () => {
                                 <TextField
                                     className="amount-field"
                                     variant="standard"
-                                    placeholder="Enter amount"
+                                    placeholder={`Enter amount`}
                                     fullWidth
+                                    value={form.amount || ''}
+                                    type="number"
+                                    onChange={
+                                        (e) => {
+                                            handleSetForm({ amount: Number(e.target.value) })
+                                        }
+                                    }
                                     InputProps={{
                                         disableUnderline: true,
                                         startAdornment: (
@@ -139,7 +251,12 @@ const BuySell = () => {
                                                 disableUnderline
                                                 displayEmpty
                                                 variant='standard'
-                                                value={buyForm.currency}
+                                                onChange={
+                                                    (e) => {
+                                                        handleSetForm({ currency: e.target.value })
+                                                    }
+                                                }
+                                                value={form.currency}
                                                 className="currency-selector"
                                                 label="Currency">
                                                 <MenuItem value='NGN'>
@@ -160,18 +277,18 @@ const BuySell = () => {
                                 <div className="content">
                                     <div className="fiat-balance">
                                         <div>
-                                            <div className="naira-balance">₦200,000.00</div>
+                                            <div className="naira-balance">₦ {user?.available_bal}</div>
                                             <div className="usd-balance">USD 500</div>
                                         </div>
                                     </div>
                                     <div className="coin-balance">
-                                        <span>0.01074701</span>
+                                        {/* <span>0.01074701</span> */}
                                     </div>
                                 </div>
                             </div>
 
                             <div className="mt-5 mb-3">
-                                <button onClick={() => navigate(3)} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                <button onClick={getBreakdown} disabled={form.gettingBreakdown} className='btn btn-radius w-100 btn-primary'>Continue</button>
                             </div>
                         </div>
                     )
@@ -185,25 +302,16 @@ const BuySell = () => {
                             <div className="heading">Confirmation</div>
                             <div className="content">
                                 <div className="text-center">
-                                    <BitCoinFilledIcon fillColor="#FF930F" color="white"></BitCoinFilledIcon>
                                 </div>
                                 <div className="transaction-details">
                                     <div className="transaction-details-heading">Transaction Details</div>
                                     <div className="data">
                                         <div className="item">
                                             <div className="title">
-                                                Date
+                                                Asset
                                             </div>
                                             <div className="value">
-                                                20 August, 2021
-                                            </div>
-                                        </div>
-                                        <div className="item">
-                                            <div className="title">
-                                                Time
-                                            </div>
-                                            <div className="value">
-                                                06:40PM
+                                                {form.coin}
                                             </div>
                                         </div>
                                         <div className="item">
@@ -211,7 +319,7 @@ const BuySell = () => {
                                                 Amount
                                             </div>
                                             <div className="value">
-                                                NGN500,000.00
+                                                NGN{form.amount}
                                             </div>
                                         </div>
                                         <div className="item">
@@ -219,7 +327,7 @@ const BuySell = () => {
                                                 Fee
                                             </div>
                                             <div className="value">
-                                                NGN 5.00
+                                                {form.breakdown.feePercent}
                                             </div>
                                         </div>
                                         <div className="item">
@@ -227,7 +335,7 @@ const BuySell = () => {
                                                 You Get
                                             </div>
                                             <div className="value">
-                                                0.0001
+                                                {form.breakdown.assetUnits}
                                             </div>
                                         </div>
                                     </div>
@@ -242,56 +350,34 @@ const BuySell = () => {
                 {
                     step == 4 && (
                         <div className="dialog-page">
-                            <div className="mb-3 back-nav" onClick={() => navigate(3)}>
+                            <div className="mb-3 back-nav" onClick={() => {
+                                navigate(3);
+                                handleSetForm({ pin: '' })
+                            }}>
                                 <ArrowLeftIcon color="black"></ArrowLeftIcon>
                             </div>
                             <div className="heading">Enter your pin</div>
                             <div className="content text-center">
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
+                                <PinInput
+                                    length={6}
+                                    initialValue=""
+                                    secret
+                                    onChange={(value, index) => { }}
+                                    type="numeric"
+                                    inputMode="number"
+                                    style={{ padding: '10px' }}
+                                    inputStyle={{ borderColor: '#ececec', borderRadius: '10px' }}
+                                    inputFocusStyle={{ borderColor: 'blue' }}
+                                    onComplete={(value, index) => {
+                                        handleSetForm({ pin: value })
                                     }}
-                                    variant="standard"
+                                    autoSelect={true}
+                                    regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
                                 />
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                    variant="standard"
-                                />
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                    variant="standard"
-                                />
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                    variant="standard"
-                                />
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                    variant="standard"
-                                />
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                    variant="standard"
-                                />
+
                             </div>
-                            <div className="mt-5">
-                                <button onClick={() => navigate(5)} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                            <div className="mt-4">
+                                <button onClick={completeTransaction} disabled={form.completingTransaction} className='btn btn-radius w-100 btn-primary'>Continue</button>
                             </div>
                         </div>
                     )

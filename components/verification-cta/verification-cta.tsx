@@ -7,6 +7,7 @@ import useCustomSnackbar from "../snackbar/use-custom-snackbar";
 import { useAuth } from "../auth/auth-provider";
 import { resendEmailVerification, sendPhoneNumberVerificationCode } from "../../shared/services/dashboard/settings/profile/profile.service";
 import VerifyPhoneNumber from "../dialogs/settings/verify-phone-number/verify-phone-number";
+import { useAppContext } from "../../shared/contexts/app.context";
 
 const VerificationCta = () => {
     const snackbar = useCustomSnackbar();
@@ -71,11 +72,26 @@ const VerificationCta = () => {
         setData({ sendingPhoneVerificationCode: false })
     }
 
+    const [appState, setAppState] = useAppContext();
+
     useEffect(() => {
-        if (user && !user.email_verified_at) return setData({ activeVerificationStep: 1 })
-        if (user && !user.pin_exists) return setData({ activeVerificationStep: 2 })
-        if (user && (!user.nin_verified_at && !user.bvn_verified_at)) return setData({ activeVerificationStep: 3 })
-        if (user && !user.phone_verified_at) return setData({ activeVerificationStep: 4 })
+        if (user && !user.email_verified_at) {
+            setAppState({ ...appState, incompleteVerification: true })
+            return setData({ activeVerificationStep: 1 })
+        }
+        if (user && !user.pin_exists) {
+            setAppState({ ...appState, incompleteVerification: true })
+            return setData({ activeVerificationStep: 2 })
+        }
+        if (user && (!user.nin_verified_at && !user.bvn_verified_at)) {
+            setAppState({ ...appState, incompleteVerification: true })
+            return setData({ activeVerificationStep: 3 })
+        }
+        if (user && !user.phone_verified_at) {
+            setAppState({ ...appState, incompleteVerification: true })
+            return setData({ activeVerificationStep: 4 })
+           
+        }
     }, [user])
 
 

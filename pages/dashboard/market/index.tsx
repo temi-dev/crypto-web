@@ -131,12 +131,14 @@ const Market: NextApplicationPage = () => {
         selectableRows: false,
         searchAlwaysOpen: true,
         searchOpen: true,
+        searchPlaceholder: "Search coin",
         search: true,
         download: false,
+        rowsPerPage: 100,
         onTableChange: (action: any, state: any) => {
         },
         onRowClick: (rowData: any[], rowMeta: { dataIndex: number, rowIndex: number }) => {
-            setDialogVisibilityState({ portfolioDetailsDialogVisibility: true })
+            // setDialogVisibilityState({ portfolioDetailsDialogVisibility: true })
         }
     };
 

@@ -3,29 +3,52 @@ import React, { useState } from "react";
 import { ArrowLeftIcon, CancelIcon, CheckCircleFilledIcon, NigeriaIcon } from "../../icons/icons";
 import ReactSimplyCarousel from 'react-simply-carousel';
 import { IDialogs } from "../../../shared/interface/global.interface";
+import PinInput from "react-pin-input";
+import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
+import { transferFiat } from "../../../shared/services/dashboard/transactions/transaction";
 
 const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
 
+    const snackbar = useCustomSnackbar();
     interface IFormData {
-        fromCoin?: string,
-        from?: number,
-        to?: string,
-        toCoin?: string,
-        step: number
+        recipient?: string,
+        amount?: number,
+        description?: string,
+        step?: number
+        pin?: string
+        processingRequest?: boolean
     }
     const formData: IFormData = {
-        fromCoin: 'bitcoin',
         step: 1,
-        toCoin: 'etherum'
     }
     const [form, setForm] = React.useState({ ...formData });
-    const handleSetFormData = (data: object) => {
-        setForm({ ...formData, ...data });
+
+    const handleSetFormData = (data: IFormData) => {
+        setForm({ ...form, ...data });
     };
+
     const handleDialogClose = () => {
         if (form.step == 4) handleSetFormData({ step: 1 })
         setVisibilityState({ transferDialogVisibility: false });
     };
+
+    const submit = async () => {
+        handleSetFormData({ processingRequest: true });
+        const data = {
+            pin: form.pin,
+            amount: form.amount,
+            recipent: form.recipient,
+            description: form.description
+        }
+        const request = await transferFiat(data);
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+            handleSetFormData({ processingRequest: false })
+            return
+        } else {
+        }
+    }
+
     const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
     return (
@@ -52,6 +75,11 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                             variant="standard"
                                             placeholder="Name, @username, or email"
                                             fullWidth
+                                            value={form.recipient}
+                                            onChange={(e) => {
+                                                console.log(form)
+                                                handleSetFormData({ recipient: e.target.value })
+                                            }}
                                             InputProps={{
                                                 disableUnderline: true,
                                             }}
@@ -59,7 +87,7 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
 
                                     </div>
 
-                                    <div className="recent-contacts my-3">
+                                    {/* <div className="recent-contacts my-3">
                                         <div className="headline">Recent Contacts</div>
                                         <div className="my-3">
                                             <ReactSimplyCarousel
@@ -117,15 +145,17 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
 
                                             </ReactSimplyCarousel>
                                         </div>
-                                    </div>
+                                    </div> */}
 
-                                    <div >
+                                    <div className="mt-3">
                                         <label className="form-label">Amount</label>
                                         <TextField
                                             className="amount-field"
                                             variant="standard"
                                             placeholder="Enter an amount"
                                             fullWidth
+                                            value={form.amount}
+                                            onChange={(e) => { handleSetFormData({ amount: Number(e.target.value) }) }}
                                             InputProps={{
                                                 disableUnderline: true,
                                                 endAdornment: (
@@ -145,6 +175,8 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                             variant="standard"
                                             placeholder="What’s this for?"
                                             fullWidth
+                                            value={form.description}
+                                            onChange={(e) => { handleSetFormData({ description: e.target.value }) }}
                                             InputProps={{
                                                 disableUnderline: true,
                                             }}
@@ -153,7 +185,7 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                     </div>
 
                                     <div className="mt-4 mb-4">
-                                        <button onClick={() => setForm({ step: 2 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                        <button onClick={() => handleSetFormData({ step: 2 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
                                     </div>
                                 </div>
                             </div>
@@ -171,10 +203,10 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                 Notice: Ensure that the name of the recipient is corrent as transfer are not reversible
                             </div>
                             <div className="content text-center">
-                                <span className="transfer-name-confirmation">Obi Pedro</span>
+                                <span className="transfer-name-confirmation">{form.recipient}</span>
                             </div>
                             <div className="mt-5">
-                                <button onClick={() => setForm({ step: 3 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                <button onClick={() => handleSetFormData({ step: 3 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
                             </div>
                         </div>
                     )
@@ -187,44 +219,27 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                             </div>
                             <div className="heading">Enter your pin</div>
                             <div className="content text-center">
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
+                                <PinInput
+                                    length={6}
+                                    initialValue=""
+                                    secret
+                                    onChange={(value, index) => {
+                                        handleSetFormData({ pin: value })
+                                     }}
+                                    type="numeric"
+                                    inputMode="number"
+                                    style={{ padding: '10px' }}
+                                    inputStyle={{ borderColor: '#ececec', borderRadius: '10px' }}
+                                    inputFocusStyle={{ borderColor: 'blue' }}
+                                    onComplete={(value, index) => {
+                                        handleSetFormData({ pin: value })
                                     }}
-                                    variant="standard"
-                                />
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                    variant="standard"
-                                />
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                    variant="standard"
-                                />
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                    variant="standard"
-                                />
-                                <TextField
-                                    className="form-control-2 pin-field"
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                    variant="standard"
+                                    autoSelect={true}
+                                    regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
                                 />
                             </div>
                             <div className="mt-5">
-                                <button onClick={() => setForm({ step: 4 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                <button disabled={!form.pin || form.pin.length != 6 || form.processingRequest} onClick={submit} className='btn btn-radius w-100 btn-primary'>Continue</button>
                             </div>
                         </div>
                     )

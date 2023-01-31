@@ -56,21 +56,13 @@ const DashboardHeader = ({ title }: { title: string }) => {
                 <div className="d-flex flex-grow-1  align-items-center justify-content-end">
                     <button className="btn d-none d-lg-block btn-primary" onClick={() =>
                         setAppState({
+                            ...appState,
                             dialogStates: {
                                 buySellDialog: { visibitlity: true }
                             }
                         })
                     }>Buy / Sell</button>
-                    <button className="btn d-none d-lg-block btn-secondary" onClick={() =>
-                        setAppState({
-                            dialogStates: {
-                                sendReceive: { visibitlity: true }
-                            }
-                        })
-                    }>Send / Receive</button>
-                    {/* <button className="notification-btn" onClick={openNotificationsMenu}>
-                        <BellIcon color="black"></BellIcon>
-                    </button> */}
+                    
                     <button onClick={openProfileMenu} className="profile-menu align-items-center d-flex">
                         <div className="profile-image " style={{ backgroundImage: "url(" + state.profilePicture + ")" }}></div>
                         <div className="profile-name">{user?.fname}</div>
@@ -95,60 +87,6 @@ const DashboardHeader = ({ title }: { title: string }) => {
                     </div>
                 </div>
             </div>
-
-            <Menu
-                id="notifications-menu"
-                anchorEl={notificationsMenu}
-                open={notificationsMenuState}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
-                }}
-                onClose={closeNotificationsMenu}>
-                <div>
-                    <div className="heading d-flex">
-                        <div className="text">Notifications</div>
-                        <div className="d-flex flex-grow-1 justify-content-end">
-                            <Button>
-                                <CheckFilledIcon color="#194BFB"></CheckFilledIcon>
-                                <span className="d-inline-block mx-2">Mark as Read</span>
-                            </Button>
-                        </div>
-
-                    </div>
-                    <div id="content">
-                        <div className="section-headline">
-                            Today
-                        </div>
-                        <div className="notification">
-                            <div>
-                                <div className="notification-image" style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }}></div>
-                            </div>
-                            <div className="notification-content">
-                                <div className="notification-heading">Bolade Temmy</div>
-                                <div className="notification-note">
-                                    Sent <span className="amount" >$500.00</span> to your wallet
-                                </div>
-                                <div className="notification-timestamp">2 mins ago</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id='footer'>
-                        <div>
-                            <Link href='/dashboard/notifications'>See all Notifications</Link>
-                        </div>
-                        <div>
-                            <Link href='/dashboard/settings' passHref>
-                                <SettingsIcon color="#A0AEC0"></SettingsIcon>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </Menu>
 
             <Menu
                 id="profile-menu"

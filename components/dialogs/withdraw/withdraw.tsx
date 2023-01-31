@@ -11,13 +11,13 @@ const WithdrawDialog = ({ open, setVisibilityState, amount, complete }: { open: 
     
 
     interface IWallet {
-        username?: string,
+        account?: string,
         amount?: number,
         pin?: string
-        tag?: string
+        wallet?: string
     }
     const data: IWallet = {
-        tag: 'hometown',
+        wallet: 'hometown',
     }
 
     const [walletDetails, setWalletDetails] = useState(data);
@@ -28,7 +28,7 @@ const WithdrawDialog = ({ open, setVisibilityState, amount, complete }: { open: 
     }
 
     const withdraw = async () => {
-        if (!walletDetails.username) {
+        if (!walletDetails.account) {
             snackbar.showError(
                 "Enter your Hometown username"
             );
@@ -41,12 +41,11 @@ const WithdrawDialog = ({ open, setVisibilityState, amount, complete }: { open: 
             return
         }
         setProcessingRrquest(true)
-        setWalletData({ amount })
-        const request = await walletWithdraw(walletDetails);
+        const request = await walletWithdraw({...walletDetails, amount});
         if (request.responseCode == 422) {
             setProcessingRrquest(false)
             snackbar.showError(
-                request.data.message ? request.data.message : "An error occured"
+                request.data && request.data.message ? request.data.message : "An error occured"
             );
         } else {
             setWalletDetails(request.data.data);
@@ -56,7 +55,7 @@ const WithdrawDialog = ({ open, setVisibilityState, amount, complete }: { open: 
 
     const handleDialogClose = () => {
         setVisibilityState({ WithdrawDialogDialogVisibility: false });
-        setWalletDetails({})
+        setWalletDetails(data)
     };
 
     const completed = () => {
@@ -98,9 +97,10 @@ const WithdrawDialog = ({ open, setVisibilityState, amount, complete }: { open: 
                                         }}
                                         variant="standard"
                                         name="walletUsername"
-                                        value={walletDetails.username || ''}
+                                        autoComplete="off"
+                                        value={walletDetails?.account || ''}
                                         onChange={(e) => {
-                                            setWalletData({ username: e.target.value })
+                                            setWalletData({ account: e.target.value })
                                         }}
                                     />
                                 </div>
@@ -114,7 +114,8 @@ const WithdrawDialog = ({ open, setVisibilityState, amount, complete }: { open: 
                                         }}
                                         name="pin"
                                         variant="standard"
-                                        value={walletDetails.pin || ''}
+                                        autoComplete="off"
+                                        value={walletDetails?.pin || ''}
                                         onChange={(e) => {
                                             setWalletData({ pin: e.target.value })
                                         }}

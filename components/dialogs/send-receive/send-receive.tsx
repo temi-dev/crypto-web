@@ -1,7 +1,8 @@
-import { Dialog, Select, MenuItem, TextField, FormGroup, FormControl } from "@mui/material";
+import { Dialog, Select, MenuItem, TextField, FormGroup, FormControl, Autocomplete } from "@mui/material";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../../shared/contexts/app.context";
+import { getMarketData } from "../../../shared/services/dashboard/market/market";
 import { WalletDepositFilledIcon, WalletDebitFilledIcon, ArrowLeftIcon, BitCoinFilledIcon, EtherumFilledIcon, CheckCircleFilledIcon, WalletSendIcon, WalletReceiveIcon, WalletAddIcon, WalletAddressIcon, CopyIcon } from "../../icons/icons";
 
 const SendReceive = () => {
@@ -23,18 +24,19 @@ const SendReceive = () => {
         currency: 'NGN'
     }
 
-    const [buyForm, setBuyForm] = useState({ ...formData });
+    const [form, setFormData] = useState({ ...formData });
 
     const handleSetBuyForm = (data: object) => {
-        setBuyForm({ ...buyForm, ...data });
+        setFormData({ ...form, ...data });
     };
 
     const handleDialogClose = () => {
-        setAppState({ dialogStates: { sendReceive: { visibitlity: false } } });
+        setAppState({ ...appState, dialogStates: { sendReceive: { visibitlity: false } } });
     };
 
     const navigate = (step: number) => {
         setAppState({
+            ...appState,
             dialogStates: {
                 sendReceive: {
                     ...appState.dialogStates?.sendReceive,
@@ -44,6 +46,14 @@ const SendReceive = () => {
         })
     }
 
+    const getData = async () => {
+        const request = await getMarketData();
+
+    }
+    useEffect(() => {
+        getData()
+    }, [])
+
     return (
         <Dialog fullWidth maxWidth='xs' open={appState.dialogStates?.sendReceive?.visibitlity! || false} onClose={handleDialogClose}>
             <div className="animate__animated animate__fadeIn animate__fast p-4">
@@ -52,6 +62,7 @@ const SendReceive = () => {
                         <div className="dailog-action-picker">
                             <div className="send" onClick={() => {
                                 setAppState({
+                                    ...appState,
                                     dialogStates: {
                                         sendReceive: {
                                             ...appState.dialogStates?.sendReceive,
@@ -70,6 +81,7 @@ const SendReceive = () => {
                             </div>
                             <div className="receive" onClick={() => {
                                 setAppState({
+                                    ...appState,
                                     dialogStates: {
                                         sendReceive: {
                                             ...appState.dialogStates?.sendReceive,
@@ -99,35 +111,8 @@ const SendReceive = () => {
 
                                         <div>
                                             <label className="form-label">Select a digital currency to {action}</label>
-                                            <Select
-                                                className="form-control-select w-100"
-                                                disableUnderline
-                                                displayEmpty
-                                                variant='standard'
-                                                value={buyForm.coin}
-                                                label="Coin"
-                                                onChange={(event) => handleSetBuyForm({ coin: event.target.value })}>
-                                                <MenuItem value='bitcoin' className="ui-select-menu">
-                                                    <div className="d-flex">
-                                                        <div>
-                                                            <BitCoinFilledIcon fillColor="#F7931A" color="white"></BitCoinFilledIcon>
-                                                        </div>
-                                                        <div className="mx-2">
-                                                            <span className="">Bitcoin</span>
-                                                        </div>
-                                                    </div>
-                                                </MenuItem>
-                                                <MenuItem value='etherum' className="ui-select-menu">
-                                                    <div className="d-flex">
-                                                        <div>
-                                                            <EtherumFilledIcon color="white" fillColor="#627EEA"></EtherumFilledIcon>
-                                                        </div>
-                                                        <div className="mx-2">
-                                                            <span className="">Etherum</span>
-                                                        </div>
-                                                    </div>
-                                                </MenuItem>
-                                            </Select>
+                                          
+                                          
                                         </div>
 
                                         <div className="mt-3">
@@ -145,7 +130,7 @@ const SendReceive = () => {
                                                             disableUnderline
                                                             displayEmpty
                                                             variant='standard'
-                                                            value={buyForm.currency}
+                                                            value={form.currency}
                                                             className="currency-selector"
                                                             label="Currency">
                                                             <MenuItem value='NGN'>
@@ -356,7 +341,7 @@ const SendReceive = () => {
                                                 disableUnderline
                                                 displayEmpty
                                                 variant='standard'
-                                                value={buyForm.coin}
+                                                value={form.coin}
                                                 label="Coin"
                                                 onChange={(event) => handleSetBuyForm({ coin: event.target.value })}>
                                                 <MenuItem value='bitcoin' className="ui-select-menu">

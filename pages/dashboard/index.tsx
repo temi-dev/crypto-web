@@ -42,7 +42,7 @@ ChartJS.register(
     Legend
 )
 import DashboardTransactionList from "../../components/dashboard-transaction-list/dashboard-transaction-list";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CoinSwap from "../../components/dialogs/coin-swap/coin-swap";
 import MoneyConversion from "../../components/dialogs/convert/convert";
 import Transfer from "../../components/dialogs/transfer/transfer";
@@ -53,41 +53,31 @@ import { useAppContext } from "../../shared/contexts/app.context";
 import { NextApplicationPage } from "../_app";
 import VerificationCta from "../../components/verification-cta/verification-cta";
 import { useAuth } from "../../components/auth/auth-provider";
+import { getPortfolioList, getTransactionsList } from "../../shared/services/dashboard/transactions/transaction";
+import useCustomSnackbar from "../../components/snackbar/use-custom-snackbar";
 
 const Dashboard: NextApplicationPage = (props) => {
 
-    const {user} = useAuth();
+    interface IComponentData {
+        transactions?: Array<any>,
+        loadingTransactions?: boolean
+    }
+    interface IAssetsData {
+        assets?: Array<any>,
+        loadingAssets?: boolean
+    }
 
-    const rows = [
-        {
-            id: '12',
-            description: "Bitcoin transaction",
-            timestamp: "12th Feb, 2022",
-            amount: "-$1000",
-            status: "Pending"
-        },
-        {
-            id: '13',
-            description: "Cash Withdraw",
-            timestamp: "12th Feb, 2022",
-            amount: "-$1000",
-            status: "Success"
-        },
-        {
-            id: '14',
-            description: "Bitcoin transaction",
-            timestamp: "12th Feb, 2022",
-            amount: "-$1000",
-            status: "Pending"
-        },
-        {
-            id: '15',
-            description: "Cash Withdraw",
-            timestamp: "12th Feb, 2022",
-            amount: "-$1000",
-            status: "Success"
-        }
-    ];
+    const { user } = useAuth();
+    const snackbar = useCustomSnackbar();
+
+    const initComponentData: IComponentData = {
+        transactions: [],
+        loadingTransactions: true
+    }
+
+    const initAssets : IAssetsData = {
+        
+    }
 
     const DialogsVisibilityInitState: IDialogs = {
         coinSwapDialogVisibitlity: false,
@@ -103,9 +93,42 @@ const Dashboard: NextApplicationPage = (props) => {
         setDialogVisibilityState({ ...dialogsVisibilityState, ...data });
     };
 
-    const [appState, setAppState] = useAppContext()
+    const [appState, setAppState] = useAppContext();
+    const [componentData, setComponentData] = useState(initComponentData);
+    const [assetsData, setAssets] = useState(initAssets);
 
-    const [buySellDialogAction, setBuySellDialogAction] = useState('buy')
+    const setData = (data: IComponentData) => {
+        setComponentData({   ...componentData, ...data})
+    }
+
+    const getTransactions = async () => {
+        const request = await getTransactionsList();
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+            setData({
+                transactions: request.data.data.slice(0, 5),
+                loadingTransactions: false
+            })
+            
+        getPortfolio();
+        }
+    }
+
+    const getPortfolio = async () => {
+        const request = await getPortfolioList();
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+            setAssets({
+                assets: request.data.data.slice(0, 5)
+            })
+        }
+    }
+    
+    useEffect(() => {
+        getTransactions();
+    }, [])
 
     return (
         <div className="dashboard">
@@ -127,13 +150,19 @@ const Dashboard: NextApplicationPage = (props) => {
                                 <div className="title">Crypto For Better</div>
                                 <div className="note">Experience kochure on mobile app</div>
                                 <div className="cta">
-                                    <VerificationCta/>
-                                    {/* <picture>
-                                        <img alt="google play" src="/icons/google-play.svg"></img>
-                                    </picture>
-                                    <picture>
-                                        <img alt="apple store" className="d-inline-block ms-2" src="/icons/apple-store.svg"></img>
-                                    </picture> */}
+                                    
+                                <VerificationCta />
+                                    {
+                                       appState && !appState.incompleteVerification &&
+                                        <div>
+                                            <picture>
+                                                <img alt="google play" src="/icons/google-play.svg"></img>
+                                            </picture>
+                                            <picture>
+                                                <img alt="apple store" className="d-inline-block ms-2" src="/icons/apple-store.svg"></img>
+                                            </picture>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                             <div className="d-none d-lg-flex flex-grow-1 justify-content-end">
@@ -144,6 +173,7 @@ const Dashboard: NextApplicationPage = (props) => {
                         <div className="dashboard-ctas">
 
                             <div className="flex-fill cursor-pointer" onClick={() => setAppState({
+                                ...appState,
                                 dialogStates: {
                                     buySellDialog: {
                                         visibitlity: true,
@@ -159,6 +189,7 @@ const Dashboard: NextApplicationPage = (props) => {
                             </div>
 
                             <div className="flex-fill cursor-pointer" onClick={() => setAppState({
+                                 ...appState,
                                 dialogStates: {
                                     buySellDialog: {
                                         visibitlity: true,
@@ -173,45 +204,10 @@ const Dashboard: NextApplicationPage = (props) => {
                                 <div className="cta-text">Sell</div>
                             </div>
 
-                            <div className="flex-fill cursor-pointer"
-                                onClick={() =>
-                                    setAppState({
-                                        dialogStates: {
-                                            sendReceive: {
-                                                visibitlity: true,
-                                                action: 'send',
-                                                step: 2
-                                            }
-                                        }
-                                    })
-                                }>
-                                <div className="cta">
-                                    <button><WalletSendIcon color="white"></WalletSendIcon></button>
-                                </div>
-                                <div className="cta-text">Send</div>
-                            </div>
-
-                            <div className="flex-fill cursor-pointer"
-                                onClick={() =>
-                                    setAppState({
-                                        dialogStates: {
-                                            sendReceive: {
-                                                visibitlity: true,
-                                                action: 'receive',
-                                                step: 2
-                                            }
-                                        }
-                                    })
-                                }>
-                                <div className="cta">
-                                    <button><WalletReceiveIcon color="white"></WalletReceiveIcon></button>
-                                </div>
-                                <div className="cta-text">Receive</div>
-                            </div>
                         </div>
 
                         <div className="box-section mt-4 d-none d-lg-block">
-                            <DashboardTransactionList data={rows}></DashboardTransactionList>
+                            <DashboardTransactionList mode="recent" data={componentData.transactions!}></DashboardTransactionList>
                         </div>
 
                     </div>
@@ -237,7 +233,7 @@ const Dashboard: NextApplicationPage = (props) => {
                                 </div>
                                 <div className="balance">
                                     <div className="heading">Balance</div>
-                                    <div className="amount">₦200,000.00</div>
+                                    <div className="amount">₦ {user?.available_bal}</div>
                                 </div>
                             </div>
 
@@ -254,12 +250,7 @@ const Dashboard: NextApplicationPage = (props) => {
                                     </div>
                                     <div className="cta-text">Transfer</div>
                                 </div>
-                                <div className="flex-fill cursor-pointer" onClick={() => openDialog({ conversionDialogVisibilty: true })}>
-                                    <div className="cta">
-                                        <ExchangeIcon color="#FACC15"></ExchangeIcon>
-                                    </div>
-                                    <div className="cta-text">Convert</div>
-                                </div>
+
                                 <div className="flex-fill cursor-pointer" onClick={() => openDialog({ priceAlertsDialogVisibility: true })}>
                                     <div className="cta">
                                         <BellIcon color="#1D38E4"></BellIcon>
@@ -270,7 +261,7 @@ const Dashboard: NextApplicationPage = (props) => {
                         </div>
 
                         <div className="box-section mt-4 d-block d-lg-none">
-                            <DashboardTransactionList data={rows}></DashboardTransactionList>
+                            <DashboardTransactionList mode="recent" data={componentData.transactions!}></DashboardTransactionList>
                         </div>
 
                         <div className="box-section mt-4">
@@ -280,13 +271,14 @@ const Dashboard: NextApplicationPage = (props) => {
                             </div>
 
                             <div className="mt-2">
-                                <DashboardPortfolioBalance coinIcon={<BitCoinFilledIcon color="white" fillColor="#F7931A"></BitCoinFilledIcon>} coinName="BTC" percentageChange={"+5%"} coinBalance={0.222} fiatBalance={"NGN200,000"} ></DashboardPortfolioBalance>
+                                {
+                                    assetsData.assets?.map((element) =>{
+                                        return (
+                                            <DashboardPortfolioBalance  key={element.id} coinName={element.coin} percentageChange={element._24hrs} coinBalance={element.bal} fiatBalance={"NGN200,000"} ></DashboardPortfolioBalance>
+                                        )
+                                    })
+                                }
 
-                                <DashboardPortfolioBalance coinIcon={<EtherumFilledIcon color="white" fillColor="#627EEA"></EtherumFilledIcon>} coinName="ETH" percentageChange={"+2%"} coinBalance={1.222} fiatBalance={"NGN1,000,000"} ></DashboardPortfolioBalance>
-
-                                <DashboardPortfolioBalance coinIcon={<DashCoinFilledIcon color="white" fillColor="#008DE4"></DashCoinFilledIcon>} coinName="DASH" percentageChange={"+5%"} coinBalance={50.222} fiatBalance={"NGN250,000"} ></DashboardPortfolioBalance>
-
-                                <DashboardPortfolioBalance coinIcon={<TetherCoinFilledIcon color="white" fillColor="#53AE94"></TetherCoinFilledIcon>} coinName="TETHER" percentageChange={"+5%"} coinBalance={110.222} fiatBalance={"NGN50,000"} ></DashboardPortfolioBalance>
                             </div>
 
                         </div>
@@ -297,7 +289,6 @@ const Dashboard: NextApplicationPage = (props) => {
 
                 <CoinSwap open={dialogsVisibilityState.coinSwapDialogVisibitlity!} setVisibilityState={setDialogVisibilityState}></CoinSwap>
 
-                <MoneyConversion open={dialogsVisibilityState.conversionDialogVisibilty!} setVisibilityState={setDialogVisibilityState}></MoneyConversion>
 
                 <Transfer open={dialogsVisibilityState.transferDialogVisibility!} setVisibilityState={setDialogVisibilityState}></Transfer>
 

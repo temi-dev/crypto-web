@@ -1,5 +1,6 @@
 import { Dialog, TextField } from "@mui/material"
 import React from "react";
+import PinInput from "react-pin-input";
 import { IDialogs } from "../../../../shared/interface/global.interface";
 import { confirmPhoneNumberVerificationCode } from "../../../../shared/services/dashboard/settings/profile/profile.service";
 import { useAuth } from "../../../auth/auth-provider";
@@ -64,22 +65,25 @@ const VerifyPhoneNumber = ({ open, setVisibilityState }: { open: boolean, setVis
                                 </button>
                             </div>
                         </div>
-                        <div className="content padding">
+                        <div className="content padding text-center">
                             <div >
-                                <TextField
-                                    type='number'
-                                    className={`form-control ${(!form.pin && form.formSubmitted ? 'error' : '')} `}
-                                    variant="standard"
-                                    placeholder="Enter code"
-                                    fullWidth
-                                    value={form.pin || ''}
-                                    onChange={(e) => {
-                                        handleSetFormData({ pin: e.target.value })
+                            <PinInput
+                                    length={6}
+                                    initialValue=""
+                                    secret
+                                    onChange={(value, index) => { }}
+                                    type="numeric"
+                                    inputMode="number"
+                                    style={{ padding: '10px' }}
+                                    inputStyle={{ borderColor: !form.pin && form.formSubmitted ? 'red' : '#ececec', borderRadius: '10px' }}
+                                    inputFocusStyle={{ borderColor: 'blue' }}
+                                    onComplete={(value, index) => {
+                                        handleSetFormData({ pin: value })
                                     }}
-                                    InputProps={{
-                                        disableUnderline: true,
-                                    }}
+                                    autoSelect={true}
+                                    regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
                                 />
+                                
                                 {
                                     ((!form.pin) && form.formSubmitted) && (
                                         <div className='error-message'>Enter the verification code sent to your phone</div>

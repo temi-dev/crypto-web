@@ -35,7 +35,8 @@ export interface IDialogs  {
 }
 
 export interface IAppState{
-    dialogStates?: IDialogs
+    dialogStates?: IDialogs,
+    incompleteVerification?: boolean
 }
 
 export interface ICustomHttpResponse {

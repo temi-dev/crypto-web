@@ -87,7 +87,8 @@ const Wallet: NextApplicationPage = () => {
         snackbar.showMessage('This transaction will be automatically marked completed once transfer is confirmed by user.')
         setData({
             flowStep: null,
-            amount: ''
+            amount: '',
+            mobileHidden: false 
         })
     }
 
@@ -95,7 +96,8 @@ const Wallet: NextApplicationPage = () => {
         snackbar.showMessage('Withdraw successful')
         setData({
             flowStep: null,
-            amount: ''
+            amount: '',
+            mobileHidden: false
         })
     }
  
