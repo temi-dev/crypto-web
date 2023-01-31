@@ -19,6 +19,7 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
         amount?: number
         pin?: string
         processingRequest?: boolean
+        fromAsset?: any
     }
     const formData: IFormData = {
         step: 1,
@@ -31,7 +32,9 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
     const handleSetFormData = (data: IFormData) => {
         if (data.fromCoin) {
             const toAssets = form.assets!.filter((element) => element.label != data.fromCoin);
-            setForm({ ...form, toAssets, toCoin: null, ...data });
+            const fromAsset = form.assets!.find((element) => element.label == data.fromCoin);
+            console.log(fromAsset)
+            setForm({ ...form, toAssets, fromAsset, toCoin: null, ...data });
         } else {
             setForm(form => ({ ...form, ...data }));
         }
@@ -52,7 +55,8 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
             request.data.data.forEach((element: any) => {
                 assets.push({
                     label: element.name,
-                    asset: element.coin
+                    asset: element.coin,
+                    bal: element.bal
                 })
             })
             handleSetFormData({ assets })
@@ -75,6 +79,8 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
             handleSetFormData({ processingRequest: false })
             return
         } else {
+            handleDialogClose()
+            snackbar.showSuccess(request.data.message)
         }
     }
 
@@ -141,6 +147,20 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
 
                                     </div>
 
+                                    {
+                                        form.fromCoin &&
+                                        <div className="form-coin-wallet-balance">
+                                            <div className="balance-header">{form.fromAsset?.label} balance</div>
+                                            <div className="content">
+                                                <div className="fiat-balance">
+                                                    <div>
+                                                        <div className="naira-balance">{form.fromAsset?.bal}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
                                     <div className="mt-3">
                                         <TextField
                                             className="amount-field"
@@ -178,7 +198,7 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                     length={6}
                                     initialValue=""
                                     secret
-                                    onChange={(value, index) => { 
+                                    onChange={(value, index) => {
                                         handleSetFormData({ pin: value })
                                     }}
                                     type="numeric"

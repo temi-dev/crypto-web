@@ -1,38 +1,89 @@
 import { Checkbox, Dialog, MenuItem, Select, TextField } from "@mui/material"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IDialogs } from "../../../shared/interface/global.interface";
 import { BitCoinFilledIcon, CancelIcon, EtherumFilledIcon, NotificationBellIllustrationIcon } from "../../icons/icons";
 
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { Autocomplete } from "@mui/lab";
+import { getMarketData } from "../../../shared/services/dashboard/market/market";
+import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
+import { createPriceAlert } from "../../../shared/services/dashboard/price-alert/price-alert";
+import { useAuth } from "../../auth/auth-provider";
 
 
 const PriceAlert = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
+    const {user} = useAuth()
     interface IFormData {
         coin?: string,
         step?: number,
         when?: string,
         frequency?: string,
         currency?: string
+        coins?: any[]
+        price?: number
     }
 
     const formData: IFormData = {
         coin: '',
-        step: 1,
+        coins: [],
+        step: 2,
         when: '',
         frequency: '',
-        currency: 'naira'
+        currency: 'NGN'
     }
     const [form, setForm] = useState(formData);
-
+    const snackbar = useCustomSnackbar(); 
     const setFormData = (data: IFormData) => {
         setForm({ ...form, ...data });
     };
 
     const handleDialogClose = () => {
-        setFormData({ step: 1 })
+        setForm(formData)
         setVisibilityState({ priceAlertsDialogVisibility: false });
     };
 
+    const getData = async () => {
+        const request = await getMarketData();
+
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+            return
+        } else {
+            let rows: any[] = [];
+            request.data.data.forEach((element: any) => {
+                rows.push({
+                    label: element.name,
+                    asset: element.coin
+                })
+            })
+            setFormData({ coins: rows })
+        }
+    }
+
+    const submit = async() =>{
+        const asset = form.coins!.find((x) => x.label == form.coin).asset
+        const data = {
+            asset,
+            _trigger: form.when,
+            currency: form.currency,
+            frequency: form.frequency,
+            phone: user?.phone,
+            price: form.price
+        }
+        const request = await createPriceAlert(data);
+
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+            return
+        } else {
+            handleDialogClose()
+            snackbar.showSuccess(request.data.message)
+        } 
+    }
+
+    useEffect(()=>{
+        getData()
+    }, [])
     return (
         <Dialog fullWidth maxWidth='xs' open={open} onClose={handleDialogClose}>
             <div className="animate__animated animate__fadeIn animate__fast">
@@ -79,44 +130,25 @@ const PriceAlert = ({ open, setVisibilityState }: { open: boolean, setVisibility
                                 </div>
                                 <div className="content padding">
                                     <div className="price-alert-currency">
-                                        <span onClick={() => setFormData({ currency: 'naira' })} className={form.currency == 'naira' ? 'active' : ''} >₦</span>
-                                        <span onClick={() => setFormData({ currency: 'usd' })} className={form.currency == 'usd' ? 'active' : ''} >$</span>
+                                        <span onClick={() => setFormData({ currency: 'NGN' })} className={form.currency == 'NGN' ? 'active' : ''} >₦</span>
+                                        <span onClick={() => setFormData({ currency: 'USD' })} className={form.currency == 'USD' ? 'active' : ''} >$</span>
                                     </div>
                                     <div >
                                         <label className="form-label">Choose coin</label>
-                                        <Select
-                                            className="form-control-select w-100"
-                                            disableUnderline
-                                            displayEmpty
-                                            variant='standard'
-                                            placeholder="Select coin"
+                                        <Autocomplete
+                                            disablePortal
+                                            className="mt-2 w-100"
+                                            options={form.coins!}
                                             value={form.coin}
-                                            label="Coin"
-                                            onChange={(event) => setFormData({ coin: event.target.value })}>
-                                            <MenuItem value="" className="ui-select-menu">
-                                                Select coin
-                                            </MenuItem>
-                                            <MenuItem value='bitcoin' className="ui-select-menu">
-                                                <div className="d-flex">
-                                                    <div>
-                                                        <BitCoinFilledIcon fillColor="#F7931A" color="white"></BitCoinFilledIcon>
-                                                    </div>
-                                                    <div className="mx-2">
-                                                        <span className="">Bitcoin</span>
-                                                    </div>
-                                                </div>
-                                            </MenuItem>
-                                            <MenuItem value='etherum' className="ui-select-menu">
-                                                <div className="d-flex">
-                                                    <div>
-                                                        <EtherumFilledIcon color="white" fillColor="#627EEA"></EtherumFilledIcon>
-                                                    </div>
-                                                    <div className="mx-2">
-                                                        <span className="">Etherum</span>
-                                                    </div>
-                                                </div>
-                                            </MenuItem>
-                                        </Select>
+                                            onChange={(event: any, newValue: any) => {
+                                                if (newValue) setFormData({ coin: newValue.label });
+                                            }}
+                                            renderInput={(params) => <TextField
+                                                {...params}
+                                                value={form.coin}
+                                                label="Coin"
+                                            />}
+                                        />
 
                                     </div>
 
@@ -148,10 +180,13 @@ const PriceAlert = ({ open, setVisibilityState }: { open: boolean, setVisibility
                                             className="form-control-2"
                                             variant="standard"
                                             placeholder="Enter price"
+                                            type='number'
                                             fullWidth
                                             InputProps={{
                                                 disableUnderline: true,
                                             }}
+                                            value={form.price}
+                                            onChange={(event) => setFormData({ price: Number(event.target.value) })}
                                         />
 
                                     </div>
@@ -183,7 +218,7 @@ const PriceAlert = ({ open, setVisibilityState }: { open: boolean, setVisibility
                                     </div>
 
                                     <div className="my-4">
-                                        <button onClick={handleDialogClose} className='btn btn-radius w-100 btn-primary'>Create</button>
+                                        <button onClick={submit} className='btn btn-radius w-100 btn-primary'>Create</button>
                                     </div>
                                 </div>
                             </div>
