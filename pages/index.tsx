@@ -9,6 +9,7 @@ import React from 'react';
 import { signin, verifyAuthOtp } from '../shared/services/siginin/signin.service';
 import useCustomSnackbar from '../components/snackbar/use-custom-snackbar';
 import { useRouter } from 'next/router';
+import PinInput from 'react-pin-input';
 
 interface ISigninFormValue {
     email?: string,
@@ -62,7 +63,7 @@ const Signin: NextApplicationPage = (props) => {
     const setData = (data: ISigninFormValue) => {
         setState({ ...state, formValue: { ...state.formValue, ...data } })
     }
-    
+
     const switchPassordFieldState = (data: IPasswordFieldsStates) => {
         setState({ ...state, passwordFieldsStates: { ...state.passwordFieldsStates, ...data } })
     }
@@ -77,7 +78,7 @@ const Signin: NextApplicationPage = (props) => {
             setState({ ...state, processingLoginRequest: true })
             const response = await signin(state.formValue);
             if (response.responseCode == 422) {
-                snackbar.showError(response.data? response.data.message : "Error occured")
+                snackbar.showError(response.data ? response.data.message : "Error occured")
                 setState({ ...state, processingLoginRequest: false })
             } else {
                 setState({ ...state, step: 2, formValue: { ...state.formValue, email: response.data.data } })
@@ -94,7 +95,7 @@ const Signin: NextApplicationPage = (props) => {
                 snackbar.showError(request.data.message)
                 setState({ ...state, processingOtpVerificationRequest: false })
             } else {
-                router.push('/dashboard')
+                window.location.replace('/dashboard')
             }
         }
     }
@@ -192,19 +193,28 @@ const Signin: NextApplicationPage = (props) => {
                                 <div className='form-content'>
                                     <div className='mt-3'>
                                         <label className='mb-2'>OTP*</label>
-                                        <TextField
-                                            className={`form-control ${(!state.otpFormValue.otp && state.otpFormSubitted ? 'error' : '')} `}
-                                            variant="standard"
-                                            placeholder='Enter OTP'
-                                            fullWidth
-                                            type='text'
-                                            onChange={(e) => {
-                                                setOtpFormData({ otp: e.target.value })
+                                        <PinInput
+                                            length={6}
+                                            initialValue=""
+                                            secret
+                                            onChange={(value, index) => {
+                                                setOtpFormData({ otp: value })
                                             }}
-                                            InputProps={{
-                                                disableUnderline: true
+                                            type="numeric"
+                                            inputMode="number"
+                                            style={{ padding: '10px' }}
+                                            inputStyle={{
+                                                borderColor: `${(!state.otpFormValue.otp && state.otpFormSubitted ? 'red' : '#ececec')} `,
+                                                borderRadius: '10px'
                                             }}
+                                            inputFocusStyle={{ borderColor: 'blue' }}
+                                            onComplete={(value, index) => {
+                                                setOtpFormData({ otp: value })
+                                            }}
+                                            autoSelect={true}
+                                            regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
                                         />
+                                       
                                         {
                                             ((!state.otpFormValue.otp) && state.otpFormSubitted) && (
                                                 <div className='error-message'>Enter the OTP sent to your email address</div>

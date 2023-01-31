@@ -11,7 +11,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     if (!initializing) {
       if (!user) {
         setRedirect(router.route)
-        router.push("/signup")
+        router.push("/")
       }
     }
   }, [initializing, router, user, setRedirect])

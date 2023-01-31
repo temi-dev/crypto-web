@@ -133,7 +133,7 @@ const Signup: NextApplicationPage = (props) => {
                 );
                 setState({ ...state, processingPinSetupHttpRequest: false })
             } else {
-                router.push('/dashboard')
+                window.location.replace('/dashboard')
                 snackbar.showSuccess(
                     response.data.message
                 );
