@@ -37,7 +37,7 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
         const data = {
             pin: form.pin,
             amount: form.amount,
-            recipent: form.recipient,
+            recipient: form.recipient,
             description: form.description
         }
         const request = await transferFiat(data);
@@ -46,6 +46,9 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
             handleSetFormData({ processingRequest: false })
             return
         } else {
+            handleDialogClose()
+            snackbar.showSuccess(request.data.message)
+            setForm(formData)
         }
     }
 

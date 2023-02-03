@@ -21,6 +21,7 @@ const PriceAlert = ({ open, setVisibilityState }: { open: boolean, setVisibility
         currency?: string
         coins?: any[]
         price?: number
+        processing?: boolean
     }
 
     const formData: IFormData = {
@@ -70,14 +71,17 @@ const PriceAlert = ({ open, setVisibilityState }: { open: boolean, setVisibility
             phone: user?.phone,
             price: form.price
         }
+        setFormData({ processing: true })
         const request = await createPriceAlert(data);
 
         if (request.responseCode == 422) {
+            setFormData({ processing: false })
             snackbar.showError(request.data ? request.data.message : "Error occured");
             return
         } else {
             handleDialogClose()
             snackbar.showSuccess(request.data.message)
+            setForm(formData)
         } 
     }
 
@@ -203,10 +207,10 @@ const PriceAlert = ({ open, setVisibilityState }: { open: boolean, setVisibility
                                             <MenuItem value="">
                                                 <em>Select</em>
                                             </MenuItem>
-                                            <MenuItem value='once'>
+                                            <MenuItem value='0'>
                                                 <span>Once</span>
                                             </MenuItem>
-                                            <MenuItem value='always'>
+                                            <MenuItem value='1'>
                                                 <span>Always</span>
                                             </MenuItem>
                                         </Select>

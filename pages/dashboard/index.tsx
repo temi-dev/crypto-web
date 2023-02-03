@@ -233,7 +233,7 @@ const Dashboard: NextApplicationPage = (props) => {
                                 </div>
                                 <div className="balance">
                                     <div className="heading">Balance</div>
-                                    <div className="amount">₦ {user?.available_bal}</div>
+                                    <div className="amount">₦ {user?.available_bal?.toFixed(2)}</div>
                                 </div>
                             </div>
 
