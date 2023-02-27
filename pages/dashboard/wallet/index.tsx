@@ -156,7 +156,7 @@ const Wallet: NextApplicationPage = () => {
                                         </div>
 
                                         <div className="wallet-balance">
-                                            <span className="wallet-balance-chip">Balance: ₦ {user?.available_bal}</span>
+                                            <span className="wallet-balance-chip">Balance: ₦ {user?.available_bal?.toFixed(2)}</span>
                                         </div>
 
                                         <div className="mt-5 mb-4">

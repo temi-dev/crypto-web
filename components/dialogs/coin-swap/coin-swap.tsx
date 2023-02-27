@@ -2,7 +2,7 @@ import { Autocomplete, Dialog, TextField } from "@mui/material"
 import React, { useEffect, useState } from "react";
 import PinInput from "react-pin-input";
 import { IDialogs } from "../../../shared/interface/global.interface";
-import { getPortfolioList, swapCoin } from "../../../shared/services/dashboard/transactions/transaction";
+import { getPortfolioList, getSwapTransactionBreakdown, swapCoin } from "../../../shared/services/dashboard/transactions/transaction";
 import { ArrowLeftIcon, CancelIcon, CheckCircleFilledIcon, CoinSwapIcon } from "../../icons/icons";
 import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
 
@@ -20,6 +20,9 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
         pin?: string
         processingRequest?: boolean
         fromAsset?: any
+        toAsset?: any
+        gettingBreakdown?: boolean
+        breakdown?: any,
     }
     const formData: IFormData = {
         step: 1,
@@ -33,9 +36,12 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
         if (data.fromCoin) {
             const toAssets = form.assets!.filter((element) => element.label != data.fromCoin);
             const fromAsset = form.assets!.find((element) => element.label == data.fromCoin);
-            console.log(fromAsset)
             setForm({ ...form, toAssets, fromAsset, toCoin: null, ...data });
         } else {
+            if (data.toCoin) {
+                const toAsset = form.assets!.find((element) => element.label == data.toCoin);
+                setForm({...form, toAsset })
+            }
             setForm(form => ({ ...form, ...data }));
         }
     };
@@ -81,6 +87,32 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
         } else {
             handleDialogClose()
             snackbar.showSuccess(request.data.message)
+        }
+    }
+
+    const setMaxAmount = () => {
+        handleSetFormData({ amount: form.fromAsset?.bal })
+    }
+
+    const navigate = (step: number) => {
+        handleSetFormData({ step })
+    }
+
+    const getBreakdown = async () => {
+        handleSetFormData({ gettingBreakdown: true });
+        
+        const data = {
+            type: 'swap',
+            amount: form.amount,
+            asset: form.fromAsset?.asset,
+            swap_asset: form.toAsset?.asset
+        }
+        const request = await getSwapTransactionBreakdown(data);
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+             handleSetFormData({ breakdown: request.data.data, gettingBreakdown: false })
+            navigate(2)
         }
     }
 
@@ -167,11 +199,18 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                             variant="standard"
                                             placeholder={`Enter amount`}
                                             fullWidth
-                                            value={form.amount || ''}
+                                            value={form.amount || 0}
                                             type='number'
+
                                             InputProps={{
                                                 disableUnderline: true,
+                                                endAdornment: (
+                                                    <button onClick={setMaxAmount} disabled={!form.fromCoin} className="max-amount-btn">
+                                                        max
+                                                    </button>
+                                                ),
                                             }}
+
                                             onChange={(e) => {
                                                 handleSetFormData({ amount: Number(e.target.value) })
                                             }}
@@ -179,7 +218,7 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                     </div>
 
                                     <div className="mt-4 mb-4">
-                                        <button disabled={!form.fromCoin || !form.toCoin || !form.amount} onClick={() => handleSetFormData({ step: 2 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                        <button disabled={!form.fromCoin || !form.toCoin || !form.amount} onClick={getBreakdown} className='btn btn-radius w-100 btn-primary'>Continue</button>
                                     </div>
                                 </div>
                             </div>
@@ -188,6 +227,64 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                 }
                 {
                     form.step == 2 && (
+                        <div className="transaction-confirmation dialog-page">
+                            <div className="d-flex align-items-center p-3">
+                                <div className=" back-nav" onClick={() => navigate(1)}>
+                                    <ArrowLeftIcon color="black"></ArrowLeftIcon>
+                                </div>
+                                <div className="heading mx-3 justify-content-center d-flex">Confirmation</div>
+                            </div>
+                            <div className="content padding">
+                                <div className="text-center">
+                                </div>
+                                <div className="transaction-details">
+                                    <div className="transaction-details-heading">Transaction Details</div>
+                                    <div className="data">
+                                        <div className="item">
+                                            <div className="title">
+                                                From
+                                            </div>
+                                            <div className="value">
+                                                {form.fromCoin}
+                                            </div>
+                                        </div>
+                                        <div className="item">
+                                            <div className="title">
+                                                To
+                                            </div>
+                                            <div className="value">
+                                                {form.toCoin}
+                                            </div>
+                                        </div>
+                                        <div className="item">
+                                            <div className="title">
+                                               Swap
+                                            </div>
+                                            <div className="value">
+                                            {form.breakdown.totalAssetUnits}  {form.fromAsset?.asset}
+                                            </div>
+                                        </div>
+                                        <div className="item">
+                                            <div className="title">
+                                               Get
+                                            </div>
+                                            <div className="value">
+                                                {form.breakdown.swapAssetUnits} {form.toAsset?.asset}
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                <div className="my-4">
+                                    <button onClick={() => navigate(3)} className='btn btn-radius w-100 btn-primary'>Confirm</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    )
+                }
+                {
+                    form.step == 3 && (
                         <div className="dialog-page p-4">
                             <div className="mb-3 back-nav" onClick={() => handleSetFormData({ step: 1 })}>
                                 <ArrowLeftIcon color="black"></ArrowLeftIcon>
@@ -220,7 +317,7 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                     )
                 }
                 {
-                    form.step == 3 && (
+                    form.step == 4 && (
                         <div className="dialog-page p-4">
                             <div className="heading">Success</div>
                             <div className="heading-note">Transaction successful</div>

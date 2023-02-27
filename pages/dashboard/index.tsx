@@ -153,7 +153,7 @@ const Dashboard: NextApplicationPage = (props) => {
                                     
                                 <VerificationCta />
                                     {
-                                       appState && !appState.incompleteVerification &&
+                                      user && appState && !appState.incompleteVerification &&
                                         <div>
                                             <picture>
                                                 <img alt="google play" src="/icons/google-play.svg"></img>

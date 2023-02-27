@@ -138,7 +138,7 @@ const Market: NextApplicationPage = () => {
         onTableChange: (action: any, state: any) => {
         },
         onRowClick: (rowData: any[], rowMeta: { dataIndex: number, rowIndex: number }) => {
-            // setDialogVisibilityState({ portfolioDetailsDialogVisibility: true })
+            setDialogVisibilityState({ portfolioDetailsDialogVisibility: true })
         }
     };
 
@@ -165,7 +165,7 @@ const Market: NextApplicationPage = () => {
                             </div>
                         )
                     },
-                    coin: element.name,
+                    coin: element.coin,
                     key: element.coin,
                     lastPrice: element.price,
                     hoursChange: () => {

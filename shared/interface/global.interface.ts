@@ -32,6 +32,7 @@ export interface IDialogs  {
     profilePinVisibility?: boolean
     verifyPhoneNumberDialogVisibility?: boolean
     WithdrawDialogDialogVisibility?: boolean
+    initVerificationDialogDialogVisibility?: boolean
 }
 
 export interface IAppState{

@@ -1,14 +1,16 @@
 import { Dialog, TextField } from "@mui/material"
 import React, { useState } from "react";
 import { ArrowLeftIcon, CancelIcon, CheckCircleFilledIcon, NigeriaIcon } from "../../icons/icons";
-import ReactSimplyCarousel from 'react-simply-carousel';
 import { IDialogs } from "../../../shared/interface/global.interface";
 import PinInput from "react-pin-input";
 import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
-import { transferFiat } from "../../../shared/services/dashboard/transactions/transaction";
+import { transferFiat, verifyAccount } from "../../../shared/services/dashboard/transactions/transaction";
+import { Auth } from "../../auth/auth";
+import { useAuth } from "../../auth/auth-provider";
+const auth = new Auth();
 
 const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
-
+    const { user, setUser } = useAuth();
     const snackbar = useCustomSnackbar();
     interface IFormData {
         recipient?: string,
@@ -17,6 +19,7 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
         step?: number
         pin?: string
         processingRequest?: boolean
+        verifiedUser?: any
     }
     const formData: IFormData = {
         step: 1,
@@ -28,8 +31,8 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
     };
 
     const handleDialogClose = () => {
-        if (form.step == 4) handleSetFormData({ step: 1 })
         setVisibilityState({ transferDialogVisibility: false });
+        setForm(formData)
     };
 
     const submit = async () => {
@@ -48,8 +51,31 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
         } else {
             handleDialogClose()
             snackbar.showSuccess(request.data.message)
-            setForm(formData)
+            setForm(formData);
+            const updatedUserInfo = await auth.resolveUser();
+            if (updatedUserInfo) setUser(updatedUserInfo);
         }
+    }
+
+    const next = async () => {
+        if (!form.recipient) {
+            return snackbar.showError("Enter your recipient");
+        } else if (!form.amount) {
+            return snackbar.showError("Enter amount to transfer");
+        } else if (!form.description) {
+            return snackbar.showError("Enter description");
+        } else {
+            handleSetFormData({ processingRequest: true });
+            const request = await verifyAccount({ username: form.recipient });
+            if (request.responseCode == 422) {
+                snackbar.showError(request.data ? request.data.message : "Error occured");
+                handleSetFormData({ processingRequest: false })
+                return
+            } else {
+                handleSetFormData({ verifiedUser: request.data.data, step: 2, processingRequest: false })
+            }
+        }
+
     }
 
     const [activeSlideIndex, setActiveSlideIndex] = useState(0);
@@ -188,7 +214,7 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                     </div>
 
                                     <div className="mt-4 mb-4">
-                                        <button onClick={() => handleSetFormData({ step: 2 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                        <button disabled={form.processingRequest}  onClick={next} className='btn btn-radius w-100 btn-primary'>Continue</button>
                                     </div>
                                 </div>
                             </div>
@@ -206,7 +232,9 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                 Notice: Ensure that the name of the recipient is corrent as transfer are not reversible
                             </div>
                             <div className="content text-center">
-                                <span className="transfer-name-confirmation">{form.recipient}</span>
+                                <span className="transfer-name-confirmation">
+                                    {form.verifiedUser?.fname}  {form.verifiedUser?.lname}
+                                </span>
                             </div>
                             <div className="mt-5">
                                 <button onClick={() => handleSetFormData({ step: 3 })} className='btn btn-radius w-100 btn-primary'>Continue</button>
@@ -228,7 +256,7 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                     secret
                                     onChange={(value, index) => {
                                         handleSetFormData({ pin: value })
-                                     }}
+                                    }}
                                     type="numeric"
                                     inputMode="number"
                                     style={{ padding: '10px' }}

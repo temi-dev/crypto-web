@@ -2,6 +2,7 @@ import { Dialog, Select, MenuItem, TextField, FormGroup, FormControl, Autocomple
 import React, { useState, useEffect } from "react";
 import PinInput from "react-pin-input";
 import { useAppContext } from "../../../shared/contexts/app.context";
+import { getAppData } from "../../../shared/services/app/app.service";
 import { getMarketData } from "../../../shared/services/dashboard/market/market";
 import { completeBuySellTransaction, getPortfolioList, getTransactionBreakdown } from "../../../shared/services/dashboard/transactions/transaction";
 import { Auth } from "../../auth/auth";
@@ -32,16 +33,21 @@ const BuySell = () => {
         completingTransaction?: boolean
         action?: string,
         loadingCoins?: boolean
+        rate?: number
+        usdBalance?: string
     }
 
     const formData: IFormData = {
         step: initAction ? 2 : 1,
         currency: 'NGN',
-        coins: []
+        coins: [],
+
     }
 
     const [form, setForm] = useState({ ...formData });
     const [action, setAction] = useState(initAction);
+    const [usdBalance, setUsdBalance] = useState('');
+    const [usdRate, setUsdRate] = useState();
 
     const handleSetForm = (data: IFormData) => {
         setForm({ ...form, ...data });
@@ -111,6 +117,18 @@ const BuySell = () => {
             }
             handleSetForm({ coins: rows, loadingCoins: false })
         }
+
+        const appDataRequest = await getAppData();
+        if (appDataRequest.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+            return
+        } else {
+            if (user && user.available_bal) {
+                const usdBalance = Number(user.available_bal / appDataRequest.data.data.app.sell_naira_rate).toFixed(2);
+                setUsdBalance(usdBalance);
+                setUsdRate(appDataRequest.data.data.app.sell_naira_rate)
+            }
+        }
     }
 
     const getBreakdown = async () => {
@@ -137,6 +155,10 @@ const BuySell = () => {
             amount: form.amount,
             asset: assetInfo.asset
         }
+        if (form.currency == 'USD') {
+            data.amount = form.amount * usdRate!
+        }
+
         handleSetForm({ gettingBreakdown: true })
         const request = await getTransactionBreakdown(data);
         if (request.responseCode == 422) {
@@ -153,10 +175,13 @@ const BuySell = () => {
         }
         const assetInfo = form.coins.find((x: any) => x.label.toLowerCase() == form.coin?.toLowerCase())
         const data = {
-            amount_in: form.currency,
+            amount_in: 'NGN',
             amount: form.amount,
             asset: assetInfo.asset,
             pin: form.pin
+        }
+        if (form.currency == 'USD' && form.amount && usdRate) {
+            data.amount = form.amount * usdRate
         }
         handleSetForm({ completingTransaction: true })
         const request = await completeBuySellTransaction(data, action);
@@ -221,11 +246,12 @@ const BuySell = () => {
                                     onChange={(event: any, newValue: any) => {
                                         if (newValue) handleSetForm({ coin: newValue.label });
                                     }}
-                                    renderInput={(params) => <TextField
-                                        {...params}
-                                        value={form.coin}
-                                        label="Coin"
-                                    />}
+                                    renderInput={(params) =>
+                                        <TextField
+                                            {...params}
+                                            value={form.coin}
+                                            label="Coin"
+                                        />}
                                 />
                             </div>
 
@@ -237,7 +263,7 @@ const BuySell = () => {
                                     variant="standard"
                                     placeholder={`Enter amount`}
                                     fullWidth
-                                    value={form.amount || ''}
+                                    value={form.amount}
                                     type="number"
                                     onChange={
                                         (e) => {
@@ -272,20 +298,21 @@ const BuySell = () => {
 
                             </div>
 
-                            <div className="form-coin-wallet-balance">
-                                <div className="balance-header">Total Balance</div>
-                                <div className="content">
-                                    <div className="fiat-balance">
-                                        <div>
-                                            <div className="naira-balance">₦ {user?.available_bal}</div>
-                                            <div className="usd-balance">USD 500</div>
+                            {
+                                user && user.available_bal && usdBalance && (
+                                    <div className="form-coin-wallet-balance">
+                                        <div className="balance-header">Total Balance</div>
+                                        <div className="content">
+                                            <div className="fiat-balance">
+                                                <div>
+                                                    <div className="naira-balance">₦ {user?.available_bal?.toFixed(2)}</div>
+                                                    <div className="usd-balance">USD {usdBalance}</div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="coin-balance">
-                                        {/* <span>0.01074701</span> */}
-                                    </div>
-                                </div>
-                            </div>
+                                )
+                            }
 
                             <div className="mt-5 mb-3">
                                 <button onClick={getBreakdown} disabled={form.gettingBreakdown} className='btn btn-radius w-100 btn-primary'>Continue</button>
@@ -318,16 +345,27 @@ const BuySell = () => {
                                             <div className="title">
                                                 Amount
                                             </div>
-                                            <div className="value">
-                                                NGN{form.amount}
-                                            </div>
+                                            {
+                                                form.currency == 'NGN' && (
+                                                    <div className="value">
+                                                        NGN{form.amount}
+                                                    </div>
+                                                )
+                                            }
+                                            {
+                                                form.currency == 'USD' && form.amount && usdRate && (
+                                                    <div className="value">
+                                                        NGN{form.amount * usdRate}
+                                                    </div>
+                                                )
+                                            }
                                         </div>
                                         <div className="item">
                                             <div className="title">
                                                 Fee
                                             </div>
                                             <div className="value">
-                                                {form.breakdown.feePercent}
+                                                {form.breakdown?.feePercent}
                                             </div>
                                         </div>
                                         <div className="item">
@@ -335,7 +373,7 @@ const BuySell = () => {
                                                 You Get
                                             </div>
                                             <div className="value">
-                                                {form.breakdown.assetUnits}
+                                                {form.breakdown?.assetUnits}
                                             </div>
                                         </div>
                                     </div>

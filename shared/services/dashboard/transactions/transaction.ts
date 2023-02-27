@@ -18,6 +18,23 @@ const getTransactionBreakdown = async (data: object): Promise<ICustomHttpRespons
 
 }
 
+const getSwapTransactionBreakdown = async (data: object): Promise<ICustomHttpResponse> => {
+    try {
+        const token = window.localStorage.getItem('auth');
+        const response = await axios.post(`${process.env.apiUrl}/account/trade_breakdown`, { token, ...data });
+        return {
+            responseCode: 200,
+            data: response.data
+        }
+    } catch (error: any) {
+        return {
+            responseCode: 422,
+            data: error.response?.data
+        }
+    }
+
+}
+
 const completeBuySellTransaction = async (data: object, type: string): Promise<ICustomHttpResponse> => {
     try {
         const token = window.localStorage.getItem('auth');
@@ -99,11 +116,29 @@ const transferFiat = async (data: object): Promise<ICustomHttpResponse> => {
     }
 }
 
+const verifyAccount = async (data: object): Promise<ICustomHttpResponse> => {
+    try {
+        const token = window.localStorage.getItem('auth');
+        const response = await axios.post(`${process.env.apiUrl}/general/verify_account`, { ...data });
+        return {
+            responseCode: 200,
+            data: response.data
+        }
+    } catch (error: any) {
+        return {
+            responseCode: 422,
+            data: error.response?.data
+        }
+    }
+}
+
 export {
     getTransactionBreakdown,
     completeBuySellTransaction,
     getTransactionsList,
     getPortfolioList,
     swapCoin,
-    transferFiat
+    transferFiat,
+    verifyAccount,
+    getSwapTransactionBreakdown
 }

@@ -13,7 +13,8 @@ const DashboardTransactionList = ({ data, mode }: {
         description: string;
         timestamp: string;
         amount: string;
-        direction: string
+        direction: string,
+        asset: string
     }>,
     mode: string
 }) => {
@@ -49,8 +50,20 @@ const DashboardTransactionList = ({ data, mode }: {
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell className='d-flex align-items-center transaction-description' >
-                                        {/* <div style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }} className="transaction-image-placeholder" >
-                                        </div> */}
+                                        {
+                                            row.asset == 'NGN' && row.direction == 'debit' &&
+                                            <img className="transaction-image-placeholder" src='/images/send.svg'/>
+                                        }
+                                        {
+                                            row.asset == 'NGN' && row.direction == 'credit' &&
+                                            <img className="transaction-image-placeholder" src='/images/receive.svg'/>
+                                        }
+                                        {
+                                            row.asset != 'NGN' &&
+                                            <div style={{ backgroundImage: "url(" + "https://api.kochure.com/test/static/assets/" + row.asset + '.png' + ")" }} className="transaction-image-placeholder" >
+                                            </div>
+                                        }
+
                                         <div className=''>{row.description}</div>
                                     </TableCell>
                                     <TableCell>{row.timestamp}</TableCell>
@@ -65,7 +78,15 @@ const DashboardTransactionList = ({ data, mode }: {
                                                 row.direction == 'credit' &&
                                                 '+'
                                             }
-                                            <span>{row.amount}</span>
+                                            {
+                                                row.asset == 'NGN' &&
+                                                '₦'
+                                            }
+                                            <span>{row.amount} </span>
+                                            {
+                                                row.asset != 'NGN' &&
+                                                row.asset
+                                            }
                                         </span>
                                     </TableCell>
                                 </TableRow>
@@ -74,7 +95,7 @@ const DashboardTransactionList = ({ data, mode }: {
                     </Table>
                 </TableContainer>
             </div>
-        </div>
+        </div >
     )
 }
 

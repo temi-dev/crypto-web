@@ -154,20 +154,23 @@ a.grey {
   border-radius: 10px;
 }
 
-.css-1d3z3hw-MuiOutlinedInput-notchedOutline{
-  border: 1px solid #edf2f7 !important; 
+.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  border: 1px solid #edf2f7 !important;
 }
 
 .css-viou3o-MuiAutocomplete-root .MuiOutlinedInput-root {
   padding: 5px;
 }
 
-.MuiAutocomplete-input, .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+.MuiAutocomplete-input,
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
   font-size: 14px;
 }
-.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
   top: 2px;
 }
+
 .form-control.error {
   border: 1px solid #EF1E1E !important;
 }
@@ -197,9 +200,64 @@ a.grey {
   outline: none;
 }
 
-input.pincode-input-text{
+input.pincode-input-text {
   width: 34px !important;
   height: 34px !important;
+}
+
+.verify-profile {
+  color: #F60A0A;
+  background: #FFF0F0;
+  outline: none;
+  border: 0;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 10px 25px;
+  border-radius: 12px;
+}
+
+.verification-list {
+  padding: 15px;
+  border: 0.837963px solid #E2E8F0;
+  border-radius: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+  background: white;
+  width: 100%;
+  outline: none;
+  text-align: left;
+}
+
+.verification-list:disabled {
+  opacity: 0.7;
+}
+
+.verification-list:hover,
+.verification-list.done {
+  border: 1px solid var(--primaryColor);
+}
+
+.verification-list .title {
+  font-weight: bold;
+}
+
+.verification-list .description {
+  color: #1A202C;
+  font-size: 13px;
+  opacity: 0.6
+}
+
+.verifications-tab button{
+  width: 50%;
+  padding: 10px;
+  background-color: var(--secondaryColor);
+  border: none;
+  outline: none;
+}
+
+.verifications-tab button.active{
+  background: rgba(243, 243, 244, 0.7);
+  color: var(--primaryColor);
 }
 
 .form-control-select .MuiSelect-select {
@@ -1146,6 +1204,12 @@ label+.css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   border-radius: 50%;
 }
 
+.max-amount-btn{
+  background-color: white;
+  color: var(--primaryColor);
+  border: 0;
+}
+
 .amount-field {
   padding: 12px !important;
   border: 1px solid #edf2f7 !important;
@@ -1202,7 +1266,7 @@ label+.css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 .form-coin-wallet-balance .content .fiat-balance .naira-balance {
   color: #fefefe;
   font-weight: 700;
-  font-size: 22px;
+  font-size: 16px;
 }
 
 .form-coin-wallet-balance .content .fiat-balance .usd-balance {
@@ -1750,7 +1814,8 @@ label+.css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   color: var(--primaryColor)
 }
 
-.deposit-note-header, .deposit-note-footer {
+.deposit-note-header,
+.deposit-note-footer {
   color: var(--primaryColor);
   font-style: normal;
   font-weight: 800;
@@ -1758,11 +1823,11 @@ label+.css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   font-size: 18px;
 }
 
-.deposit-note-footer{
- font-size: 15px;
+.deposit-note-footer {
+  font-size: 15px;
 }
 
-.deposit-info{
+.deposit-info {
   margin: 50px 0;
 }
 
@@ -2116,7 +2181,7 @@ label+.css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
 
 /* Large screens */
 @media (min-width: 992px) {
-  input.pincode-input-text{
+  input.pincode-input-text {
     width: 40px !important;
     height: 40px !important;
   }
@@ -2199,11 +2264,11 @@ label+.css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   }
 
   .transaction-image-placeholder {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     background-size: cover;
     display: inline-block;
-    margin-left: 10px;
+    margin-right: 10px;
   }
 
   .page-content {

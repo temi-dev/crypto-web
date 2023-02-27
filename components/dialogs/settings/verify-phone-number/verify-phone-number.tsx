@@ -6,7 +6,7 @@ import { confirmPhoneNumberVerificationCode } from "../../../../shared/services/
 import { useAuth } from "../../../auth/auth-provider";
 import { CancelIcon } from "../../../icons/icons";
 import useCustomSnackbar from "../../../snackbar/use-custom-snackbar";
-const VerifyPhoneNumber = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>>}) => {
+const VerifyPhoneNumber = ({ open, setVisibilityState, next }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>>, next?: any}) => {
 
     interface IFormData {
         pin?: string,
@@ -30,9 +30,8 @@ const VerifyPhoneNumber = ({ open, setVisibilityState }: { open: boolean, setVis
 
     const handleDialogClose = () => {
         setVisibilityState({ verifyPhoneNumberDialogVisibility: false });
+        if(next) next();
     };
-
-
 
     const continueWithAction = async () => {
         handleSetFormData({ formSubmitted: true })
