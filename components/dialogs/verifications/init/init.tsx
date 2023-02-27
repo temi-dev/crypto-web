@@ -126,7 +126,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                                 </button>
                                             )}
                                             {user && user.email_verified_at && (
-                                                <button disabled={componentData.sendingVerificationEmail} className="verification-list done">
+                                                <button disabled className="verification-list done">
                                                     <div className="title">Email Verified</div>
                                                     <div className="description">Your email address is verified</div>
                                                 </button>
@@ -134,12 +134,12 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
 
                                             {user && !user.phone_verified_at && (
                                                 <button disabled={componentData.sendingPhoneVerificationCode} className="verification-list" onClick={verifyPhonenumber}>
-                                                    <div className="title">Phone number Verification</div>
+                                                    <div className="title">Verify phone number</div>
                                                     <div className="description">Click here to verify your phone number</div>
                                                 </button>
                                             )}
                                             {user && user.phone_verified_at && (
-                                                <button className="verification-list done">
+                                                <button disabled className="verification-list done">
                                                     <div className="title">Phone Verified</div>
                                                     <div className="description">Your phone number is verified</div>
                                                 </button>
@@ -170,7 +170,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                                         </button>
                                                     )}
                                                     {user && user.bvn_verified_at && (
-                                                        <button className="verification-list done">
+                                                        <button disabled className="verification-list done">
                                                             <div className="title">BVN Verified</div>
                                                             <div className="description">Your BVN is verified</div>
                                                         </button>
@@ -183,7 +183,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                                         </button>
                                                     )}
                                                     {user && user.nin_verified_at && (
-                                                        <button disabled={componentData.sendingVerificationEmail} className="verification-list done">
+                                                        <button disabled className="verification-list done">
                                                             <div className="title">NIN Verified</div>
                                                             <div className="description">Your NIN is verified</div>
                                                         </button>
