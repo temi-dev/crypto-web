@@ -299,7 +299,7 @@ const BuySell = () => {
                             </div>
 
                             {
-                                user && user.available_bal && usdBalance && (
+                                user && user.available_bal && usdBalance && action == 'buy' && (
                                     <div className="form-coin-wallet-balance">
                                         <div className="balance-header">Total Balance</div>
                                         <div className="content">
