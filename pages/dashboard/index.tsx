@@ -75,8 +75,8 @@ const Dashboard: NextApplicationPage = (props) => {
         loadingTransactions: true
     }
 
-    const initAssets : IAssetsData = {
-        
+    const initAssets: IAssetsData = {
+
     }
 
     const DialogsVisibilityInitState: IDialogs = {
@@ -98,7 +98,7 @@ const Dashboard: NextApplicationPage = (props) => {
     const [assetsData, setAssets] = useState(initAssets);
 
     const setData = (data: IComponentData) => {
-        setComponentData({   ...componentData, ...data})
+        setComponentData({ ...componentData, ...data })
     }
 
     const getTransactions = async () => {
@@ -110,8 +110,8 @@ const Dashboard: NextApplicationPage = (props) => {
                 transactions: request.data.data.slice(0, 5),
                 loadingTransactions: false
             })
-            
-        getPortfolio();
+
+            getPortfolio();
         }
     }
 
@@ -125,7 +125,7 @@ const Dashboard: NextApplicationPage = (props) => {
             })
         }
     }
-    
+
     useEffect(() => {
         getTransactions();
     }, [])
@@ -150,10 +150,10 @@ const Dashboard: NextApplicationPage = (props) => {
                                 <div className="title">Crypto For Better</div>
                                 <div className="note">Experience kochure on mobile app</div>
                                 <div className="cta">
-                                    
-                                <VerificationCta />
+
+                                    <VerificationCta />
                                     {
-                                      user && appState && !appState.incompleteVerification &&
+                                        user && appState && !appState.incompleteVerification &&
                                         <div>
                                             <picture>
                                                 <img alt="google play" src="/icons/google-play.svg"></img>
@@ -189,7 +189,7 @@ const Dashboard: NextApplicationPage = (props) => {
                             </div>
 
                             <div className="flex-fill cursor-pointer" onClick={() => setAppState({
-                                 ...appState,
+                                ...appState,
                                 dialogStates: {
                                     buySellDialog: {
                                         visibitlity: true,
@@ -272,9 +272,9 @@ const Dashboard: NextApplicationPage = (props) => {
 
                             <div className="mt-2">
                                 {
-                                    assetsData.assets?.map((element) =>{
+                                    assetsData.assets?.map((element) => {
                                         return (
-                                            <DashboardPortfolioBalance  key={element.id} coinName={element.coin} percentageChange={element._24hrs} coinBalance={element.bal} fiatBalance={"NGN200,000"} ></DashboardPortfolioBalance>
+                                            <DashboardPortfolioBalance key={element.id} coinName={element.coin} percentageChange={element._24hrs} coinBalance={element.bal} fiatBalance={"NGN200,000"} ></DashboardPortfolioBalance>
                                         )
                                     })
                                 }
@@ -282,7 +282,6 @@ const Dashboard: NextApplicationPage = (props) => {
                             </div>
 
                         </div>
-
 
                     </div>
                 </div>
@@ -293,7 +292,6 @@ const Dashboard: NextApplicationPage = (props) => {
                 <Transfer open={dialogsVisibilityState.transferDialogVisibility!} setVisibilityState={setDialogVisibilityState}></Transfer>
 
                 <PriceAlert open={dialogsVisibilityState.priceAlertsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></PriceAlert>
-
 
             </div>
 

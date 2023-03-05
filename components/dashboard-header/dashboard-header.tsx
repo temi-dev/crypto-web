@@ -69,6 +69,14 @@ const DashboardHeader = ({ title }: { title: string }) => {
                             }
                         })
                     }>Buy / Sell</button>
+                    <button className="btn d-none d-lg-block btn-secondary" onClick={() =>
+                        setAppState({
+                            ...appState,
+                            dialogStates: {
+                                sendReceive: { visibitlity: true }
+                            }
+                        })
+                    }>Send / Receive</button>
                     
                     <button onClick={openProfileMenu} className="profile-menu align-items-center d-flex">
                         <div className="profile-image " style={{ backgroundImage: "url(" + state?.profilePicture + ")" }}></div>

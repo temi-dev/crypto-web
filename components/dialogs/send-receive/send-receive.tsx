@@ -1,58 +1,166 @@
-import { Dialog, Select, MenuItem, TextField, FormGroup, FormControl, Autocomplete } from "@mui/material";
+import { Dialog, Select, MenuItem, TextField, Autocomplete } from "@mui/material";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../../shared/contexts/app.context";
 import { getMarketData } from "../../../shared/services/dashboard/market/market";
-import { WalletDepositFilledIcon, WalletDebitFilledIcon, ArrowLeftIcon, BitCoinFilledIcon, EtherumFilledIcon, CheckCircleFilledIcon, WalletSendIcon, WalletReceiveIcon, WalletAddIcon, WalletAddressIcon, CopyIcon } from "../../icons/icons";
+import { generateReceiveWalletAddress, getPortfolioList, getReceiveWalletAddresses } from "../../../shared/services/dashboard/transactions/transaction";
+import { ArrowLeftIcon, BitCoinFilledIcon, CheckCircleFilledIcon, WalletSendIcon, WalletReceiveIcon, WalletAddressIcon, CopyIcon } from "../../icons/icons";
+import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
+import QRCode from "react-qr-code";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const SendReceive = () => {
 
     const [appState, setAppState] = useAppContext()
 
-    const action = appState.dialogStates!.sendReceive?.action!
+    const initAction = appState.dialogStates!.sendReceive?.action!
     const step = appState.dialogStates!.sendReceive?.step! || 1
+
+    const snackbar = useCustomSnackbar();
 
     interface IFormData {
         coin?: string,
+        coinShort?: string,
+        coins?: Array<any>,
         step?: number,
-        currency?: string
+        currency?: string,
+        network?: string
+        networks?: Array<any>
+        loadingCoins?: boolean,
+        loading?: boolean,
+        address?: string
+        wallets?: Array<any>
     }
 
     const formData: IFormData = {
-        coin: 'bitcoin',
-        step: action ? 2 : 1,
-        currency: 'NGN'
+        step: initAction ? 2 : 1,
+        currency: 'NGN',
+        coins: [],
+        networks: [],
     }
 
     const [form, setFormData] = useState({ ...formData });
+    const [action, setAction] = useState(initAction);
 
-    const handleSetBuyForm = (data: object) => {
+    const handleSetForm = (data: IFormData) => {
         setFormData({ ...form, ...data });
+        if (data.coin) {
+            const coin = form.coins?.find(x => x.label == data.coin);
+            let networks: any[] = [];
+            coin.networks.forEach((element: any) => {
+                networks.push({
+                    label: element.network
+                })
+            })
+            setFormData({ ...form, networks, coinShort: coin.asset, network: '' });
+        }
+
     };
 
     const handleDialogClose = () => {
         setAppState({ ...appState, dialogStates: { sendReceive: { visibitlity: false } } });
+        handleSetForm({ network: '' })
     };
 
-    const navigate = (step: number) => {
+
+    const getData = async (action: string) => {
+        const request = await getMarketData();
+
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+            return
+        } else {
+            let assets: string[] = [];
+            let rows: any[] = [];
+            handleSetForm({ loadingCoins: true })
+            if (action == 'send') {
+                const portfolio = await getPortfolioList();
+                if (portfolio.responseCode == 422) {
+                    snackbar.showError(request.data ? request.data.message : "Error occured");
+                    return
+                } else {
+                    portfolio.data.data.forEach((element: any) => {
+                        assets.push(element.coin)
+                    })
+                    request.data.data.forEach((element: any) => {
+                        if (assets.includes(element.coin)) {
+                            rows.push({
+                                label: element.name,
+                                asset: element.coin,
+                                networks: element.network
+                            })
+                        }
+                    })
+                }
+            } else if (action == 'receive') {
+                request.data.data.forEach((element: any) => {
+                    rows.push({
+                        label: element.name,
+                        asset: element.coin,
+                        networks: element.network
+                    })
+                })
+            }
+            handleSetForm({ coins: rows, loadingCoins: false })
+        }
+    }
+
+    const getWallets = async () => {
+        const request = await getReceiveWalletAddresses();
+
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+            return
+        } else {
+            handleSetForm({ wallets: request.data.data })
+        }
+    }
+
+    const navigate = (step: number, action?: string) => {
         setAppState({
             ...appState,
             dialogStates: {
                 sendReceive: {
                     ...appState.dialogStates?.sendReceive,
-                    step
+                    step,
+                    action
                 }
             }
         })
+
+        if (action) {
+            setAction(action);
+            getData(action);
+            getWallets()
+        }
     }
 
-    const getData = async () => {
-        const request = await getMarketData();
+    const generateWallet = async () => {
+        const wallet = form.wallets?.find(x => x.coin == form.coinShort && x.network == form.network);
+        if (wallet) {
+            handleSetForm({ address: wallet.address })
+        } else {
+            handleSetForm({ loading: true })
+            const data = {
+                coin: form.coinShort,
+                network: form.network
+            }
+            const request = await generateReceiveWalletAddress(data);
 
+            if (request.responseCode == 422) {
+                snackbar.showError(request.data ? request.data.message : "Error occured");
+                return
+            } else {
+                handleSetForm({ address: request.data.data.address, loading: false })
+                getWallets()
+            }
+        }
+        navigate(3)
     }
+
     useEffect(() => {
-        getData()
-    }, [])
+        if (initAction) getData(initAction)
+    }, [appState?.dialogStates?.sendReceive?.visibitlity!])
 
     return (
         <Dialog fullWidth maxWidth='xs' open={appState.dialogStates?.sendReceive?.visibitlity! || false} onClose={handleDialogClose}>
@@ -61,16 +169,7 @@ const SendReceive = () => {
                     step == 1 && (
                         <div className="dailog-action-picker">
                             <div className="send" onClick={() => {
-                                setAppState({
-                                    ...appState,
-                                    dialogStates: {
-                                        sendReceive: {
-                                            ...appState.dialogStates?.sendReceive,
-                                            action: 'send',
-                                            step: 2
-                                        }
-                                    }
-                                })
+                                navigate(2, 'send');
                             }}>
                                 <div className="my-2">
                                     <span className="icon-holder">
@@ -80,16 +179,7 @@ const SendReceive = () => {
                                 <div>Send</div>
                             </div>
                             <div className="receive" onClick={() => {
-                                setAppState({
-                                    ...appState,
-                                    dialogStates: {
-                                        sendReceive: {
-                                            ...appState.dialogStates?.sendReceive,
-                                            action: 'receive',
-                                            step: 2
-                                        }
-                                    }
-                                })
+                                navigate(2, 'receive');
                             }}>
                                 <div className="my-2">
                                     <span className="icon-holder"><WalletReceiveIcon color='#194BFB'></WalletReceiveIcon></span>
@@ -109,10 +199,41 @@ const SendReceive = () => {
                                             <ArrowLeftIcon color="black"></ArrowLeftIcon>
                                         </div>
 
-                                        <div>
+                                        <div className="">
                                             <label className="form-label">Select a digital currency to {action}</label>
-                                          
-                                          
+                                            <Autocomplete
+                                                disablePortal
+                                                className="mt-2 w-100"
+                                                options={form.coins || []}
+                                                value={form.coin}
+                                                onChange={(event: any, newValue: any) => {
+                                                    if (newValue) handleSetForm({ coin: newValue.label });
+                                                }}
+                                                renderInput={(params) =>
+                                                    <TextField
+                                                        {...params}
+                                                        value={form.coin}
+                                                        label="Coin"
+                                                    />}
+                                            />
+                                        </div>
+                                        <div className="">
+                                            <label className="form-label">Select network</label>
+                                            <Autocomplete
+                                                disablePortal
+                                                className="mt-2 w-100"
+                                                options={form.networks || []}
+                                                value={form.network}
+                                                onChange={(event: any, newValue: any) => {
+                                                    if (newValue) handleSetForm({ network: newValue.label });
+                                                }}
+                                                renderInput={(params) =>
+                                                    <TextField
+                                                        {...params}
+                                                        value={form.network}
+                                                        label="Network"
+                                                    />}
+                                            />
                                         </div>
 
                                         <div className="mt-3">
@@ -336,63 +457,84 @@ const SendReceive = () => {
 
                                         <div>
                                             <label className="form-label">Select a digital currency to {action}</label>
-                                            <Select
-                                                className="form-control-select w-100"
-                                                disableUnderline
-                                                displayEmpty
-                                                variant='standard'
-                                                value={form.coin}
-                                                label="Coin"
-                                                onChange={(event) => handleSetBuyForm({ coin: event.target.value })}>
-                                                <MenuItem value='bitcoin' className="ui-select-menu">
-                                                    <div className="d-flex">
-                                                        <div>
-                                                            <BitCoinFilledIcon fillColor="#F7931A" color="white"></BitCoinFilledIcon>
-                                                        </div>
-                                                        <div className="mx-2">
-                                                            <span className="">Bitcoin</span>
-                                                        </div>
-                                                    </div>
-                                                </MenuItem>
-                                                <MenuItem value='etherum' className="ui-select-menu">
-                                                    <div className="d-flex">
-                                                        <div>
-                                                            <EtherumFilledIcon color="white" fillColor="#627EEA"></EtherumFilledIcon>
-                                                        </div>
-                                                        <div className="mx-2">
-                                                            <span className="">Etherum</span>
-                                                        </div>
-                                                    </div>
-                                                </MenuItem>
-                                            </Select>
+                                            <Autocomplete
+                                                disablePortal
+                                                className="mt-2 w-100"
+                                                options={form.coins || []}
+                                                value={form.coinShort}
+                                                onChange={(event: any, newValue: any) => {
+                                                    if (newValue) handleSetForm({ coin: newValue.label });
+                                                }}
+                                                renderInput={(params) =>
+                                                    <TextField
+                                                        {...params}
+                                                        value={form.coinShort}
+                                                        label="Coin"
+                                                    />}
+                                            />
                                         </div>
 
+                                        <div className="mt-3">
+                                            <label className="form-label">Select network</label>
+                                            <Autocomplete
+                                                disablePortal
+                                                className="mt-2 w-100"
+                                                options={form.networks || []}
+                                                value={form.network}
+                                                onChange={(event: any, newValue: any) => {
+                                                    if (newValue) handleSetForm({ network: newValue.label });
+                                                }}
+                                                renderInput={(params) =>
+                                                    <TextField
+                                                        {...params}
+                                                        value={form.network}
+                                                        label="Network"
+                                                    />}
+                                            />
+                                        </div>
+
+                                        <div className="my-3">
+                                            <button disabled={form.loading || !form.coinShort || !form.network} onClick={() => generateWallet()} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                        </div>
+                                    </div>
+                                )
+                            }
+
+                            {
+                                step == 3 && (
+                                    <div>
+                                        <div className="mb-3 back-nav" onClick={() => navigate(2)}>
+                                            <ArrowLeftIcon color="black"></ArrowLeftIcon>
+                                        </div>
                                         <div className="mt-3 receive-wallet-address">
                                             <div className="address-barcode">
-                                                <Image alt="barcode" src='/images/address-btc.png' height='240px' width='240px'></Image>
+                                                <QRCode value={form.address!} className="mb-3" />
                                             </div>
                                             <div className="wallet-receive-address-clipboard">
                                                 <div className="d-flex">
                                                     <div className="title">Wallet address</div>
                                                     <div className="copy">
-                                                        <button><CopyIcon color="black"></CopyIcon></button>
+                                                        <CopyToClipboard text={form.address!} onCopy={() =>{
+                                                            snackbar.showSuccess('Address copied')
+                                                        }}>
+                                                            <button><CopyIcon color="black"></CopyIcon></button>
+                                                        </CopyToClipboard>
+
                                                     </div>
                                                 </div>
                                                 <div className="address text-truncate">
-                                                    Z9fB9JfMi5ec8R3RA2LIZ9fB9JfMi5ec8R3RA2LI
+                                                    {form.address}
                                                 </div>
 
                                             </div>
                                         </div>
-
-
-
                                     </div>
                                 )
                             }
                         </div>
                     )
                 }
+
             </div>
         </Dialog>
     )

@@ -1,12 +1,12 @@
 import styles from './dashboard-transaction-card.module.css';
 
-const DashboardTransactionCard = ({ description, direction, amount }: { description: string, direction: string, amount: string }) => {
+const DashboardTransactionCard = ({ description, direction, amount, asset }: { description: string, direction: string, amount: string, asset: string }) => {
     return (
         <div className={styles.dashboardTransactionCard}>
             <div className={styles.description}>
                 <div>
                     <div className={styles.title}>{description}</div>
-                    <div className={styles.timestamp}>Jan 16, 2022</div>
+                    {/* <div className={styles.timestamp}>Jan 16, 2022</div> */}
                 </div>
             </div>
             <div className={styles.info}>
@@ -20,7 +20,15 @@ const DashboardTransactionCard = ({ description, direction, amount }: { descript
                             direction == 'credit' &&
                             '+'
                         }
-                        <span>{amount}</span>
+                        {
+                            asset == 'NGN' &&
+                            '₦'
+                        }
+                        <span>{amount} </span>
+                        {
+                            asset != 'NGN' &&
+                            asset
+                        }
                     </span>
                 </div>
             </div>

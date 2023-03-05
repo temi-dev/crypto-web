@@ -36,7 +36,7 @@ const DashboardTransactionList = ({ data, mode }: {
 
                 <div className='d-block d-lg-none'>
                     {data.map((row) => (
-                        <DashboardTransactionCard key={row.id} amount={row.amount} description={row.description} direction={row.direction} ></DashboardTransactionCard>
+                        <DashboardTransactionCard key={row.id} amount={row.amount} description={row.description} direction={row.direction} asset={row.asset}></DashboardTransactionCard>
                     ))}
                 </div>
 

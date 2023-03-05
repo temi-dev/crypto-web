@@ -65,7 +65,7 @@ const BuySell = () => {
         setForm(formData)
     };
 
-    const navigate = (step: number) => {
+    const navigate = (step: number, action?: string) => {
         setAppState({
             ...appState,
             dialogStates: {
@@ -76,19 +76,23 @@ const BuySell = () => {
                 }
             }
         })
+
+        if(action){
+            setAction(action);
+            getData(action);
+        }
     }
 
     const getData = async (action: string) => {
         const request = await getMarketData();
-        setAction(action)
-
+            
         if (request.responseCode == 422) {
             snackbar.showError(request.data ? request.data.message : "Error occured");
             return
         } else {
             let assets: string[] = [];
             let rows: any[] = [];
-            setForm({ loadingCoins: true })
+            handleSetForm({ loadingCoins: true })
             if (action == 'sell') {
                 const portfolio = await getPortfolioList();
                 if (portfolio.responseCode == 422) {
@@ -120,7 +124,7 @@ const BuySell = () => {
 
         const appDataRequest = await getAppData();
         if (appDataRequest.responseCode == 422) {
-            snackbar.showError(request.data ? request.data.message : "Error occured");
+            snackbar.showError(appDataRequest.data ? appDataRequest.data.message : "Error occured");
             return
         } else {
             if (user && user.available_bal) {
@@ -208,9 +212,8 @@ const BuySell = () => {
                 {
                     step == 1 && (
                         <div className="dailog-action-picker">
-                            <div className="buy" onClick={() => {
-                                navigate(2);
-                                getData('buy')
+                            <div className="buy" onClick={() => {    
+                                navigate(2, 'buy');
                             }}>
                                 <div className="my-2">
                                     <WalletDepositFilledIcon fillColor='#FAFAFA' color='#194BFB'></WalletDepositFilledIcon>
@@ -218,8 +221,7 @@ const BuySell = () => {
                                 <div>Buy</div>
                             </div>
                             <div className="sell" onClick={() => {
-                                navigate(2);
-                                getData('sell')
+                                navigate(2, 'sell');
                             }}>
                                 <div className="my-2">
                                     <WalletDebitFilledIcon fillColor='#FAFAFA' color='#194BFB'></WalletDebitFilledIcon>

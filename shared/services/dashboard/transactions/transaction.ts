@@ -132,6 +132,39 @@ const verifyAccount = async (data: object): Promise<ICustomHttpResponse> => {
     }
 }
 
+const generateReceiveWalletAddress = async (data: object): Promise<ICustomHttpResponse> => {
+    try {
+        const token = window.localStorage.getItem('auth');
+        const response = await axios.post(`${process.env.apiUrl}/account/wallet`, { token, ...data });
+        return {
+            responseCode: 200,
+            data: response.data
+        }
+    } catch (error: any) {
+        return {
+            responseCode: 422,
+            data: error.response?.data
+        }
+    }
+}
+
+
+const getReceiveWalletAddresses = async (): Promise<ICustomHttpResponse> => {
+    try {
+        const token = window.localStorage.getItem('auth');
+        const response = await axios.get(`${process.env.apiUrl}/account/wallets?token=${token}`);
+        return {
+            responseCode: 200,
+            data: response.data
+        }
+    } catch (error: any) {
+        return {
+            responseCode: 422,
+            data: error.response?.data
+        }
+    }
+}
+
 export {
     getTransactionBreakdown,
     completeBuySellTransaction,
@@ -140,5 +173,7 @@ export {
     swapCoin,
     transferFiat,
     verifyAccount,
-    getSwapTransactionBreakdown
+    getSwapTransactionBreakdown,
+    generateReceiveWalletAddress,
+    getReceiveWalletAddresses
 }
