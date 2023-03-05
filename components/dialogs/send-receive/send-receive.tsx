@@ -59,7 +59,6 @@ const SendReceive = () => {
 
     const handleDialogClose = () => {
         setAppState({ ...appState, dialogStates: { sendReceive: { visibitlity: false } } });
-        handleSetForm({ network: '' })
     };
 
 
