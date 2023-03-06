@@ -26,7 +26,10 @@ export interface IDialogs  {
     settingsBankDetailsDialogVisibility?: boolean,
     settingsSupportTicketsDialogVisibility?: boolean,
     settingsCreateTicketDialogVisibility?: boolean
-    bvnNinUpdateDialogVisibility?: boolean
+    bvnNinUpdateDialog?: {
+        visibitlity?: boolean,
+        type?: string,
+    }
     settingsAvatarDialogVisibility?: boolean,
     settingsMobileMenuVisibility?: boolean,
     profilePinVisibility?: boolean

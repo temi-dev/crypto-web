@@ -1,15 +1,12 @@
-import { Dialog, Select, MenuItem, TextField, Autocomplete } from "@mui/material";
-import Image from "next/image";
+import { Dialog, TextField, Autocomplete } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../../shared/contexts/app.context";
 import { getMarketData } from "../../../shared/services/dashboard/market/market";
 import { generateReceiveWalletAddress, getPortfolioList, getReceiveWalletAddresses, getTransactionBreakdown, sendTransaction, sendTransactionToken } from "../../../shared/services/dashboard/transactions/transaction";
-import { ArrowLeftIcon, BitCoinFilledIcon, CheckCircleFilledIcon, WalletSendIcon, WalletReceiveIcon, WalletAddressIcon, CopyIcon } from "../../icons/icons";
+import { ArrowLeftIcon, CheckCircleFilledIcon, WalletSendIcon, WalletReceiveIcon, WalletAddressIcon, CopyIcon } from "../../icons/icons";
 import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
 import QRCode from "react-qr-code";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { useAuth } from "../../auth/auth-provider";
-import { getAppData } from "../../../shared/services/app/app.service";
 import PinInput from "react-pin-input";
 
 const SendReceive = () => {

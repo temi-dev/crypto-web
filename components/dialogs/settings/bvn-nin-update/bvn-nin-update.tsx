@@ -1,30 +1,28 @@
 import { Dialog, MenuItem, Select, TextField } from "@mui/material"
 import React, { useState } from "react";
+import { useAppContext } from "../../../../shared/contexts/app.context";
 import { IDialogs } from "../../../../shared/interface/global.interface";
 import { verifyBvn, verifyNin } from "../../../../shared/services/dashboard/settings/profile/profile.service";
 import { useAuth } from "../../../auth/auth-provider";
 import { CancelIcon, CheckCircleFilledIcon } from "../../../icons/icons";
 import useCustomSnackbar from "../../../snackbar/use-custom-snackbar";
-const BvnNinUpdate = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
+const BvnNinUpdate = ({ open, setVisibilityState, next }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>>, next?: any }) => {
 
     const { user, setUser } = useAuth();
     const snackbar = useCustomSnackbar();
+   
+    const [appState, setAppState] = useAppContext()
+
+    const type = appState.dialogStates!.bvnNinUpdateDialog?.type!
 
     interface IData {
-        idType?: string,
         idNumber?: string,
         step?: number,
-        options?: Array<string>,
         formSubmitted?: boolean,
         processingRequest?: boolean,
     }
     const data: IData = {
-        idType: '',
         step: 1,
-        options: [
-            'BVN',
-            'NIN'
-        ],
         formSubmitted: false,
         processingRequest: false
     }
@@ -35,13 +33,22 @@ const BvnNinUpdate = ({ open, setVisibilityState }: { open: boolean, setVisibili
     };
 
     const handleDialogClose = () => {
-        setVisibilityState({ transferDialogVisibility: false });
+        setAppState({ 
+            ...appState,
+            dialogStates:{
+                ...appState.dialogStates,
+                bvnNinUpdateDialog: {
+                    visibitlity: false
+                }
+            }
+         });
+        if (next) next();
     };
 
     const submit = async () => {
         setStateData({ formSubmitted: true });
-        if (state.idType && state.idNumber) {
-            if (state.idType == 'BVN') {
+        if (type && state.idNumber) {
+            if (type == 'BVN') {
                 setStateData({ processingRequest: true });
                 const request = await verifyBvn(state.idNumber);
                 if (request.responseCode == 422) {
@@ -53,7 +60,7 @@ const BvnNinUpdate = ({ open, setVisibilityState }: { open: boolean, setVisibili
                 }
                 setStateData({ processingRequest: false, formSubmitted: false });
             }
-            if (state.idType == 'NIN') {
+            if (type == 'NIN') {
                 setStateData({ processingRequest: true });
                 const request = await verifyNin(state.idNumber);
                 if (request.responseCode == 422) {
@@ -77,7 +84,7 @@ const BvnNinUpdate = ({ open, setVisibilityState }: { open: boolean, setVisibili
                         <div>
                             <div className="dialog-page">
                                 <div className="dialog-header">
-                                    <div className="title">Verify BVN / NIN</div>
+                                    <div className="title">Verify {type}</div>
                                     <div className="action-btn">
                                         <button onClick={handleDialogClose}>
                                             <CancelIcon color="#1d38e4"></CancelIcon>
@@ -85,34 +92,7 @@ const BvnNinUpdate = ({ open, setVisibilityState }: { open: boolean, setVisibili
                                     </div>
                                 </div>
                                 <div className="content padding">
-                                    <div className="">
-                                        <label className="form-label">I.D Type</label>
-                                        <Select
-                                            className={`form-control ${(!state.idType && state.formSubmitted ? 'error' : '')} `}
-                                            disableUnderline
-                                            displayEmpty
-                                            variant='standard'
-                                            value={state.idType || ''}
-                                            onChange={(event) => setStateData({ idType: event.target.value })}>
-                                            <MenuItem value="" className="ui-select-menu">
-                                                <em>Select an option</em>
-                                            </MenuItem>
-                                            {
-                                                state.options?.map(element => {
-                                                    return (
-                                                        <MenuItem key={element} value={element} className="ui-select-menu">
-                                                            {element}
-                                                        </MenuItem>
-                                                    )
-                                                })
-                                            }
-                                        </Select>
-                                        {
-                                            (!state.idType && state.formSubmitted &&
-                                                <div className='error-message'>Select an option</div>
-                                            )
-                                        }
-                                    </div>
+                                    
                                     <div className="mt-2">
                                         <label className="form-label">I.D Number</label>
                                         <TextField

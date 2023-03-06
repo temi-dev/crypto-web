@@ -1,5 +1,6 @@
 import { Dialog, TextField } from "@mui/material"
 import { useState } from "react";
+import { useAppContext } from "../../../../shared/contexts/app.context";
 import { IDialogs } from "../../../../shared/interface/global.interface"
 import { resendEmailVerification, sendPhoneNumberVerificationCode } from "../../../../shared/services/dashboard/settings/profile/profile.service";
 import { useAuth } from "../../../auth/auth-provider";
@@ -13,6 +14,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
     const { user, setUser } = useAuth();
     const snackbar = useCustomSnackbar();
 
+    const [appState, setAppState] = useAppContext()
 
     const DialogsVisibilityInitState: IDialogs = {
     }
@@ -86,6 +88,21 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
             handleDialogClose()
         }
     }
+
+    const setUpNINBVN = (type: string) =>{
+        setAppState({ 
+            ...appState,
+            dialogStates:{
+                ...appState.dialogStates,
+                bvnNinUpdateDialog: {
+                    visibitlity: true,
+                    type
+                }
+            }
+        })
+        handleDialogClose()
+    }
+
     const handleDialogClose = () => {
         setVisibilityState({ initVerificationDialogDialogVisibility: false });
     };
@@ -164,7 +181,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                             componentData.activeIdentityTab == 0 && (
                                                 <div>
                                                     {user && !user.bvn_verified_at && (
-                                                        <button className="verification-list" onClick={() => setDialogVisibilityState({ bvnNinUpdateDialogVisibility: true })}>
+                                                        <button className="verification-list" onClick={() => setUpNINBVN('BVN')}>
                                                             <div className="title">Verify BVN</div>
                                                             <div className="description">Click here to verify your BVN</div>
                                                         </button>
@@ -177,7 +194,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                                     )}
 
                                                     {user && !user.nin_verified_at && (
-                                                        <button className="verification-list" onClick={() => setDialogVisibilityState({ bvnNinUpdateDialogVisibility: true })}>
+                                                        <button className="verification-list" onClick={() => setUpNINBVN('NIN')}>
                                                             <div className="title">Verify NIN</div>
                                                             <div className="description">Click here to verify your NIN</div>
                                                         </button>
@@ -206,7 +223,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
 
                 </div>
             </Dialog>
-            <BvnNinUpdate open={dialogsVisibilityState.bvnNinUpdateDialogVisibility!} setVisibilityState={setDialogVisibilityState}></BvnNinUpdate>
+            <BvnNinUpdate open={appState.dialogStates?.bvnNinUpdateDialog?.visibitlity!} setVisibilityState={setDialogVisibilityState} next={relaunchDialog}></BvnNinUpdate>
             <VerifyPhoneNumber open={dialogsVisibilityState.verifyPhoneNumberDialogVisibility!} setVisibilityState={setDialogVisibilityState} next={relaunchDialog}></VerifyPhoneNumber>
             <ProfilePin user={user!} open={dialogsVisibilityState.profilePinVisibility!} setVisibilityState={setDialogVisibilityState} snackbar={snackbar} next={pinCreated}></ProfilePin>
         </div>

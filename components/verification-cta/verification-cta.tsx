@@ -19,7 +19,7 @@ const VerificationCta = () => {
     }
 
     useEffect(()=>{
-        if(user && (!user.account_verified || !user.pin_exists)){
+        if(user && (!user.account_verified || !user.pin_exists || !user.second_layer_verf_completed)){
             setAppState({ ...appState, incompleteVerification: true })
         }
     }, [user])
