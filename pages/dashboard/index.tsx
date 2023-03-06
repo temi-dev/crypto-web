@@ -203,7 +203,43 @@ const Dashboard: NextApplicationPage = (props) => {
                                 </div>
                                 <div className="cta-text">Sell</div>
                             </div>
+                            <div className="flex-fill cursor-pointer"
+                                onClick={() =>
+                                    setAppState({
+                                        ...appState,
+                                        dialogStates: {
+                                            sendReceive: {
+                                                visibitlity: true,
+                                                action: 'send',
+                                                step: 2
+                                            }
+                                        }
+                                    })
+                                }>
+                                <div className="cta">
+                                    <button><WalletSendIcon color="white"></WalletSendIcon></button>
+                                </div>
+                                <div className="cta-text">Send</div>
+                            </div>
 
+                            <div className="flex-fill cursor-pointer"
+                                onClick={() =>
+                                    setAppState({
+                                        ...appState,
+                                        dialogStates: {
+                                            sendReceive: {
+                                               visibitlity: true,
+                                                action: 'receive',
+                                               step: 2
+                                            }
+                                        }
+                                    })
+                                }>
+                                <div className="cta">
+                                    <button><WalletReceiveIcon color="white"></WalletReceiveIcon></button>
+                                </div>
+                                <div className="cta-text">Receive</div>
+                            </div>
                         </div>
 
                         <div className="box-section mt-4 d-none d-lg-block">

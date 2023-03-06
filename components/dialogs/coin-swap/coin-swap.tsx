@@ -201,7 +201,6 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                             fullWidth
                                             value={form.amount || 0}
                                             type='number'
-
                                             InputProps={{
                                                 disableUnderline: true,
                                                 endAdornment: (

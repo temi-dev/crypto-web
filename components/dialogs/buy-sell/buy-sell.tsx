@@ -85,7 +85,7 @@ const BuySell = () => {
 
     const getData = async (action: string) => {
         const request = await getMarketData();
-            
+
         if (request.responseCode == 422) {
             snackbar.showError(request.data ? request.data.message : "Error occured");
             return
@@ -203,7 +203,10 @@ const BuySell = () => {
     }
 
     useEffect(() => {
-        if (initAction) getData(initAction)
+        if (initAction) {
+            setAction(initAction)
+            getData(initAction)
+        }
     }, [appState?.dialogStates?.buySellDialog?.visibitlity!])
 
     return (
@@ -265,7 +268,7 @@ const BuySell = () => {
                                     variant="standard"
                                     placeholder={`Enter amount`}
                                     fullWidth
-                                    value={form.amount}
+                                    value={form.amount || 0}
                                     type="number"
                                     onChange={
                                         (e) => {

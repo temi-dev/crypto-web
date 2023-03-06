@@ -127,7 +127,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                             )}
                                             {user && user.email_verified_at && (
                                                 <button disabled className="verification-list done">
-                                                    <div className="title">Email Verified</div>
+                                                    <div className="title">Email Verification</div>
                                                     <div className="description">Your email address is verified</div>
                                                 </button>
                                             )}
@@ -140,7 +140,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                             )}
                                             {user && user.phone_verified_at && (
                                                 <button disabled className="verification-list done">
-                                                    <div className="title">Phone Verified</div>
+                                                    <div className="title">Phone Number Verification</div>
                                                     <div className="description">Your phone number is verified</div>
                                                 </button>
                                             )}
@@ -171,7 +171,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                                     )}
                                                     {user && user.bvn_verified_at && (
                                                         <button disabled className="verification-list done">
-                                                            <div className="title">BVN Verified</div>
+                                                            <div className="title">BVN Verification</div>
                                                             <div className="description">Your BVN is verified</div>
                                                         </button>
                                                     )}
@@ -184,7 +184,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                                     )}
                                                     {user && user.nin_verified_at && (
                                                         <button disabled className="verification-list done">
-                                                            <div className="title">NIN Verified</div>
+                                                            <div className="title">NIN Verification</div>
                                                             <div className="description">Your NIN is verified</div>
                                                         </button>
                                                     )}

@@ -232,10 +232,7 @@ input.pincode-input-text {
   opacity: 0.7;
 }
 
-.verification-list:hover,
-.verification-list.done {
-  border: 1px solid var(--primaryColor);
-}
+
 
 .verification-list .title {
   font-weight: bold;
@@ -1507,13 +1504,17 @@ label+.css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   border-bottom: 1px solid #edf2f7;
 }
 
+.receive-wallet-address .address-barcode svg{
+  width: 100%;
+}
+
 .wallet-receive-address-clipboard {
   padding: 10px 0;
 }
 
 .wallet-receive-address-clipboard .title {
   font-family: 800;
-  font-size: 20px;
+  font-size: 17px;
 }
 
 .wallet-receive-address-clipboard .copy button {
@@ -1546,6 +1547,7 @@ label+.css-1nbvhrz-MuiInputBase-root-MuiInput-root-MuiSelect-root {
   padding: 14px 18px;
   flex-grow: 1;
   align-self: center;
+  font-size: 13px;
 }
 
 .wallet-address-clipboard .copy {

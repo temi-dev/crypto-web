@@ -3,11 +3,14 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../../shared/contexts/app.context";
 import { getMarketData } from "../../../shared/services/dashboard/market/market";
-import { generateReceiveWalletAddress, getPortfolioList, getReceiveWalletAddresses } from "../../../shared/services/dashboard/transactions/transaction";
+import { generateReceiveWalletAddress, getPortfolioList, getReceiveWalletAddresses, getTransactionBreakdown, sendTransaction, sendTransactionToken } from "../../../shared/services/dashboard/transactions/transaction";
 import { ArrowLeftIcon, BitCoinFilledIcon, CheckCircleFilledIcon, WalletSendIcon, WalletReceiveIcon, WalletAddressIcon, CopyIcon } from "../../icons/icons";
 import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
 import QRCode from "react-qr-code";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { useAuth } from "../../auth/auth-provider";
+import { getAppData } from "../../../shared/services/app/app.service";
+import PinInput from "react-pin-input";
 
 const SendReceive = () => {
 
@@ -30,6 +33,14 @@ const SendReceive = () => {
         loading?: boolean,
         address?: string
         wallets?: Array<any>
+        assets?: Array<any>
+        coinAsset?: any
+        amount?: number | null
+        breakdown?: any
+        pin?: string
+        token?: string
+        memo?: string
+        action?: string
     }
 
     const formData: IFormData = {
@@ -38,9 +49,12 @@ const SendReceive = () => {
         coins: [],
         networks: [],
     }
-
+    const initAssets: any[] = []
     const [form, setFormData] = useState({ ...formData });
     const [action, setAction] = useState(initAction);
+    const [assets, setAssets] = useState(initAssets);
+    const w: any[] = []
+    const [wallets, setWallets] = useState(w);
 
     const handleSetForm = (data: IFormData) => {
         setFormData({ ...form, ...data });
@@ -52,13 +66,15 @@ const SendReceive = () => {
                     label: element.network
                 })
             })
-            setFormData({ ...form, networks, coinShort: coin.asset, network: '' });
+            const asset = assets!.find((element: { label: string | undefined; }) => element.label == data.coin);
+            setFormData({ ...form, networks, coinShort: coin.asset, network: '', coinAsset: asset });
         }
 
     };
 
     const handleDialogClose = () => {
         setAppState({ ...appState, dialogStates: { sendReceive: { visibitlity: false } } });
+        handleSetForm(({ coin: '', coinShort: '', network: '' }))
     };
 
 
@@ -111,11 +127,30 @@ const SendReceive = () => {
             snackbar.showError(request.data ? request.data.message : "Error occured");
             return
         } else {
-            handleSetForm({ wallets: request.data.data })
+            setWallets(request.data.data)
+        }
+    }
+
+    const getPortfolio = async () => {
+        const request = await getPortfolioList();
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+            return
+        } else {
+            let assets: object[] = [];
+            request.data.data.forEach((element: any) => {
+                assets.push({
+                    label: element.name,
+                    asset: element.coin,
+                    bal: element.bal
+                })
+            })
+            setAssets(assets)
         }
     }
 
     const navigate = (step: number, action?: string) => {
+        if (step == 1) handleSetForm(({ coin: '', coinShort: '', network: '', coinAsset: null, address: '', amount: null }))
         setAppState({
             ...appState,
             dialogStates: {
@@ -130,14 +165,16 @@ const SendReceive = () => {
         if (action) {
             setAction(action);
             getData(action);
-            getWallets()
+            getWallets();
+            getPortfolio();
         }
     }
 
     const generateWallet = async () => {
-        const wallet = form.wallets?.find(x => x.coin == form.coinShort && x.network == form.network);
+
+        const wallet = wallets?.find(x => x.coin == form.coinShort && x.network == form.network);
         if (wallet) {
-            handleSetForm({ address: wallet.address })
+            handleSetForm({ address: wallet.address, memo: wallet.memo })
         } else {
             handleSetForm({ loading: true })
             const data = {
@@ -148,17 +185,80 @@ const SendReceive = () => {
 
             if (request.responseCode == 422) {
                 snackbar.showError(request.data ? request.data.message : "Error occured");
+                handleSetForm({ loading: false })
                 return
             } else {
-                handleSetForm({ address: request.data.data.address, loading: false })
+                handleSetForm({ address: request.data.data.address, loading: false, memo: request.data.data.memo })
                 getWallets()
             }
         }
         navigate(3)
     }
 
+    const getBreakdown = async () => {
+        handleSetForm({ loading: true });
+
+        const data = {
+            network: form.network,
+            amount: form.amount,
+            asset: form.coinShort,
+            type: 'withdraw'
+        }
+        const request = await getTransactionBreakdown(data);
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+
+            handleSetForm({ loading: false })
+        } else {
+            handleSetForm({ breakdown: request.data.data, loading: false })
+            navigate(3)
+        }
+    }
+
+    const sendToken = async () => {
+        handleSetForm({ loading: true });
+
+        const data = {
+            address: form.address,
+            pin: form.pin,
+            amount: form.amount,
+            asset: form.coinShort,
+            network: form.network
+        }
+        const request = await sendTransactionToken(data);
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+            navigate(5)
+            handleSetForm({ loading: false });
+        }
+    }
+
+    const send = async () => {
+        const data = {
+            address: form.address,
+            pin: form.pin,
+            amount: form.amount,
+            asset: form.coinShort,
+            network: form.network,
+            otp: form.token
+        }
+
+        const request = await sendTransaction(data);
+        if (request.responseCode == 422) {
+            navigate(3)
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+            navigate(6)
+            handleSetForm({ loading: false });
+        }
+    }
+
     useEffect(() => {
-        if (initAction) getData(initAction)
+        if (initAction) {
+            setAction(initAction)
+            getData(initAction)
+        }
     }, [appState?.dialogStates?.sendReceive?.visibitlity!])
 
     return (
@@ -191,6 +291,7 @@ const SendReceive = () => {
                 {
                     action == 'send' && (
                         <div>
+                           
                             {
                                 step == 2 && (
                                     <div>
@@ -198,29 +299,30 @@ const SendReceive = () => {
                                             <ArrowLeftIcon color="black"></ArrowLeftIcon>
                                         </div>
 
-                                        <div className="">
+                                        <div>
                                             <label className="form-label">Select a digital currency to {action}</label>
                                             <Autocomplete
                                                 disablePortal
-                                                className="mt-2 w-100"
+                                                className="mt-1 w-100"
                                                 options={form.coins || []}
-                                                value={form.coin}
+                                                value={form.coinShort}
                                                 onChange={(event: any, newValue: any) => {
                                                     if (newValue) handleSetForm({ coin: newValue.label });
                                                 }}
                                                 renderInput={(params) =>
                                                     <TextField
                                                         {...params}
-                                                        value={form.coin}
+                                                        value={form.coinShort}
                                                         label="Coin"
                                                     />}
                                             />
                                         </div>
-                                        <div className="">
+
+                                        <div className="mt-3">
                                             <label className="form-label">Select network</label>
                                             <Autocomplete
                                                 disablePortal
-                                                className="mt-2 w-100"
+                                                className="mt-1 w-100"
                                                 options={form.networks || []}
                                                 value={form.network}
                                                 onChange={(event: any, newValue: any) => {
@@ -243,24 +345,13 @@ const SendReceive = () => {
                                                 variant="standard"
                                                 placeholder="Enter amount"
                                                 fullWidth
+                                                type='number'
+                                                value={form.amount || 0}
+                                                onChange={(event) => {
+                                                    handleSetForm({ amount: Number(event.target.value) });
+                                                }}
                                                 InputProps={{
-                                                    disableUnderline: true,
-                                                    startAdornment: (
-                                                        <Select
-                                                            disableUnderline
-                                                            displayEmpty
-                                                            variant='standard'
-                                                            value={form.currency}
-                                                            className="currency-selector"
-                                                            label="Currency">
-                                                            <MenuItem value='NGN'>
-                                                                <span>NGN</span>
-                                                            </MenuItem>
-                                                            <MenuItem value='USD'>
-                                                                <span>USD</span>
-                                                            </MenuItem>
-                                                        </Select>
-                                                    ),
+                                                    disableUnderline: true
                                                 }}
                                             />
 
@@ -272,8 +363,12 @@ const SendReceive = () => {
                                             <TextField
                                                 className="amount-field"
                                                 variant="standard"
-                                                placeholder="Wallet address or Email addresss"
+                                                placeholder="Wallet address"
                                                 fullWidth
+                                                value={form.address}
+                                                onChange={(event) => {
+                                                    handleSetForm({ address: event.target.value });
+                                                }}
                                                 InputProps={{
                                                     disableUnderline: true,
                                                     startAdornment: (
@@ -286,23 +381,22 @@ const SendReceive = () => {
 
                                         </div>
 
-                                        <div className="form-coin-wallet-balance">
-                                            <div className="balance-header">Total Balance</div>
-                                            <div className="content">
-                                                <div className="fiat-balance">
-                                                    <div>
-                                                        <div className="naira-balance">₦200,000.00</div>
-                                                        <div className="usd-balance">USD 500</div>
+                                        {
+                                            form.coinAsset &&
+                                            <div className="form-coin-wallet-balance">
+                                                <div className="balance-header">{form.coinAsset?.label} balance</div>
+                                                <div className="content">
+                                                    <div className="fiat-balance">
+                                                        <div>
+                                                            <div className="naira-balance">{form.coinAsset?.bal}</div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="coin-balance">
-                                                    <span>0.01074701</span>
-                                                </div>
                                             </div>
-                                        </div>
+                                        }
 
                                         <div className="mt-5 mb-3">
-                                            <button onClick={() => navigate(3)} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                            <button disabled={!form.coinShort || !form.network || !form.amount || !form.address || form.loading} onClick={getBreakdown} className='btn btn-radius w-100 btn-primary'>Continue</button>
                                         </div>
                                     </div>
                                 )
@@ -315,26 +409,24 @@ const SendReceive = () => {
                                         </div>
                                         <div className="heading">Confirmation</div>
                                         <div className="content">
-                                            <div className="text-center">
-                                                <BitCoinFilledIcon fillColor="#FF930F" color="white"></BitCoinFilledIcon>
-                                            </div>
+
                                             <div className="transaction-details">
                                                 <div className="transaction-details-heading">Transaction Details</div>
                                                 <div className="data">
                                                     <div className="item">
                                                         <div className="title">
-                                                            Date
+                                                            Coin
                                                         </div>
                                                         <div className="value">
-                                                            20 August, 2021
+                                                            {form.coinShort}
                                                         </div>
                                                     </div>
                                                     <div className="item">
                                                         <div className="title">
-                                                            Time
+                                                            Network
                                                         </div>
                                                         <div className="value">
-                                                            06:40PM
+                                                            {form.network}
                                                         </div>
                                                     </div>
                                                     <div className="item">
@@ -342,25 +434,19 @@ const SendReceive = () => {
                                                             Amount
                                                         </div>
                                                         <div className="value">
-                                                            NGN500,000.00
+                                                            {form.amount}
                                                         </div>
+
                                                     </div>
                                                     <div className="item">
                                                         <div className="title">
                                                             Fee
                                                         </div>
                                                         <div className="value">
-                                                            NGN 5.00
+                                                            {form.breakdown.withdrawFee}
                                                         </div>
                                                     </div>
-                                                    <div className="item">
-                                                        <div className="title">
-                                                            You Get
-                                                        </div>
-                                                        <div className="value">
-                                                            0.0001
-                                                        </div>
-                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -378,57 +464,62 @@ const SendReceive = () => {
                                         </div>
                                         <div className="heading">Enter your pin</div>
                                         <div className="content text-center">
-                                            <TextField
-                                                className="form-control-2 pin-field"
-                                                InputProps={{
-                                                    disableUnderline: true
+                                            <PinInput
+                                                length={6}
+                                                initialValue=""
+                                                secret
+                                                onChange={(value, index) => { }}
+                                                type="numeric"
+                                                inputMode="number"
+                                                style={{ padding: '10px' }}
+                                                inputStyle={{ borderColor: '#ececec', borderRadius: '10px' }}
+                                                inputFocusStyle={{ borderColor: 'blue' }}
+                                                onComplete={(value, index) => {
+                                                    handleSetForm({ pin: value })
                                                 }}
-                                                variant="standard"
-                                            />
-                                            <TextField
-                                                className="form-control-2 pin-field"
-                                                InputProps={{
-                                                    disableUnderline: true
-                                                }}
-                                                variant="standard"
-                                            />
-                                            <TextField
-                                                className="form-control-2 pin-field"
-                                                InputProps={{
-                                                    disableUnderline: true
-                                                }}
-                                                variant="standard"
-                                            />
-                                            <TextField
-                                                className="form-control-2 pin-field"
-                                                InputProps={{
-                                                    disableUnderline: true
-                                                }}
-                                                variant="standard"
-                                            />
-                                            <TextField
-                                                className="form-control-2 pin-field"
-                                                InputProps={{
-                                                    disableUnderline: true
-                                                }}
-                                                variant="standard"
-                                            />
-                                            <TextField
-                                                className="form-control-2 pin-field"
-                                                InputProps={{
-                                                    disableUnderline: true
-                                                }}
-                                                variant="standard"
+                                                autoSelect={true}
+                                                regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
                                             />
                                         </div>
                                         <div className="mt-5">
-                                            <button onClick={() => navigate(5)} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                            <button disabled={!form.pin || form.loading} onClick={sendToken} className='btn btn-radius w-100 btn-primary'>Continue</button>
                                         </div>
                                     </div>
                                 )
                             }
                             {
                                 step == 5 && (
+                                    <div className="dialog-page">
+                                        <div className="mb-3 back-nav" onClick={() => navigate(3)}>
+                                            <ArrowLeftIcon color="black"></ArrowLeftIcon>
+                                        </div>
+                                        <div className="heading">Enter your token</div>
+                                        <div className="content text-center">
+                                            <PinInput
+                                                length={6}
+                                                initialValue=""
+                                                secret
+                                                onChange={(value, index) => { }}
+                                                type="numeric"
+                                                inputMode="number"
+                                                style={{ padding: '10px' }}
+                                                inputStyle={{ borderColor: '#ececec', borderRadius: '10px' }}
+                                                inputFocusStyle={{ borderColor: 'blue' }}
+                                                onComplete={(value, index) => {
+                                                    handleSetForm({ token: value })
+                                                }}
+                                                autoSelect={true}
+                                                regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
+                                            />
+                                        </div>
+                                        <div className="mt-5">
+                                            <button disabled={!form.token || form.loading} onClick={send} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                            {
+                                step == 6 && (
                                     <div className="dialog-page">
                                         <div className="heading">Success</div>
                                         <div className="heading-note">Transaction successful</div>
@@ -513,7 +604,7 @@ const SendReceive = () => {
                                                 <div className="d-flex">
                                                     <div className="title">Wallet address</div>
                                                     <div className="copy">
-                                                        <CopyToClipboard text={form.address!} onCopy={() =>{
+                                                        <CopyToClipboard text={form.address!} onCopy={() => {
                                                             snackbar.showSuccess('Address copied')
                                                         }}>
                                                             <button><CopyIcon color="black"></CopyIcon></button>
@@ -526,6 +617,26 @@ const SendReceive = () => {
                                                 </div>
 
                                             </div>
+                                            {
+                                                form.memo && (
+                                                    <div className="wallet-receive-address-clipboard">
+                                                        <div className="d-flex">
+                                                            <div className="title">Memo</div>
+                                                            <div className="copy">
+                                                                <CopyToClipboard text={form.memo!} onCopy={() => {
+                                                                    snackbar.showSuccess('Memo copied')
+                                                                }}>
+                                                                    <button><CopyIcon color="black"></CopyIcon></button>
+                                                                </CopyToClipboard>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className="address text-truncate">
+                                                            {form.memo}
+                                                        </div>
+                                                    </div>
+                                                )
+                                            }
                                         </div>
                                     </div>
                                 )
