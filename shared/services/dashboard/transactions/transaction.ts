@@ -35,7 +35,7 @@ const getSwapTransactionBreakdown = async (data: object): Promise<ICustomHttpRes
 
 }
 
-const sendTransactionToken = async (data: object): Promise<ICustomHttpResponse> => {
+const requestTransactionToken = async (data: object): Promise<ICustomHttpResponse> => {
     try {
         const token = window.localStorage.getItem('auth');
         const response = await axios.post(`${process.env.apiUrl}/account/withdrawal_otp`, { token, ...data });
@@ -209,6 +209,6 @@ export {
     getSwapTransactionBreakdown,
     generateReceiveWalletAddress,
     getReceiveWalletAddresses,
-    sendTransactionToken,
+    requestTransactionToken,
     sendTransaction
 }

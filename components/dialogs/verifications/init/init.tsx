@@ -1,14 +1,17 @@
-import { Dialog, TextField } from "@mui/material"
-import { useState } from "react";
+import { Dialog, MenuItem, Select, TextField } from "@mui/material"
+import { useEffect, useState } from "react";
 import { useAppContext } from "../../../../shared/contexts/app.context";
 import { IDialogs } from "../../../../shared/interface/global.interface"
-import { resendEmailVerification, sendPhoneNumberVerificationCode } from "../../../../shared/services/dashboard/settings/profile/profile.service";
+import { getAppData } from "../../../../shared/services/app/app.service";
+import { resendEmailVerification, sendPhoneNumberVerificationCode, submitIdDoc } from "../../../../shared/services/dashboard/settings/profile/profile.service";
+import { Auth } from "../../../auth/auth";
 import { useAuth } from "../../../auth/auth-provider";
 import { CancelIcon } from "../../../icons/icons"
 import useCustomSnackbar from "../../../snackbar/use-custom-snackbar";
 import BvnNinUpdate from "../../settings/bvn-nin-update/bvn-nin-update";
 import ProfilePin from "../../settings/profile-pin/profile-pin";
 import VerifyPhoneNumber from "../../settings/verify-phone-number/verify-phone-number";
+const auth = new Auth();
 
 const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
     const { user, setUser } = useAuth();
@@ -33,6 +36,15 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
         step?: number
         activeIdentityTab?: number,
         open?: boolean
+        idFrontPicture?: any
+        _idFrontPicture?: any
+        idBackPicture?: any
+        _idBackPicture?: any
+        processingRequest?: boolean
+        formSubmitted?: boolean
+        idNumber?: string
+        idType?: string,
+        options?: Array<string>
     }
 
     const data: IData = {
@@ -45,7 +57,9 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
         sendingPhoneVerificationCode: false,
         step: 1,
         activeIdentityTab: 0,
-        open
+        options: [
+            ''
+        ]
     }
     const [componentData, setComponentData] = useState(data);
 
@@ -89,10 +103,10 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
         }
     }
 
-    const setUpNINBVN = (type: string) =>{
-        setAppState({ 
+    const setUpNINBVN = (type: string) => {
+        setAppState({
             ...appState,
-            dialogStates:{
+            dialogStates: {
                 ...appState.dialogStates,
                 bvnNinUpdateDialog: {
                     visibitlity: true,
@@ -110,6 +124,49 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
     const relaunchDialog = () => {
         setVisibilityState({ initVerificationDialogDialogVisibility: true });
     }
+
+    const encodeImageFileAsURL = (element: any, type: string) => {
+        var file = element.target.files[0];
+        var reader = new FileReader();
+        reader.onloadend = async function () {
+            if (type == 'front') setComponentData({ ...componentData, idFrontPicture: reader.result })
+            if (type == 'back') setComponentData({ ...componentData, idBackPicture: reader.result })
+
+        }
+        reader.readAsDataURL(file);
+    }
+
+    const submitDocs = async () => {
+        const data = {
+            front_img_string: componentData.idFrontPicture,
+            back_img_string: componentData.idBackPicture,
+            number: componentData.idNumber,
+            type: componentData.idType,
+        }
+        const appDataRequest = await submitIdDoc(data);
+        if (appDataRequest.responseCode == 422) {
+            snackbar.showError(appDataRequest.data ? appDataRequest.data.message : "Error occured");
+            return
+        } else {
+            snackbar.showSuccess(appDataRequest.data.message);
+            const updatedUserInfo = await auth.resolveUser();
+            if (updatedUserInfo) setUser(updatedUserInfo);
+        }
+    }
+
+    const getData = async () => {
+        const appDataRequest = await getAppData();
+        if (appDataRequest.responseCode == 422) {
+            snackbar.showError(appDataRequest.data ? appDataRequest.data.message : "Error occured");
+            return
+        } else {
+            setData({ options: appDataRequest.data.data.idcard_types })
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [appState?.dialogStates?.initVerificationDialogDialogVisibility])
 
     return (
         <div>
@@ -209,12 +266,94 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                             )
                                         }
                                         {
-                                            componentData.activeIdentityTab == 1 && (
-                                                <div>
-
+                                            componentData.activeIdentityTab == 1 && user && !user.idc_uploaded_at && (
+                                                <div >
+                                                    <div className="">
+                                                        <label className="form-label">I.D Type</label>
+                                                        <Select
+                                                            className={`form-control ${(!componentData.idType && componentData.formSubmitted ? 'error' : '')} `}
+                                                            disableUnderline
+                                                            displayEmpty
+                                                            variant='standard'
+                                                            value={componentData.idType || ''}
+                                                            onChange={(event) => setData({ idType: event.target.value })}>
+                                                            <MenuItem value="" className="ui-select-menu">
+                                                                <em>Select an option</em>
+                                                            </MenuItem>
+                                                            {
+                                                                componentData.options?.map(element => {
+                                                                    return (
+                                                                        <MenuItem key={element} value={element} className="ui-select-menu">
+                                                                            {element}
+                                                                        </MenuItem>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </Select>
+                                                        {
+                                                            (!componentData.idType && componentData.formSubmitted &&
+                                                                <div className='error-message'>Select an option</div>
+                                                            )
+                                                        }
+                                                    </div>
+                                                    <div className="mt-3">
+                                                        <label className="form-label">I.D Number</label>
+                                                        <TextField
+                                                            className={`form-control ${(!componentData.idNumber && componentData.formSubmitted ? 'error' : '')} `}
+                                                            variant="standard"
+                                                            placeholder="I.D Number"
+                                                            fullWidth
+                                                            value={componentData.idNumber || ''}
+                                                            onChange={(e) => setData({ idNumber: e.target.value })}
+                                                            InputProps={{
+                                                                disableUnderline: true,
+                                                            }}
+                                                        />
+                                                        {
+                                                            (!componentData.idNumber && componentData.formSubmitted &&
+                                                                <div className='error-message'>Enter your I.D number</div>
+                                                            )
+                                                        }
+                                                    </div>
+                                                    <div className="d-flex mt-3 doc-files-con">
+                                                        <div className="flex-grow-1 text-center">
+                                                            <div className="id-image-placeholder" >
+                                                                <div style={{ backgroundImage: "url(" + componentData.idFrontPicture + ")" }}></div>
+                                                            </div>
+                                                            <label className="avatar-btn" htmlFor="fileInput1">Front picture
+                                                                <input value={componentData._idFrontPicture} className="custom-file-input" id="fileInput1" type="file" accept="image/png,image/jpg,image/jpeg" onChange={(e) => encodeImageFileAsURL(e, 'front')} />
+                                                            </label>
+                                                        </div>
+                                                        <div className="flex-grow-1 text-center">
+                                                            <div className="id-image-placeholder" >
+                                                                <div style={{ backgroundImage: "url(" + componentData.idBackPicture + ")" }}></div>
+                                                            </div>
+                                                            <label className="avatar-btn" htmlFor="fileInput">Back picture
+                                                                <input value={componentData._idBackPicture} className="custom-file-input" id="fileInput" type="file" accept="image/png,image/jpg,image/jpeg" onChange={(e) => encodeImageFileAsURL(e, 'back')} />
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div className="mt-4 mb-4">
+                                                        <button disabled={
+                                                            componentData.processingRequest || !componentData.idType || !componentData.idNumber || !componentData.idFrontPicture || !componentData.idBackPicture
+                                                        } onClick={submitDocs} className='btn btn-radius w-100 btn-primary'>Submit</button>
+                                                    </div>
                                                 </div>
                                             )
                                         }
+
+                                        {componentData.activeIdentityTab == 1 && user && user.idc_uploaded_at && !user.idc_verified_at &&(
+                                            <button disabled className="verification-list done">
+                                                <div className="title">Doc Uploaded</div>
+                                                <div className="description">Your upload is under review    .</div>
+                                            </button>
+                                        )}
+                                        {componentData.activeIdentityTab == 1 && user && user.idc_verified_at &&(
+                                            <button disabled className="verification-list done">
+                                                <div className="title">Doc Verified</div>
+                                                <div className="description">Your upload is verified   .</div>
+                                            </button>
+                                        )}
                                     </div>
                                 )}
                             </div>

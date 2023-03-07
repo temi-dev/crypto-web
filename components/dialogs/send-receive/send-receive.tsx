@@ -2,7 +2,7 @@ import { Dialog, TextField, Autocomplete } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../../shared/contexts/app.context";
 import { getMarketData } from "../../../shared/services/dashboard/market/market";
-import { generateReceiveWalletAddress, getPortfolioList, getReceiveWalletAddresses, getTransactionBreakdown, sendTransaction, sendTransactionToken } from "../../../shared/services/dashboard/transactions/transaction";
+import { generateReceiveWalletAddress, getPortfolioList, getReceiveWalletAddresses, getTransactionBreakdown, sendTransaction, requestTransactionToken } from "../../../shared/services/dashboard/transactions/transaction";
 import { ArrowLeftIcon, CheckCircleFilledIcon, WalletSendIcon, WalletReceiveIcon, WalletAddressIcon, CopyIcon } from "../../icons/icons";
 import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
 import QRCode from "react-qr-code";
@@ -212,7 +212,7 @@ const SendReceive = () => {
         }
     }
 
-    const sendToken = async () => {
+    const requestToken = async () => {
         handleSetForm({ loading: true });
 
         const data = {
@@ -222,7 +222,7 @@ const SendReceive = () => {
             asset: form.coinShort,
             network: form.network
         }
-        const request = await sendTransactionToken(data);
+        const request = await requestTransactionToken(data);
         if (request.responseCode == 422) {
             snackbar.showError(request.data ? request.data.message : "Error occured");
         } else {
@@ -479,7 +479,7 @@ const SendReceive = () => {
                                             />
                                         </div>
                                         <div className="mt-5">
-                                            <button disabled={!form.pin || form.loading} onClick={sendToken} className='btn btn-radius w-100 btn-primary'>Continue</button>
+                                            <button disabled={!form.pin || form.loading} onClick={requestToken} className='btn btn-radius w-100 btn-primary'>Continue</button>
                                         </div>
                                     </div>
                                 )

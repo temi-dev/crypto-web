@@ -181,7 +181,21 @@ const getUser = async (): Promise<ICustomHttpResponse> => {
    }
 }
 
-
+const submitIdDoc = async (data: any): Promise<ICustomHttpResponse> => {
+   try {
+      const token = window.localStorage.getItem('auth')
+      const response = await axios.post(`${process.env.apiUrl}/account/upload/id_card`, { ...data, token });
+      return {
+         responseCode: 200,
+         data: response.data
+      }
+   } catch (error: any) {
+      return {
+         responseCode: 422,
+         data: error.response?.data
+      }
+   }
+}
 export {
    updateProfile,
    updateProfilePicture,
@@ -193,5 +207,6 @@ export {
    verifyNin,
    getUser,
    sendPhoneNumberVerificationCode,
-   confirmPhoneNumberVerificationCode
+   confirmPhoneNumberVerificationCode,
+   submitIdDoc
 }

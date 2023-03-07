@@ -5,7 +5,7 @@ import moment from 'moment';
 const getAppData = async (): Promise<ICustomHttpResponse> => {
    const token = window.localStorage.getItem('auth')
    try {
-      const response = await axios.get(`${process.env.apiUrl}/general?app_version=1.0.4`);
+      const response = await axios.get(`${process.env.apiUrl}/general?app_version=1.0.9`);
       return {
          responseCode: 200,
          data: response.data
