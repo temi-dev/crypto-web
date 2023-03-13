@@ -10,6 +10,7 @@ import { Typography } from "@mui/material";
 import { NextApplicationPage } from "../../_app";
 import { getMarketData } from "../../../shared/services/dashboard/market/market";
 import useCustomSnackbar from "../../../components/snackbar/use-custom-snackbar";
+import { useAppContext } from "../../../shared/contexts/app.context";
 
 const Market: NextApplicationPage = () => {
 
@@ -23,7 +24,6 @@ const Market: NextApplicationPage = () => {
     }
 
     const DialogsVisibilityInitState: IDialogs = {
-        portfolioDetailsDialogVisibility: false
     }
 
     const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
@@ -122,6 +122,8 @@ const Market: NextApplicationPage = () => {
     const [viewColumnBtn, setViewColumnBtn] = useState(true);
     const [filterBtn, setFilterBtn] = useState(true);
 
+    const [appState, setAppState] = useAppContext();
+    
     const options: any = {
         viewColumns: viewColumnBtn,
         filter: filterBtn,
@@ -138,7 +140,16 @@ const Market: NextApplicationPage = () => {
         onTableChange: (action: any, state: any) => {
         },
         onRowClick: (rowData: any[], rowMeta: { dataIndex: number, rowIndex: number }) => {
-            setDialogVisibilityState({ portfolioDetailsDialogVisibility: true })
+            setAppState({
+                ...appState,
+                dialogStates: {
+                    portfolioDetailsDialog: {
+                        visibitlity: true,
+                        coin: rowData[1],
+                        price: rowData[2]
+                    }
+                }
+            })
         }
     };
 
@@ -240,7 +251,7 @@ const Market: NextApplicationPage = () => {
                     </div>
                 </div>
             </div>
-            <PortfolioDetails open={dialogsVisibilityState.portfolioDetailsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></PortfolioDetails>
+          
         </div>
     )
 }

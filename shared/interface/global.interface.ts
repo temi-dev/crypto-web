@@ -9,12 +9,21 @@ export interface IDialogs  {
         action?: string,
         step?: number
     },
+    bvnNinUpdateDialog?: {
+        visibitlity?: boolean,
+        type?: string,
+    }
+    
+    portfolioDetailsDialog?: {
+        visibitlity?: boolean,
+        coin?: string,
+        price?: string,
+    },
     sideBarDialogVisibitlity?: boolean,
     coinSwapDialogVisibitlity?: boolean,
     conversionDialogVisibilty?: boolean,
     transferDialogVisibility?: boolean,
     priceAlertsDialogVisibility?: boolean,
-    portfolioDetailsDialogVisibility?: boolean,
     portfolioReceiveDialogVisibility?: boolean
     portfolioSendDialogVisibility?: boolean
     portfolioSellDialogVisibility?: boolean,
@@ -26,10 +35,6 @@ export interface IDialogs  {
     settingsBankDetailsDialogVisibility?: boolean,
     settingsSupportTicketsDialogVisibility?: boolean,
     settingsCreateTicketDialogVisibility?: boolean
-    bvnNinUpdateDialog?: {
-        visibitlity?: boolean,
-        type?: string,
-    }
     settingsAvatarDialogVisibility?: boolean,
     settingsMobileMenuVisibility?: boolean,
     profilePinVisibility?: boolean

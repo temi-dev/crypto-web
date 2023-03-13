@@ -11,6 +11,7 @@ import { useAppContext } from "../../shared/contexts/app.context";
 import SendReceive from "../dialogs/send-receive/send-receive";
 import { Auth } from "../auth/auth";
 import { useAuth } from "../auth/auth-provider";
+import PortfolioDetails from "../dialogs/portfolio/details/details";
 const auth = new Auth();
 
 const DashboardHeader = ({ title }: { title: string }) => {
@@ -142,6 +143,8 @@ const DashboardHeader = ({ title }: { title: string }) => {
             <SendReceive></SendReceive>
 
             <MobileSideBar open={dialogsVisibilityState.sideBarDialogVisibitlity!} setVisibilityState={setDialogVisibilityState}></MobileSideBar>
+              <PortfolioDetails open={dialogsVisibilityState.portfolioDetailsDialog?.visibitlity!} setVisibilityState={setDialogVisibilityState}></PortfolioDetails>
+
         </div>
     )
 }

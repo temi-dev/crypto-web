@@ -96,7 +96,7 @@ const BuySell = () => {
             if (action == 'sell') {
                 const portfolio = await getPortfolioList();
                 if (portfolio.responseCode == 422) {
-                    snackbar.showError(request.data ? request.data.message : "Error occured");
+                    snackbar.showError(portfolio.data ? portfolio.data.message : "Error occured");
                     return
                 } else {
                     portfolio.data.data.forEach((element: any) => {

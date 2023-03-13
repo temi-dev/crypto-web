@@ -1,4 +1,3 @@
-import { NextPage } from "next";
 import DashboardHeader from "../../components/dashboard-header/dashboard-header";
 import DashboardPortfolioBalance from "../../components/dashboard-portfolio-balance/dashboard-portfolio-balance";
 import DashboardSidebar from "../../components/dashboard-sidebar/dashboard-sidebar";
@@ -6,13 +5,8 @@ import DashboardSidebar from "../../components/dashboard-sidebar/dashboard-sideb
 
 import {
     BellIcon,
-    BitCoinFilledIcon,
     CoinSwapIcon,
-    DashCoinFilledIcon,
-    EtherumFilledIcon,
-    ExchangeIcon,
     PaperIcon,
-    TetherCoinFilledIcon,
     WalletMinusIcon,
     WalletPlusIcon,
     WalletReceiveIcon,
@@ -44,11 +38,9 @@ ChartJS.register(
 import DashboardTransactionList from "../../components/dashboard-transaction-list/dashboard-transaction-list";
 import React, { useEffect, useState } from "react";
 import CoinSwap from "../../components/dialogs/coin-swap/coin-swap";
-import MoneyConversion from "../../components/dialogs/convert/convert";
 import Transfer from "../../components/dialogs/transfer/transfer";
 import { IDialogs } from "../../shared/interface/global.interface";
 import PriceAlert from "../../components/dialogs/price-alert/price-alert";
-import BuySell from "../../components/dialogs/buy-sell/buy-sell";
 import { useAppContext } from "../../shared/contexts/app.context";
 import { NextApplicationPage } from "../_app";
 import VerificationCta from "../../components/verification-cta/verification-cta";
@@ -76,7 +68,6 @@ const Dashboard: NextApplicationPage = (props) => {
     }
 
     const initAssets: IAssetsData = {
-
     }
 
     const DialogsVisibilityInitState: IDialogs = {
@@ -84,7 +75,6 @@ const Dashboard: NextApplicationPage = (props) => {
         conversionDialogVisibilty: false,
         transferDialogVisibility: false,
         priceAlertsDialogVisibility: false,
-        portfolioDetailsDialogVisibility: false,
     }
 
     const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
@@ -310,7 +300,7 @@ const Dashboard: NextApplicationPage = (props) => {
                                 {
                                     assetsData.assets?.map((element) => {
                                         return (
-                                            <DashboardPortfolioBalance key={element.id} coinName={element.coin} percentageChange={element._24hrs} coinBalance={element.bal} fiatBalance={"NGN200,000"} ></DashboardPortfolioBalance>
+                                            <DashboardPortfolioBalance key={element.id} coinName={element.coin} percentageChange={element._24hrs} coinBalance={element.bal} fiatBalance={"NGN200,000"} price={element.price}></DashboardPortfolioBalance>
                                         )
                                     })
                                 }

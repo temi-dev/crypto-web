@@ -70,7 +70,10 @@ const SendReceive = () => {
     };
 
     const handleDialogClose = () => {
-        setAppState({ ...appState, dialogStates: { sendReceive: { visibitlity: false } } });
+        setAppState({ ...appState, dialogStates: { 
+            ...appState.dialogStates,
+            sendReceive: { visibitlity: false } } 
+        });
         handleSetForm(({ coin: '', coinShort: '', network: '' }))
     };
 
@@ -151,6 +154,7 @@ const SendReceive = () => {
         setAppState({
             ...appState,
             dialogStates: {
+                ...appState.dialogStates,
                 sendReceive: {
                     ...appState.dialogStates?.sendReceive,
                     step,

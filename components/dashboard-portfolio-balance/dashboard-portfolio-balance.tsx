@@ -1,31 +1,35 @@
 import { useState } from "react";
+import { useAppContext } from "../../shared/contexts/app.context";
 import { IDialogs } from "../../shared/interface/global.interface";
 import PortfolioDetails from "../dialogs/portfolio/details/details";
 
 const DashboardPortfolioBalance = (
-    {  coinName, percentageChange, coinBalance, fiatBalance }:
-        { coinName: string, percentageChange: number, coinBalance: number, fiatBalance: string }
+    {  coinName, percentageChange, coinBalance, fiatBalance, price }:
+        { coinName: string, percentageChange: number, coinBalance: number, fiatBalance: string, price: string }
 ) => {
-    const DialogsVisibilityInitState: IDialogs = {
-        portfolioDetailsDialogVisibility: false
-    }
+    const [appState, setAppState] = useAppContext();
 
-    const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
-
-    const openDialog = (data: IDialogs) => {
-        setDialogVisibilityState({ ...dialogsVisibilityState, ...data });
-    };
-    // onClick={() => openDialog({ portfolioDetailsDialogVisibility: true })}
     return (
         <div>
-            <div className="portfolio-list d-flex" >
+            <div className="portfolio-list d-flex" onClick={() =>{
+                setAppState({
+                    ...appState,
+                    dialogStates: {
+                        portfolioDetailsDialog: {
+                            visibitlity: true,
+                            coin: coinName,
+                            price
+                        }
+                    }
+                })
+            }}>
                 <div className="d-flex">
                     <div className="me-2">
                       
                     </div>
                     <div>
                         <div className="coin-name">{coinName}</div>
-                        <div className={`percentage-change ${percentageChange > 0 ? 'green' : 'red'}`}>{percentageChange}</div>
+                        <div className={`percentage-change ${percentageChange >= 0 ? 'green' : 'red'}`}>{percentageChange}</div>
                     </div>
                 </div>
                 <div className="d-flex justify-content-end flex-grow-1">
@@ -35,7 +39,6 @@ const DashboardPortfolioBalance = (
                 </div>
 
             </div>
-            <PortfolioDetails open={dialogsVisibilityState.portfolioDetailsDialogVisibility!} setVisibilityState={setDialogVisibilityState}></PortfolioDetails>
         </div>
     )
 }
