@@ -1,15 +1,13 @@
 import { TextField } from "@mui/material";
-import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import DashboardHeader from "../../../components/dashboard-header/dashboard-header";
 import DashboardSidebar from "../../../components/dashboard-sidebar/dashboard-sidebar";
-import AmountInputField from "../../../components/amount-field/amount-field";
-import { BankCircleFilledIcon, CancelIcon, HometownLogo, RavenLogo, WalletPeerToPeerIcon } from "../../../components/icons/icons";
+import { BankCircleFilledIcon, CancelIcon, HometownLogo, WalletPeerToPeerIcon } from "../../../components/icons/icons";
 import DepositConfirmation from "../../../components/dialogs/deposit-confirmation/deposit-confirmation";
 import { IDialogs } from "../../../shared/interface/global.interface";
 import { NextApplicationPage } from "../../_app";
 import { useAuth } from "../../../components/auth/auth-provider";
-import { getBankPeer2PeerDepositChannels } from "../../../shared/services/dashboard/wallet/wallet.service";
+import { getBankPeer2PeerDepositChannels, getWalletProviders } from "../../../shared/services/dashboard/wallet/wallet.service";
 import useCustomSnackbar from "../../../components/snackbar/use-custom-snackbar";
 import WithdrawDialog from "../../../components/dialogs/withdraw/withdraw";
 
@@ -29,7 +27,8 @@ const Wallet: NextApplicationPage = () => {
         bankPeer2PeerDepositUsers?: Array<any>,
         flowStep?: number | null,
         bankPeer2PeerSelectedUser?: any
-        peer2peerWallet?: string
+        peer2peerWallet?: string,
+        walletProviders?: Array<any>
     }
 
     const initData: IData = {
@@ -88,7 +87,7 @@ const Wallet: NextApplicationPage = () => {
         setData({
             flowStep: null,
             amount: '',
-            mobileHidden: false 
+            mobileHidden: false
         })
     }
 
@@ -100,18 +99,33 @@ const Wallet: NextApplicationPage = () => {
             mobileHidden: false
         })
     }
- 
+
     const continueWalletSelection = () => {
-        if(componentData.action == 'deposit'){
+        if (componentData.action == 'deposit') {
             setDialogVisibilityState({
                 depositConfirmationDialogVisibility: true
             })
-        }else{
+        } else {
             setDialogVisibilityState({
                 WithdrawDialogDialogVisibility: true
             })
         }
     }
+
+    const getWalletsChannels = async () => {
+        const request = await getWalletProviders();
+        if (request.responseCode == 422) {
+            snackbar.showError(
+                request.data.message
+            );
+        } else {
+            setData({ walletProviders: request.data.data })
+        }
+    }
+
+    useEffect(() => {
+        getWalletsChannels()
+    }, [])
 
     const [dialogsVisibilityState, setDialogVisibilityState] = useState({ ...DialogsVisibilityInitState });
 
@@ -320,18 +334,26 @@ const Wallet: NextApplicationPage = () => {
                                 <div className="heading">Select  wallet</div>
 
                                 <div className="content">
-                                    <div
-                                        onClick={() => {
-                                            setData({
-                                                peer2peerWallet: 'hometown'
-                                            });
-                                           continueWalletSelection()
-                                        }} className="ui-option">
-                                        <div className="icon">
-                                            <HometownLogo></HometownLogo>
-                                        </div>
-                                        <div className="title">Home Town</div>
-                                    </div>
+                                    {
+                                        componentData?.walletProviders?.map((element: any) => {
+                                            return (
+                                                <div
+                                                    onClick={() => {
+                                                        setData({
+                                                            peer2peerWallet: element.tag
+                                                        });
+                                                        continueWalletSelection()
+                                                    }} className="ui-option">
+                                                    <div className="icon">
+                                                        <div style={{ backgroundImage: "url(" + "https://api.kochure.com/test/static/assets/images/" + element.logo_url  + ")" }} className="transaction-image-placeholder" >
+                                                        </div>
+                                                    </div>
+                                                    <div className="title">{element.name}</div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+
                                 </div>
                             </div>
                         )}
@@ -339,7 +361,7 @@ const Wallet: NextApplicationPage = () => {
                 </div>
                 <DepositConfirmation open={dialogsVisibilityState.depositConfirmationDialogVisibility!} setVisibilityState={setDialogVisibilityState} amount={componentData.amount} wallet={componentData.peer2peerWallet!} complete={completePeer2PeerDeposit}></DepositConfirmation>
 
-                <WithdrawDialog open={dialogsVisibilityState.WithdrawDialogDialogVisibility!} setVisibilityState={setDialogVisibilityState} amount={componentData.amount} complete={completeWithdraw}></WithdrawDialog>
+                <WithdrawDialog open={dialogsVisibilityState.WithdrawDialogDialogVisibility!} setVisibilityState={setDialogVisibilityState} amount={componentData.amount} wallet={componentData.peer2peerWallet!} complete={completeWithdraw}></WithdrawDialog>
             </div>
         </div >
     )

@@ -6,7 +6,7 @@ import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
 import { useEffect, useState } from "react";
 import { da } from "date-fns/locale";
 
-const WithdrawDialog = ({ open, setVisibilityState, amount, complete }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>>, amount: any, complete: any }) => {
+const WithdrawDialog = ({ open, setVisibilityState, amount, complete, wallet }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>>, amount: any, complete: any, wallet: string }) => {
     const snackbar = useCustomSnackbar()
     
 
@@ -17,7 +17,7 @@ const WithdrawDialog = ({ open, setVisibilityState, amount, complete }: { open: 
         wallet?: string
     }
     const data: IWallet = {
-        wallet: 'hometown',
+        wallet
     }
 
     const [walletDetails, setWalletDetails] = useState(data);
@@ -30,7 +30,7 @@ const WithdrawDialog = ({ open, setVisibilityState, amount, complete }: { open: 
     const withdraw = async () => {
         if (!walletDetails.account) {
             snackbar.showError(
-                "Enter your Hometown username"
+                "Enter your username"
             );
             return
         }
@@ -91,7 +91,7 @@ const WithdrawDialog = ({ open, setVisibilityState, amount, complete }: { open: 
                                 <div className="item">
                                     <TextField
                                         className="form-control"
-                                        placeholder="Hometown username"
+                                        placeholder="Username"
                                         InputProps={{
                                             disableUnderline: true
                                         }}

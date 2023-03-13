@@ -6,35 +6,42 @@ import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
 import { useEffect, useState } from "react";
 
 const DepositConfirmation = ({ open, setVisibilityState, amount, wallet, complete }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>>, amount: any, wallet: string, complete: any }) => {
-   const snackbar = useCustomSnackbar()
-    const handleDialogClose = () => {
-        setVisibilityState({ depositConfirmationDialogVisibility: false });
-    };
+    const snackbar = useCustomSnackbar()
+
 
     interface IWallet {
         account_id?: string,
         amount?: number,
         name?: string
     }
-    const data : IWallet = {
+    const data: IWallet  = {
     }
     const [walletDetails, setWalletDetails] = useState(data);
+    const [loading, setLoading] = useState(true)
     const getWalletInfo = async () => {
+        setLoading(true)
         const request = await generateDepositWalletAddress(Number(amount), wallet);
         if (request.responseCode == 422) {
             snackbar.showError(
                 request.data.message ? request.data.message : "An error occured"
             );
+            setLoading(false)
+            handleDialogClose();
         } else {
             setWalletDetails(request.data.data);
+            setLoading(false)
         }
     }
 
-    const completed = () =>{
+    const completed = () => {
         complete();
         handleDialogClose();
     }
 
+    const handleDialogClose = () => {
+        setVisibilityState({ depositConfirmationDialogVisibility: false });
+        setWalletDetails({})
+    };
     useEffect(() => {
         if (open) getWalletInfo()
     }, [open]);
@@ -53,43 +60,54 @@ const DepositConfirmation = ({ open, setVisibilityState, amount, wallet, complet
 
                     </div>
                     <div className="transaction-details">
-                        <div className="transaction-details-heading">
+                        {/* <div className="transaction-details-heading">
                             <HometownLogo></HometownLogo>
-                        </div>
-                        <div className="data">
-                            <div className="item">
-                                <div className="title">
-                                    Wallet
-                                </div>
-                                <div className="value">
-                                    Hometown
+                        </div> */}
+                        {
+                            !loading && walletDetails &&
+                            <div>
+                                <div className="data">
+                                    <div className="item">
+                                        <div className="title">
+                                            Wallet
+                                        </div>
+                                        <div className="value">
+                                            {wallet}
+                                        </div>
+                                    </div>
+                                    <div className="item">
+                                        <div className="title">
+                                            Name
+                                        </div>
+                                        <div className="value">
+                                            {walletDetails.name}
+                                        </div>
+                                    </div>
+                                    <div className="item">
+                                        <div className="title">
+                                            Username
+                                        </div>
+                                        <div className="value">
+                                            {walletDetails.account_id}
+                                        </div>
+                                    </div>
+                                    <div className="item"   >
+                                        <div className="title">
+                                            Amount
+                                        </div>
+                                        <div className="value">
+                                            NGN {walletDetails.amount}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="item">
-                                <div className="title">
-                                    Name
-                                </div>
-                                <div className="value">
-                                    {walletDetails.name}
-                                </div>
+                        }
+                        {
+                            loading &&
+                            <div className="my-3 text-center">
+                                Loading...
                             </div>
-                            <div className="item">
-                                <div className="title">
-                                    Username
-                                </div>
-                                <div className="value">
-                                    {walletDetails.account_id}
-                                </div>
-                            </div>
-                            <div className="item"   >
-                                <div className="title">
-                                    Amount
-                                </div>
-                                <div className="value">
-                                    NGN {walletDetails.amount}
-                                </div>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </div>
                 <div className="mt-5">

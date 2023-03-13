@@ -19,6 +19,23 @@ const getBankPeer2PeerDepositChannels = async (type: string): Promise<ICustomHtt
 
 }
 
+const getWalletProviders = async (): Promise<ICustomHttpResponse> => {
+    try {
+        const token = window.localStorage.getItem('auth')
+        const response = await axios.get(`${process.env.apiUrl}//general/p2p_wallet_providers`);
+        return {
+            responseCode: 200,
+            data: response.data
+        }
+    } catch (error: any) {
+        return {
+            responseCode: 422,
+            data: error.response?.data
+        }
+    }
+
+}
+
 const generateDepositWalletAddress = async (amount: number, wallet: string): Promise<ICustomHttpResponse> => {
     try {
         const token = window.localStorage.getItem('auth')
@@ -55,5 +72,6 @@ const walletWithdraw = async (data: any): Promise<ICustomHttpResponse> => {
 export {
     getBankPeer2PeerDepositChannels,
     generateDepositWalletAddress,
-    walletWithdraw
+    walletWithdraw,
+    getWalletProviders
 }
