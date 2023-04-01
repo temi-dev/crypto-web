@@ -224,20 +224,7 @@ const Wallet: NextApplicationPage = () => {
                                         </div>
                                         <div className="title">Wallet Peer to Peer</div>
                                     </div>
-                                    {
-                                        componentData.action == 'deposit' && (
-                                            <div
-                                                onClick={() => {
-                                                    fetchBankPeer2PeerChannels()
-                                                }}
-                                                className="ui-option">
-                                                <div className="icon">
-                                                    <BankCircleFilledIcon></BankCircleFilledIcon>
-                                                </div>
-                                                <div className="title">Bank Peer</div>
-                                            </div>
-                                        )
-                                    }
+                                    
                                 </div>
                             </div>
                         )}

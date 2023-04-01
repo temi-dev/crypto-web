@@ -4,7 +4,7 @@ import { ArrowLeftIcon, CancelIcon, CheckCircleFilledIcon, NigeriaIcon } from ".
 import { IDialogs } from "../../../shared/interface/global.interface";
 import PinInput from "react-pin-input";
 import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
-import { transferFiat, verifyAccount } from "../../../shared/services/dashboard/transactions/transaction";
+import { getTransactionsList, transferFiat, verifyAccount } from "../../../shared/services/dashboard/transactions/transaction";
 import { Auth } from "../../auth/auth";
 import { useAuth } from "../../auth/auth-provider";
 const auth = new Auth();
@@ -54,6 +54,7 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
             setForm(formData);
             const updatedUserInfo = await auth.resolveUser();
             if (updatedUserInfo) setUser(updatedUserInfo);
+            getTransactions()
         }
     }
 
@@ -78,7 +79,17 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
 
     }
 
-    const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+    const getTransactions = async () => {
+        const request = await getTransactionsList();
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+            setUser({
+                ...user!,
+                transactions: request.data.data.slice(0, 5)
+            })
+        }
+    }
 
     return (
         <Dialog fullWidth maxWidth='xs' open={open ? open : false} onClose={handleDialogClose}>
@@ -116,66 +127,7 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
 
                                     </div>
 
-                                    {/* <div className="recent-contacts my-3">
-                                        <div className="headline">Recent Contacts</div>
-                                        <div className="my-3">
-                                            <ReactSimplyCarousel
-                                                activeSlideIndex={activeSlideIndex}
-                                                onRequestChange={setActiveSlideIndex}
-                                                forwardBtnProps={{
-                                                    hidden: true
-                                                }}
-                                                backwardBtnProps={{
-                                                    hidden: true
-                                                }}
-                                                responsiveProps={[
-                                                    {
-                                                        itemsToShow: 3,
-                                                        itemsToScroll: 3,
-                                                        minWidth: 768,
-                                                    }, {
-                                                        itemsToShow: 5,
-                                                        itemsToScroll: 5,
-                                                        minWidth: 1200,
-                                                    },
-                                                ]}
-                                                speed={400}
-                                                easing="linear"
-                                            >
-                                                <div className="contact-carousel-item">
-                                                    <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/avatar.png" + ")" }}></div>
-                                                    <div className="contact-name text-truncate">Yemmy</div>
-                                                </div>
-
-                                                <div className="contact-carousel-item">
-                                                    <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/img.png" + ")" }}></div>
-                                                    <div className="contact-name text-truncate">Miliano</div>
-                                                </div>
-
-                                                <div className="contact-carousel-item">
-                                                    <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/pic.png" + ")" }}></div>
-                                                    <div className="contact-name text-truncate">Ebuka</div>
-                                                </div>
-
-                                                <div className="contact-carousel-item">
-                                                    <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }}></div>
-                                                    <div className="contact-name text-truncate">Pedro</div>
-                                                </div>
-
-                                                <div className="contact-carousel-item">
-                                                    <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/profile.png" + ")" }}></div>
-                                                    <div className="contact-name text-truncate">Owk</div>
-                                                </div>
-
-                                                <div className="contact-carousel-item">
-                                                    <div className="contact-image-placeholder" style={{ backgroundImage: "url(" + "/images/img.png" + ")" }}></div>
-                                                    <div className="contact-name text-truncate">Miliano</div>
-                                                </div>
-
-                                            </ReactSimplyCarousel>
-                                        </div>
-                                    </div> */}
-
+               
                                     <div className="mt-3">
                                         <label className="form-label">Amount</label>
                                         <TextField
@@ -183,8 +135,12 @@ const Transfer = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                             variant="standard"
                                             placeholder="Enter an amount"
                                             fullWidth
-                                            value={form.amount}
-                                            onChange={(e) => { handleSetFormData({ amount: Number(e.target.value) }) }}
+                                            value={ form.amount || ''}
+                                            type="text" 
+                                            inputMode="numeric" 
+                                            onChange={
+                                                (e) => { handleSetFormData({ amount: Number(e.target.value) }) 
+                                            }}
                                             InputProps={{
                                                 disableUnderline: true,
                                                 endAdornment: (

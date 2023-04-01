@@ -21,7 +21,8 @@ export type User = {
     pin_exists: boolean,
     bank_accounts?: Array<any>
     phone: string,
-    available_bal?: number
+    available_bal?: number,
+    transactions?: Array<any>
 }
 
 export class Auth {

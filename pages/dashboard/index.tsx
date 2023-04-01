@@ -59,7 +59,7 @@ const Dashboard: NextApplicationPage = (props) => {
         loadingAssets?: boolean
     }
 
-    const { user } = useAuth();
+    const { user, setUser } = useAuth();
     const snackbar = useCustomSnackbar();
 
     const initComponentData: IComponentData = {
@@ -96,8 +96,11 @@ const Dashboard: NextApplicationPage = (props) => {
         if (request.responseCode == 422) {
             snackbar.showError(request.data ? request.data.message : "Error occured");
         } else {
+            setUser({
+                ...user!,
+                transactions: request.data.data.slice(0, 5)
+            })  
             setData({
-                transactions: request.data.data.slice(0, 5),
                 loadingTransactions: false
             })
 
@@ -218,9 +221,9 @@ const Dashboard: NextApplicationPage = (props) => {
                                         ...appState,
                                         dialogStates: {
                                             sendReceive: {
-                                               visibitlity: true,
+                                                visibitlity: true,
                                                 action: 'receive',
-                                               step: 2
+                                                step: 2
                                             }
                                         }
                                     })
@@ -233,7 +236,10 @@ const Dashboard: NextApplicationPage = (props) => {
                         </div>
 
                         <div className="box-section mt-4 d-none d-lg-block">
-                            <DashboardTransactionList mode="recent" data={componentData.transactions!}></DashboardTransactionList>
+                            {
+                                user && user.transactions &&
+                                <DashboardTransactionList mode="recent" data={user.transactions!}></DashboardTransactionList>
+                            }
                         </div>
 
                     </div>
@@ -287,7 +293,10 @@ const Dashboard: NextApplicationPage = (props) => {
                         </div>
 
                         <div className="box-section mt-4 d-block d-lg-none">
-                            <DashboardTransactionList mode="recent" data={componentData.transactions!}></DashboardTransactionList>
+                            {
+                                user && user.transactions &&
+                                <DashboardTransactionList mode="recent" data={user.transactions!}></DashboardTransactionList>
+                            }
                         </div>
 
                         <div className="box-section mt-4">

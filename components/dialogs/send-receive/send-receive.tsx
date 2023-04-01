@@ -1,16 +1,19 @@
-import { Dialog, TextField, Autocomplete } from "@mui/material";
+import { Dialog, TextField, Autocomplete, createFilterOptions } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../../shared/contexts/app.context";
 import { getMarketData } from "../../../shared/services/dashboard/market/market";
-import { generateReceiveWalletAddress, getPortfolioList, getReceiveWalletAddresses, getTransactionBreakdown, sendTransaction, requestTransactionToken } from "../../../shared/services/dashboard/transactions/transaction";
+import { generateReceiveWalletAddress, getPortfolioList, getReceiveWalletAddresses, getTransactionBreakdown, sendTransaction, requestTransactionToken, getTransactionsList } from "../../../shared/services/dashboard/transactions/transaction";
 import { ArrowLeftIcon, CheckCircleFilledIcon, WalletSendIcon, WalletReceiveIcon, WalletAddressIcon, CopyIcon } from "../../icons/icons";
 import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
 import QRCode from "react-qr-code";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import PinInput from "react-pin-input";
+import { useAuth } from "../../auth/auth-provider";
 
 const SendReceive = () => {
 
+    const {user, setUser} = useAuth();
+    
     const [appState, setAppState] = useAppContext()
 
     const initAction = appState.dialogStates!.sendReceive?.action!
@@ -58,23 +61,32 @@ const SendReceive = () => {
         if (data.coin) {
             const coin = form.coins?.find(x => x.label == data.coin);
             let networks: any[] = [];
+
             coin.networks.forEach((element: any) => {
                 networks.push({
-                    label: element.network
+                    label: element.name,
+                    network: element.network
                 })
             })
             const asset = assets!.find((element: { label: string | undefined; }) => element.label == data.coin);
             setFormData({ ...form, networks, coinShort: coin.asset, network: '', coinAsset: asset });
         }
 
+        if (data.network) {
+            const network = form.networks?.find(x => x.label == data.network);
+            setFormData({ ...form, network: network.network })
+        }
+
     };
 
     const handleDialogClose = () => {
-        setAppState({ ...appState, dialogStates: { 
-            ...appState.dialogStates,
-            sendReceive: { visibitlity: false } } 
+        setAppState({
+            ...appState, dialogStates: {
+                ...appState.dialogStates,
+                sendReceive: { visibitlity: false }
+            }
         });
-        handleSetForm(({ coin: '', coinShort: '', network: '' }))
+        setFormData(formData)
     };
 
 
@@ -229,6 +241,7 @@ const SendReceive = () => {
         const request = await requestTransactionToken(data);
         if (request.responseCode == 422) {
             snackbar.showError(request.data ? request.data.message : "Error occured");
+            handleSetForm({ loading: false });
         } else {
             navigate(5)
             handleSetForm({ loading: false });
@@ -254,6 +267,22 @@ const SendReceive = () => {
             handleSetForm({ loading: false });
         }
     }
+
+    const getTransactions = async () => {
+        const request = await getTransactionsList();
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+            setUser({
+                ...user!,
+                transactions: request.data.data.slice(0, 5)
+            })
+        }
+    }
+    
+    const filterOptions = createFilterOptions({
+        stringify: (option) => JSON.stringify(option),
+    });
 
     useEffect(() => {
         if (initAction) {
@@ -292,7 +321,7 @@ const SendReceive = () => {
                 {
                     action == 'send' && (
                         <div>
-                           
+
                             {
                                 step == 2 && (
                                     <div>
@@ -305,6 +334,7 @@ const SendReceive = () => {
                                             <Autocomplete
                                                 disablePortal
                                                 className="mt-1 w-100"
+                                                filterOptions={filterOptions}
                                                 options={form.coins || []}
                                                 value={form.coinShort}
                                                 onChange={(event: any, newValue: any) => {
@@ -347,7 +377,7 @@ const SendReceive = () => {
                                                 placeholder="Enter amount"
                                                 fullWidth
                                                 type='number'
-                                                value={form.amount || 0}
+                                                value={form.amount}
                                                 onChange={(event) => {
                                                     handleSetForm({ amount: Number(event.target.value) });
                                                 }}
@@ -432,10 +462,19 @@ const SendReceive = () => {
                                                     </div>
                                                     <div className="item">
                                                         <div className="title">
-                                                            Amount
+                                                            Receive  Amount
                                                         </div>
                                                         <div className="value">
-                                                            {form.amount}
+                                                            {form.breakdown.assetUnits}
+                                                        </div>
+
+                                                    </div>
+                                                    <div className="item">
+                                                        <div className="title">
+                                                            Amount Spent
+                                                        </div>
+                                                        <div className="value">
+                                                            {form.amount} NGN
                                                         </div>
 
                                                     </div>
@@ -553,6 +592,7 @@ const SendReceive = () => {
                                                 className="mt-2 w-100"
                                                 options={form.coins || []}
                                                 value={form.coinShort}
+                                                filterOptions={filterOptions}
                                                 onChange={(event: any, newValue: any) => {
                                                     if (newValue) handleSetForm({ coin: newValue.label });
                                                 }}
@@ -572,6 +612,7 @@ const SendReceive = () => {
                                                 className="mt-2 w-100"
                                                 options={form.networks || []}
                                                 value={form.network}
+                                                filterOptions={filterOptions}
                                                 onChange={(event: any, newValue: any) => {
                                                     if (newValue) handleSetForm({ network: newValue.label });
                                                 }}

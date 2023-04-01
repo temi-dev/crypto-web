@@ -4,6 +4,7 @@ const nextConfig = {
   env: {
     apiUrl: "https://api.kochure.com/test",
   },
+  swcMinify: false
 }
 
 module.exports = nextConfig

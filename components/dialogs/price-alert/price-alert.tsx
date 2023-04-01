@@ -1,4 +1,4 @@
-import { Checkbox, Dialog, MenuItem, Select, TextField } from "@mui/material"
+import { Checkbox, createFilterOptions, Dialog, MenuItem, Select, TextField } from "@mui/material"
 import { useEffect, useState } from "react";
 import { IDialogs } from "../../../shared/interface/global.interface";
 import { BitCoinFilledIcon, CancelIcon, EtherumFilledIcon, NotificationBellIllustrationIcon } from "../../icons/icons";
@@ -85,9 +85,13 @@ const PriceAlert = ({ open, setVisibilityState }: { open: boolean, setVisibility
         } 
     }
 
+    const filterOptions = createFilterOptions({
+        stringify: (option) => JSON.stringify(option),
+    });
+    
     useEffect(()=>{
         getData()
-    }, [])
+    }, [open])
     return (
         <Dialog fullWidth maxWidth='xs' open={open} onClose={handleDialogClose}>
             <div className="animate__animated animate__fadeIn animate__fast">
@@ -144,6 +148,7 @@ const PriceAlert = ({ open, setVisibilityState }: { open: boolean, setVisibility
                                             className="mt-2 w-100"
                                             options={form.coins!}
                                             value={form.coin}
+                                            filterOptions={filterOptions}
                                             onChange={(event: any, newValue: any) => {
                                                 if (newValue) setFormData({ coin: newValue.label });
                                             }}

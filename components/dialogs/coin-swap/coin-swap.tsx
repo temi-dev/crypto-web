@@ -1,13 +1,16 @@
-import { Autocomplete, Dialog, TextField } from "@mui/material"
+import { Autocomplete, createFilterOptions, Dialog, TextField } from "@mui/material"
 import React, { useEffect, useState } from "react";
 import PinInput from "react-pin-input";
 import { IDialogs } from "../../../shared/interface/global.interface";
-import { getPortfolioList, getSwapTransactionBreakdown, swapCoin } from "../../../shared/services/dashboard/transactions/transaction";
+import { getPortfolioList, getSwapTransactionBreakdown, getTransactionsList, swapCoin } from "../../../shared/services/dashboard/transactions/transaction";
+import { useAuth } from "../../auth/auth-provider";
 import { ArrowLeftIcon, CancelIcon, CheckCircleFilledIcon, CoinSwapIcon } from "../../icons/icons";
 import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
 
 const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
 
+    const { user, setUser } = useAuth();
+    
     interface IFormData {
         fromCoin?: string,
         from?: number,
@@ -40,7 +43,7 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
         } else {
             if (data.toCoin) {
                 const toAsset = form.assets!.find((element) => element.label == data.toCoin);
-                setForm({...form, toAsset })
+                setForm({ ...form, toAsset })
             }
             setForm(form => ({ ...form, ...data }));
         }
@@ -85,6 +88,7 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
             handleSetFormData({ processingRequest: false })
             return
         } else {
+            getTransactions()
             handleDialogClose()
             snackbar.showSuccess(request.data.message)
         }
@@ -100,7 +104,7 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
 
     const getBreakdown = async () => {
         handleSetFormData({ gettingBreakdown: true });
-        
+
         const data = {
             type: 'swap',
             amount: form.amount,
@@ -111,10 +115,27 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
         if (request.responseCode == 422) {
             snackbar.showError(request.data ? request.data.message : "Error occured");
         } else {
-             handleSetFormData({ breakdown: request.data.data, gettingBreakdown: false })
+            handleSetFormData({ breakdown: request.data.data, gettingBreakdown: false })
             navigate(2)
         }
     }
+
+    const filterOptions = createFilterOptions({
+        stringify: (option) => JSON.stringify(option),
+    });
+
+    const getTransactions = async () => {
+        const request = await getTransactionsList();
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+            setUser({
+                ...user!,
+                transactions: request.data.data.slice(0, 5)
+            })
+        }
+    }
+
 
     useEffect(() => {
         if (open) getData()
@@ -143,6 +164,7 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                             className="mt-2 w-100"
                                             options={form.assets!}
                                             value={form.fromCoin}
+                                            filterOptions={filterOptions}
                                             onChange={(event: any, newValue: any) => {
                                                 if (newValue) handleSetFormData({ fromCoin: newValue.label });
                                             }}
@@ -167,6 +189,7 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                             className="mt-2 w-100"
                                             options={form.toAssets!}
                                             value={form.toCoin || ''}
+                                            filterOptions={filterOptions}
                                             onChange={(event: any, newValue: any) => {
                                                 if (newValue) handleSetFormData({ toCoin: newValue.label });
                                             }}
@@ -257,21 +280,21 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                         </div>
                                         <div className="item">
                                             <div className="title">
-                                               Swap
+                                                Swap
                                             </div>
                                             <div className="value">
-                                            {form.breakdown.totalAssetUnits}  {form.fromAsset?.asset}
+                                                {form.breakdown.totalAssetUnits}  {form.fromAsset?.asset}
                                             </div>
                                         </div>
                                         <div className="item">
                                             <div className="title">
-                                               Get
+                                                Get
                                             </div>
                                             <div className="value">
                                                 {form.breakdown.swapAssetUnits} {form.toAsset?.asset}
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                                 <div className="my-4">

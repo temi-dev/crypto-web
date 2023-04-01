@@ -1,10 +1,10 @@
-import { Dialog, Select, MenuItem, TextField, FormGroup, FormControl, Autocomplete } from "@mui/material";
+import { Dialog, Select, MenuItem, TextField, FormGroup, FormControl, Autocomplete, createFilterOptions } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import PinInput from "react-pin-input";
 import { useAppContext } from "../../../shared/contexts/app.context";
 import { getAppData } from "../../../shared/services/app/app.service";
 import { getMarketData } from "../../../shared/services/dashboard/market/market";
-import { completeBuySellTransaction, getPortfolioList, getTransactionBreakdown } from "../../../shared/services/dashboard/transactions/transaction";
+import { completeBuySellTransaction, getPortfolioList, getTransactionBreakdown, getTransactionsList } from "../../../shared/services/dashboard/transactions/transaction";
 import { Auth } from "../../auth/auth";
 import { useAuth } from "../../auth/auth-provider";
 import { WalletDepositFilledIcon, WalletDebitFilledIcon, ArrowLeftIcon, BitCoinFilledIcon, EtherumFilledIcon, CheckCircleFilledIcon } from "../../icons/icons";
@@ -195,10 +195,26 @@ const BuySell = () => {
         } else {
             const updatedUserInfo = await auth.resolveUser();
             if (updatedUserInfo) setUser(updatedUserInfo);
-
+            getTransactions();
             snackbar.showSuccess(request.data.message)
             navigate(5)
             handleSetForm({ completingTransaction: false })
+        }
+    }
+
+    const filterOptions = createFilterOptions({
+        stringify: (option) => JSON.stringify(option),
+    });
+    
+    const getTransactions = async () => {
+        const request = await getTransactionsList();
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+            setUser({
+                ...user!,
+                transactions: request.data.data.slice(0, 5)
+            })  
         }
     }
 
@@ -248,6 +264,7 @@ const BuySell = () => {
                                     className="mt-2 w-100"
                                     options={form.coins}
                                     value={form.coin}
+                                    filterOptions={filterOptions}
                                     onChange={(event: any, newValue: any) => {
                                         if (newValue) handleSetForm({ coin: newValue.label });
                                     }}

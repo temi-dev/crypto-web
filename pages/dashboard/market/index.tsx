@@ -17,6 +17,7 @@ const Market: NextApplicationPage = () => {
     interface IMarketRowData {
         coinPair: () => JSX.Element;
         coin: string;
+        coinName: string;
         key: string;
         lastPrice: number;
         hoursChange: () => JSX.Element;
@@ -56,8 +57,15 @@ const Market: NextApplicationPage = () => {
             }
         },
         {
-            name: "coin",
+            name: "coinName",
             label: "Coin",
+            options: {
+                filter: true,
+            }
+        },
+        {
+            name: "coin",
+            label: "   ",
             options: {
                 filter: true,
             }
@@ -171,11 +179,11 @@ const Market: NextApplicationPage = () => {
                     coinPair: () => {
                         return (
                             <div>
-                                {/* <BitCoinFilledIcon color="white" fillColor="#F7931A"></BitCoinFilledIcon> */}
                                 <span className="coin-pair">{element.coin} / <span>USD</span></span>
                             </div>
                         )
                     },
+                    coinName: element.name,
                     coin: element.coin,
                     key: element.coin,
                     lastPrice: element.price,
