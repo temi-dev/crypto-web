@@ -4,8 +4,8 @@ import { IDialogs } from "../../shared/interface/global.interface";
 import PortfolioDetails from "../dialogs/portfolio/details/details";
 
 const DashboardPortfolioBalance = (
-    {  coinName, percentageChange, coinBalance, fiatBalance, price }:
-        { coinName: string, percentageChange: number, coinBalance: number, fiatBalance: string, price: string }
+    {  coinName, percentageChange, coinBalance,  price }:
+        { coinName: string, percentageChange: number, coinBalance: number,  price: string }
 ) => {
     const [appState, setAppState] = useAppContext();
 

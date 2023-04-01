@@ -113,9 +113,11 @@ const Dashboard: NextApplicationPage = (props) => {
         if (request.responseCode == 422) {
             snackbar.showError(request.data ? request.data.message : "Error occured");
         } else {
-            setAssets({
-                assets: request.data.data.slice(0, 5)
-            })
+            setUser({
+                ...user!,
+                portfolios: request.data.data.slice(0, 5)
+            })  
+           
         }
     }
 
@@ -307,9 +309,9 @@ const Dashboard: NextApplicationPage = (props) => {
 
                             <div className="mt-2">
                                 {
-                                    assetsData.assets?.map((element) => {
+                                    user?.portfolios?.map((element) => {
                                         return (
-                                            <DashboardPortfolioBalance key={element.id} coinName={element.coin} percentageChange={element._24hrs} coinBalance={element.bal} fiatBalance={"NGN200,000"} price={element.price}></DashboardPortfolioBalance>
+                                            <DashboardPortfolioBalance key={element.id} coinName={element.coin} percentageChange={element._24hrs} coinBalance={element.bal}  price={element.price}></DashboardPortfolioBalance>
                                         )
                                     })
                                 }

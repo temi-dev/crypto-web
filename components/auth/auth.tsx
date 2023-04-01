@@ -23,6 +23,7 @@ export type User = {
     phone: string,
     available_bal?: number,
     transactions?: Array<any>
+    portfolios?: Array<any>
 }
 
 export class Auth {

@@ -125,14 +125,25 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
     });
 
     const getTransactions = async () => {
-        const request = await getTransactionsList();
+        let request = await getTransactionsList();
         if (request.responseCode == 422) {
             snackbar.showError(request.data ? request.data.message : "Error occured");
         } else {
             setUser({
                 ...user!,
                 transactions: request.data.data.slice(0, 5)
-            })
+            })  
+        }
+
+        request = await getPortfolioList();
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+            setUser({
+                ...user!,
+                portfolios: request.data.data.slice(0, 5)
+            })  
+           
         }
     }
 

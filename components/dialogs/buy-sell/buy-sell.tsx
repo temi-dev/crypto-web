@@ -77,7 +77,7 @@ const BuySell = () => {
             }
         })
 
-        if(action){
+        if (action) {
             setAction(action);
             getData(action);
         }
@@ -205,16 +205,27 @@ const BuySell = () => {
     const filterOptions = createFilterOptions({
         stringify: (option) => JSON.stringify(option),
     });
-    
+
     const getTransactions = async () => {
-        const request = await getTransactionsList();
+        let request = await getTransactionsList();
         if (request.responseCode == 422) {
             snackbar.showError(request.data ? request.data.message : "Error occured");
         } else {
             setUser({
                 ...user!,
                 transactions: request.data.data.slice(0, 5)
-            })  
+            })
+        }
+
+        request = await getPortfolioList();
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+        } else {
+            setUser({
+                ...user!,
+                portfolios: request.data.data.slice(0, 5)
+            })
+
         }
     }
 
@@ -231,7 +242,7 @@ const BuySell = () => {
                 {
                     step == 1 && (
                         <div className="dailog-action-picker">
-                            <div className="buy" onClick={() => {    
+                            <div className="buy" onClick={() => {
                                 navigate(2, 'buy');
                             }}>
                                 <div className="my-2">
@@ -285,8 +296,9 @@ const BuySell = () => {
                                     variant="standard"
                                     placeholder={`Enter amount`}
                                     fullWidth
-                                    value={form.amount || 0}
-                                    type="number"
+                                    value={form.amount || ''}
+                                    type="text"
+                                    inputMode="numeric"
                                     onChange={
                                         (e) => {
                                             handleSetForm({ amount: Number(e.target.value) })
