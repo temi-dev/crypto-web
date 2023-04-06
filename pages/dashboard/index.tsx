@@ -92,34 +92,30 @@ const Dashboard: NextApplicationPage = (props) => {
     }
 
     const getTransactions = async () => {
-        const request = await getTransactionsList();
+        let request = await getTransactionsList();
         if (request.responseCode == 422) {
             snackbar.showError(request.data ? request.data.message : "Error occured");
         } else {
-            setUser({
-                ...user!,
-                transactions: request.data.data.slice(0, 5)
-            })  
+            let request2 = await getPortfolioList();
+            if (request2.responseCode != 422) {
+                setUser({
+                    ...user!,
+                    transactions: request.data.data.slice(0, 5),
+                    portfolios: request2.data.data.slice(0, 5)
+                }) 
+            }else{
+                setUser({
+                    ...user!,
+                    transactions: request.data.data.slice(0, 5)
+                }) 
+            }
+             
             setData({
                 loadingTransactions: false
             })
-
-            getPortfolio();
         }
     }
 
-    const getPortfolio = async () => {
-        const request = await getPortfolioList();
-        if (request.responseCode == 422) {
-            snackbar.showError(request.data ? request.data.message : "Error occured");
-        } else {
-            setUser({
-                ...user!,
-                portfolios: request.data.data.slice(0, 5)
-            })  
-           
-        }
-    }
 
     useEffect(() => {
         getTransactions();
