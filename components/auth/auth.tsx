@@ -3,6 +3,8 @@ import { useAuth } from './auth-provider';
 export type UserCB = (user: User, error: any) => void
 
 export type User = {
+    dp_verified_at: any;
+    first_layer_verf_completed: any;
     idc_uploaded_at?: any;
     second_layer_verf_completed?: any;
     account_verified?: any;

@@ -19,7 +19,7 @@ const VerificationCta = () => {
     }
 
     useEffect(()=>{
-        if(user && (!user.account_verified || !user.pin_exists || !user.second_layer_verf_completed)){
+        if(user && (!user.account_verified || !user.pin_exists || !user.first_layer_verf_completed || !user.second_layer_verf_completed)){
             setAppState({ ...appState, incompleteVerification: true })
         }
     }, [user])
@@ -28,7 +28,16 @@ const VerificationCta = () => {
 
     return (
         <div>
-            <button className="verify-profile" onClick={() => setDialogVisibilityState({ initVerificationDialogDialogVisibility: true })}>Complete your profile</button>
+            <button className="verify-profile" onClick={() => setDialogVisibilityState({ initVerificationDialogDialogVisibility: true })}>
+                {
+                    !user?.first_layer_verf_completed &&
+                    <span>Complete your profile</span>
+                }
+                {
+                    user?.first_layer_verf_completed &&
+                    <span>Upgrade Limit</span>
+                }
+            </button>
     
             <InitVerification open={dialogsVisibilityState.initVerificationDialogDialogVisibility!} setVisibilityState={setDialogVisibilityState}></InitVerification>
         </div>
