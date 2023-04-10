@@ -19,7 +19,7 @@ const Wallet: NextApplicationPage = () => {
     interface IData {
         network?: string,
         currency?: string,
-        amount?: number | null | string,
+        amount?: number | null,
         action?: string,
         depositChannel?: string
         showWithdrawChannel?: boolean
@@ -86,7 +86,7 @@ const Wallet: NextApplicationPage = () => {
         snackbar.showMessage('This transaction will be automatically marked completed once transfer is confirmed by user.')
         setData({
             flowStep: null,
-            amount: '',
+            amount: null,
             mobileHidden: false
         })
     }
@@ -95,7 +95,7 @@ const Wallet: NextApplicationPage = () => {
         snackbar.showMessage('Withdraw successful')
         setData({
             flowStep: null,
-            amount: '',
+            amount: null,
             mobileHidden: false
         })
     }

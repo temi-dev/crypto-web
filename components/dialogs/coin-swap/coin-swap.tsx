@@ -6,6 +6,7 @@ import { getPortfolioList, getSwapTransactionBreakdown, getTransactionsList, swa
 import { useAuth } from "../../auth/auth-provider";
 import { ArrowLeftIcon, CancelIcon, CheckCircleFilledIcon, CoinSwapIcon } from "../../icons/icons";
 import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
+import NumberField from "../../number-field/number-field";
 
 const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilityState: React.Dispatch<React.SetStateAction<IDialogs>> }) => {
 
@@ -233,10 +234,11 @@ const CoinSwap = ({ open, setVisibilityState }: { open: boolean, setVisibilitySt
                                             variant="standard"
                                             placeholder={`Enter amount`}
                                             fullWidth
-                                            value={form.amount || 0}
-                                            type='number'
+                                            value={form.amount}
+                                            type='text'
                                             InputProps={{
                                                 disableUnderline: true,
+                                                inputComponent: NumberField,
                                                 endAdornment: (
                                                     <button onClick={setMaxAmount} disabled={!form.fromCoin} className="max-amount-btn">
                                                         max

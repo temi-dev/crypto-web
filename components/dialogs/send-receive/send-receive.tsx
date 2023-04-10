@@ -9,6 +9,7 @@ import QRCode from "react-qr-code";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import PinInput from "react-pin-input";
 import { useAuth } from "../../auth/auth-provider";
+import NumberField from "../../number-field/number-field";
 
 const SendReceive = () => {
 
@@ -394,6 +395,7 @@ const SendReceive = () => {
                                                     handleSetForm({ amount: Number(event.target.value) });
                                                 }}
                                                 InputProps={{
+                                                    inputComponent: NumberField,
                                                     disableUnderline: true
                                                 }}
                                             />

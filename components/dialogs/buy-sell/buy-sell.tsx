@@ -9,6 +9,7 @@ import { Auth } from "../../auth/auth";
 import { useAuth } from "../../auth/auth-provider";
 import { WalletDepositFilledIcon, WalletDebitFilledIcon, ArrowLeftIcon, BitCoinFilledIcon, EtherumFilledIcon, CheckCircleFilledIcon } from "../../icons/icons";
 import useCustomSnackbar from "../../snackbar/use-custom-snackbar";
+import NumberField from "../../number-field/number-field";
 const auth = new Auth();
 
 const BuySell = () => {
@@ -306,6 +307,7 @@ const BuySell = () => {
                                     }
                                     InputProps={{
                                         disableUnderline: true,
+                                        inputComponent: NumberField,
                                         startAdornment: (
                                             <Select
                                                 disableUnderline
