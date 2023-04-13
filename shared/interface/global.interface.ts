@@ -3,11 +3,13 @@ export interface IDialogs  {
         visibitlity?: boolean,
         action?: string,
         step?: number
+        coin?: string
     },
     sendReceive?: {
         visibitlity?: boolean,
         action?: string,
-        step?: number
+        step?: number,
+        coin?: string
     },
     bvnNinUpdateDialog?: {
         visibitlity?: boolean,

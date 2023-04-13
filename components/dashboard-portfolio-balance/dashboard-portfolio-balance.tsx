@@ -1,7 +1,4 @@
-import { useState } from "react";
 import { useAppContext } from "../../shared/contexts/app.context";
-import { IDialogs } from "../../shared/interface/global.interface";
-import PortfolioDetails from "../dialogs/portfolio/details/details";
 
 const DashboardPortfolioBalance = (
     {  coinName, percentageChange, coinBalance,  price }:

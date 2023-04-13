@@ -1,4 +1,4 @@
-import { Dialog, TextField, Autocomplete, createFilterOptions } from "@mui/material";
+import { Dialog, TextField, Autocomplete, createFilterOptions, MenuItem, Select } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../../shared/contexts/app.context";
 import { getMarketData } from "../../../shared/services/dashboard/market/market";
@@ -13,7 +13,7 @@ import NumberField from "../../number-field/number-field";
 
 const SendReceive = () => {
 
-    const {user, setUser} = useAuth();
+    const { user, setUser } = useAuth();
 
     const [appState, setAppState] = useAppContext()
 
@@ -23,12 +23,12 @@ const SendReceive = () => {
     const snackbar = useCustomSnackbar();
 
     interface IFormData {
-        coin?: string,
+        coin?: any,
         coinShort?: string,
         coins?: Array<any>,
         step?: number,
         currency?: string,
-        network?: string
+        network?: any
         networks?: Array<any>
         loadingCoins?: boolean,
         loading?: boolean,
@@ -42,6 +42,7 @@ const SendReceive = () => {
         token?: string
         memo?: string
         action?: string
+        preSelected?: any,
     }
 
     const formData: IFormData = {
@@ -50,27 +51,33 @@ const SendReceive = () => {
         coins: [],
         networks: [],
     }
-    const initAssets: any[] = []
+    const initAssets: any[] = [];
+
     const [form, setFormData] = useState({ ...formData });
     const [action, setAction] = useState(initAction);
     const [assets, setAssets] = useState(initAssets);
-    const w: any[] = []
-    const [wallets, setWallets] = useState(w);
+
+    const initWallets: any[] = []
+    const [wallets, setWallets] = useState(initWallets);
+
+    let initCoin: any;
+    const [coin, setCoin] = useState(initCoin);
 
     const handleSetForm = (data: IFormData) => {
         setFormData({ ...form, ...data });
+
         if (data.coin) {
-            const coin = form.coins?.find(x => x.label == data.coin);
+            const asset = assets!.find((element: { label: string | undefined; }) => element.label == data.coin.label);
             let networks: any[] = [];
 
-            coin.networks.forEach((element: any) => {
+            data.coin.networks.forEach((element: any) => {
                 networks.push({
                     label: element.name,
                     network: element.network
                 })
             })
-            const asset = assets!.find((element: { label: string | undefined; }) => element.label == data.coin);
-            setFormData({ ...form, networks, coinShort: coin.asset, network: '', coinAsset: asset });
+            setCoin(data.coin)
+            setFormData({ ...form, networks, coinShort: data.coin.asset, network: '', coinAsset: asset });
         }
 
         if (data.network) {
@@ -88,6 +95,7 @@ const SendReceive = () => {
             }
         });
         setFormData(formData)
+        setCoin(null);
     };
 
 
@@ -129,7 +137,28 @@ const SendReceive = () => {
                     })
                 })
             }
+
             handleSetForm({ coins: rows, loadingCoins: false })
+            presetCoin(rows)
+        }
+    }
+
+    const presetCoin = (coins: Array<any>) => {
+        const coin = appState?.dialogStates?.sendReceive?.coin;
+        if (coin) {
+            const coinDetails = coins?.find(x => (x.asset.toLowerCase() == coin!.toLowerCase()));
+
+            let networks: any[] = [];
+
+            coinDetails.networks.forEach((element: any) => {
+                networks.push({
+                    label: element.name,
+                    network: element.network
+                })
+            })
+            setCoin(coinDetails)
+            const asset = assets!.find((element: { asset: string | undefined; }) => element.asset == coin);
+            setFormData({ ...form, networks, coin: coinDetails, coins, coinAsset: asset, coinShort: coinDetails.asset });
         }
     }
 
@@ -278,7 +307,7 @@ const SendReceive = () => {
             setUser({
                 ...user!,
                 transactions: request.data.data.slice(0, 5)
-            })  
+            })
         }
 
         request = await getPortfolioList();
@@ -288,21 +317,22 @@ const SendReceive = () => {
             setUser({
                 ...user!,
                 portfolios: request.data.data.slice(0, 5)
-            })  
-           
+            })
+
         }
     }
-    
+
     const filterOptions = createFilterOptions({
-        stringify: (option) => JSON.stringify(option),
+        stringify: (option) => JSON.stringify(option)
     });
 
     const setMaxAmount = () => {
-        handleSetForm({ amount: form.coinAsset?.bal })
+        handleSetForm({ amount: form.coinAsset?.bal, currency: coin.asset })
     }
 
     useEffect(() => {
         if (initAction) {
+            getPortfolio()
             setAction(initAction)
             getData(initAction)
         }
@@ -348,19 +378,19 @@ const SendReceive = () => {
 
                                         <div>
                                             <label className="form-label">Select a digital currency to {action}</label>
+                                            {form.preSelected?.label}
                                             <Autocomplete
                                                 disablePortal
                                                 className="mt-1 w-100"
                                                 filterOptions={filterOptions}
                                                 options={form.coins || []}
-                                                value={form.coinShort}
-                                                onChange={(event: any, newValue: any) => {
-                                                    if (newValue) handleSetForm({ coin: newValue.label });
+                                                value={coin}
+                                                onChange={(event: any, value: any) => {
+                                                    if (value) handleSetForm({ coin: value });
                                                 }}
                                                 renderInput={(params) =>
                                                     <TextField
                                                         {...params}
-                                                        value={form.coinShort}
                                                         label="Coin"
                                                     />}
                                             />
@@ -401,6 +431,33 @@ const SendReceive = () => {
                                                 InputProps={{
                                                     inputComponent: NumberField,
                                                     disableUnderline: true,
+                                                    startAdornment: (
+                                                        <Select
+                                                            disableUnderline
+                                                            displayEmpty
+                                                            variant='standard'
+                                                            onChange={
+                                                                (e) => {
+                                                                    handleSetForm({ currency: e.target.value })
+                                                                }
+                                                            }
+                                                            value={form.currency}
+                                                            className="currency-selector"
+                                                            label="Currency">
+                                                            <MenuItem value='NGN'>
+                                                                <span>NGN</span>
+                                                            </MenuItem>
+                                                            <MenuItem value='USD'>
+                                                                <span>USD</span>
+                                                            </MenuItem>
+                                                            {
+                                                                coin &&
+                                                                <MenuItem value={coin.asset}>
+                                                                    <span>{coin.asset}</span>
+                                                                </MenuItem>
+                                                            }
+                                                        </Select>
+                                                    ),
                                                     endAdornment: (
                                                         <button onClick={setMaxAmount} disabled={!form.coinShort} className="max-amount-btn">
                                                             max
@@ -614,15 +671,15 @@ const SendReceive = () => {
                                                 disablePortal
                                                 className="mt-2 w-100"
                                                 options={form.coins || []}
-                                                value={form.coinShort}
+                                               
                                                 filterOptions={filterOptions}
-                                                onChange={(event: any, newValue: any) => {
-                                                    if (newValue) handleSetForm({ coin: newValue.label });
+                                                value={coin}
+                                                onChange={(event: any, value: any) => {
+                                                    if (value) handleSetForm({ coin: value });
                                                 }}
                                                 renderInput={(params) =>
                                                     <TextField
                                                         {...params}
-                                                        value={form.coinShort}
                                                         label="Coin"
                                                     />}
                                             />

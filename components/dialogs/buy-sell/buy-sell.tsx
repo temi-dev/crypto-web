@@ -25,7 +25,7 @@ const BuySell = () => {
     interface IFormData {
         coins?: any,
         breakdown?: any,
-        coin?: string,
+        coin?: any,
         step?: number,
         currency?: string,
         amount?: number,
@@ -53,12 +53,15 @@ const BuySell = () => {
     const [usdBalance, setUsdBalance] = useState('');
     const [usdRate, setUsdRate] = useState();
 
+    let initCoin: any;
+    const [coin, setCoin] = useState(initCoin);
+
     const handleSetForm = (data: IFormData) => {
         setForm({ ...form, ...data });
 
         if (data.coin) {
-            const asset = assets!.find((element: { label: string | undefined; }) => element.label == data.coin);
-
+            const asset = assets!.find((element: { label: string | undefined; }) => element.label == data.coin.label);
+            setCoin(data.coin)
             setForm({ ...form, coinAsset: asset });
         }
         return
@@ -130,6 +133,7 @@ const BuySell = () => {
                 })
             }
             handleSetForm({ coins: rows, loadingCoins: false })
+            presetCoin(rows)
         }
 
         const appDataRequest = await getAppData();
@@ -145,9 +149,21 @@ const BuySell = () => {
         }
     }
 
+    const presetCoin = (coins: Array<any>) => {
+        const coin = appState?.dialogStates?.buySellDialog?.coin;
+        if (coin) {
+            const coinDetails = coins?.find(x => (x.asset.toLowerCase() == coin!.toLowerCase()));
+            setCoin(coinDetails)
+            const asset = assets!.find((element: { asset: string | undefined; }) => element.asset == coin);
+
+            console.log(asset)
+            setForm({ ...form, coins, coinAsset: asset });
+        }
+    }
+
     const getBreakdown = async () => {
 
-        if (!form.coin) {
+        if (!coin) {
             return snackbar.showError(`Select a coin you want to ${action}`)
         }
         if (!form.amount) {
@@ -162,7 +178,7 @@ const BuySell = () => {
         if (user && user.available_bal && action == 'sell' && form.amount < 300 && form.currency == 'NGN') {
             return snackbar.showError(`Minimum amount you can sell is NGN300.`)
         }
-        const assetInfo = form.coins.find((x: any) => x.label.toLowerCase() == form.coin?.toLowerCase())
+        const assetInfo = form.coins.find((x: any) => x.label.toLowerCase() == coin.label?.toLowerCase())
         const data = {
             amount_in: form.currency,
             type: action,
@@ -187,7 +203,7 @@ const BuySell = () => {
         if (!form.pin) {
             return snackbar.showError(`Enter your pin`)
         }
-        const assetInfo = form.coins.find((x: any) => x.label.toLowerCase() == form.coin?.toLowerCase())
+        const assetInfo = form.coins.find((x: any) => x.label.toLowerCase() == coin.label?.toLowerCase())
         const data = {
             amount_in: 'NGN',
             amount: form.amount,
@@ -258,7 +274,7 @@ const BuySell = () => {
     }
 
     const setMaxAmount = () => {
-        handleSetForm({ amount: form.coinAsset?.bal })
+        handleSetForm({ amount: form.coinAsset?.bal, currency: coin.asset })
     }
 
     useEffect(() => {
@@ -307,15 +323,14 @@ const BuySell = () => {
                                     disablePortal
                                     className="mt-2 w-100"
                                     options={form.coins}
-                                    value={form.coin}
                                     filterOptions={filterOptions}
-                                    onChange={(event: any, newValue: any) => {
-                                        if (newValue) handleSetForm({ coin: newValue.label });
+                                    value={coin}
+                                    onChange={(event: any, value: any) => {
+                                        if (value) handleSetForm({ coin: value });
                                     }}
                                     renderInput={(params) =>
                                         <TextField
                                             {...params}
-                                            value={form.coin}
                                             label="Coin"
                                         />}
                                 />
@@ -359,11 +374,17 @@ const BuySell = () => {
                                                 <MenuItem value='USD'>
                                                     <span>USD</span>
                                                 </MenuItem>
+                                                {
+                                                    coin &&
+                                                    <MenuItem value={coin.asset}>
+                                                        <span>{coin.asset}</span>
+                                                    </MenuItem>
+                                                }
                                             </Select>
                                         ),
                                         endAdornment: (
                                             <>
-                                                {action == 'sell' && <button onClick={setMaxAmount} disabled={!form.coin} className="max-amount-btn">
+                                                {action == 'sell' && <button onClick={setMaxAmount} disabled={!coin} className="max-amount-btn">
                                                     max
                                                 </button>
                                                 }
@@ -375,7 +396,7 @@ const BuySell = () => {
 
                             </div>
                             {
-                                form.coin && action == 'sell' &&
+                                coin && action == 'sell' &&
                                 <div className="form-coin-wallet-balance">
                                     <div className="balance-header">{form.coinAsset?.label} balance</div>
                                     <div className="content">

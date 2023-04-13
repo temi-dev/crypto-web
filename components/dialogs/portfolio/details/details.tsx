@@ -58,8 +58,6 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
             } else {
                 coin = marketData.data.data.find((x: { coin: string; }) => x.coin.toLowerCase() == appState.dialogStates?.portfolioDetailsDialog?.coin?.toLowerCase())
                 setComponentData({ coinDetails: coin })
-
-                if (coin) console.log(coin._24hrs)
             }
         }
     }
@@ -115,12 +113,6 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
 
 
                                     <div className="d-flex">
-                                        {/* {
-                                            componentData.coinDetails && !componentData.coinDetails.bal && (
-                                                <div className="usd-fiat">0 USD</div>
-                                            )
-                                        } */}
-                                        {/* justify-content-end */}
                                         <div className="d-flex flex-grow-1 mt-2">
                                             {
                                                 componentData.coinDetails && (
@@ -141,7 +133,7 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
 
                             <div className="d-flex mt-4 ctas">
                                 <div className="flex-fill cursor-pointer" onClick={
-                                    () => {
+                                    () => { 
                                         setAppState({
                                             ...appState,
                                             dialogStates: {
@@ -149,7 +141,8 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
                                                 sendReceive: {
                                                     visibitlity: true,
                                                     action: 'receive',
-                                                    step: 2
+                                                    step: 2,
+                                                    coin: appState.dialogStates?.portfolioDetailsDialog?.coin
                                                 }
                                             }
                                         })
@@ -169,7 +162,8 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
                                                 sendReceive: {
                                                     visibitlity: true,
                                                     action: 'send',
-                                                    step: 2
+                                                    step: 2,
+                                                    coin: appState.dialogStates?.portfolioDetailsDialog?.coin
                                                 }
                                             }
                                         })
@@ -188,7 +182,8 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
                                             buySellDialog: {
                                                 visibitlity: true,
                                                 action: 'sell',
-                                                step: 2
+                                                step: 2,
+                                                coin: appState.dialogStates?.portfolioDetailsDialog?.coin
                                             }
                                         }
                                     })
@@ -206,7 +201,8 @@ const PortfolioDetails = ({ open, setVisibilityState }: { open: boolean, setVisi
                                             buySellDialog: {
                                                 visibitlity: true,
                                                 action: 'buy',
-                                                step: 2
+                                                step: 2,
+                                                coin: appState.dialogStates?.portfolioDetailsDialog?.coin
                                             }
                                         }
                                     })

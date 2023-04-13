@@ -47,15 +47,15 @@ const DashboardHeader = ({ title }: { title: string }) => {
     let d: any
     const [state, setState] = useState(d);
 
-    useEffect(() =>{
-        if(user){
+    useEffect(() => {
+        if (user) {
             const data = {
                 profilePicture: user!.dp_uploaded_at ? `${process.env.apiUrl}/static/profile_pics/${user!.username}/dp.png` : '/images/placeholder-profile.png'
             }
-            
-        setState(data)
+
+            setState(data)
         }
-    },[user])
+    }, [user])
     return (
         <div>
 
@@ -78,7 +78,7 @@ const DashboardHeader = ({ title }: { title: string }) => {
                             }
                         })
                     }>Send / Receive</button>
-                    
+
                     <button onClick={openProfileMenu} className="profile-menu align-items-center d-flex">
                         <div className="profile-image " style={{ backgroundImage: "url(" + state?.profilePicture + ")" }}></div>
                         <div className="profile-name">{user?.fname}</div>
@@ -143,7 +143,7 @@ const DashboardHeader = ({ title }: { title: string }) => {
             <SendReceive></SendReceive>
 
             <MobileSideBar open={dialogsVisibilityState.sideBarDialogVisibitlity!} setVisibilityState={setDialogVisibilityState}></MobileSideBar>
-              <PortfolioDetails open={dialogsVisibilityState.portfolioDetailsDialog?.visibitlity!} setVisibilityState={setDialogVisibilityState}></PortfolioDetails>
+            <PortfolioDetails open={dialogsVisibilityState.portfolioDetailsDialog?.visibitlity!} setVisibilityState={setDialogVisibilityState}></PortfolioDetails>
 
         </div>
     )
