@@ -554,7 +554,7 @@ const SendReceive = () => {
                                                             Amount Spent
                                                         </div>
                                                         <div className="value">
-                                                            {form.amount} NGN
+                                                            {form.amount} {form.currency}
                                                         </div>
 
                                                     </div>
