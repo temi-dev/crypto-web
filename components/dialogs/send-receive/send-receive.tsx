@@ -297,6 +297,10 @@ const SendReceive = () => {
         stringify: (option) => JSON.stringify(option),
     });
 
+    const setMaxAmount = () => {
+        handleSetForm({ amount: form.coinAsset?.bal })
+    }
+
     useEffect(() => {
         if (initAction) {
             setAction(initAction)
@@ -396,7 +400,12 @@ const SendReceive = () => {
                                                 }}
                                                 InputProps={{
                                                     inputComponent: NumberField,
-                                                    disableUnderline: true
+                                                    disableUnderline: true,
+                                                    endAdornment: (
+                                                        <button onClick={setMaxAmount} disabled={!form.coinShort} className="max-amount-btn">
+                                                            max
+                                                        </button>
+                                                    ),
                                                 }}
                                             />
 

@@ -36,6 +36,7 @@ const BuySell = () => {
         loadingCoins?: boolean
         rate?: number
         usdBalance?: string
+        coinAsset?: any
     }
 
     const formData: IFormData = {
@@ -44,6 +45,8 @@ const BuySell = () => {
         coins: [],
 
     }
+    const initAssets: any[] = [];
+    const [assets, setAssets] = useState(initAssets);
 
     const [form, setForm] = useState({ ...formData });
     const [action, setAction] = useState(initAction);
@@ -52,6 +55,12 @@ const BuySell = () => {
 
     const handleSetForm = (data: IFormData) => {
         setForm({ ...form, ...data });
+
+        if (data.coin) {
+            const asset = assets!.find((element: { label: string | undefined; }) => element.label == data.coin);
+
+            setForm({ ...form, coinAsset: asset });
+        }
         return
     };
 
@@ -230,10 +239,33 @@ const BuySell = () => {
         }
     }
 
+    const getPortfolio = async () => {
+        const request = await getPortfolioList();
+        if (request.responseCode == 422) {
+            snackbar.showError(request.data ? request.data.message : "Error occured");
+            return
+        } else {
+            let assets: object[] = [];
+            request.data.data.forEach((element: any) => {
+                assets.push({
+                    label: element.name,
+                    asset: element.coin,
+                    bal: element.bal
+                })
+            })
+            setAssets(assets)
+        }
+    }
+
+    const setMaxAmount = () => {
+        handleSetForm({ amount: form.coinAsset?.bal })
+    }
+
     useEffect(() => {
         if (initAction) {
             setAction(initAction)
             getData(initAction)
+            getPortfolio()
         }
     }, [appState?.dialogStates?.buySellDialog?.visibitlity!])
 
@@ -329,10 +361,33 @@ const BuySell = () => {
                                                 </MenuItem>
                                             </Select>
                                         ),
+                                        endAdornment: (
+                                            <>
+                                                {action == 'sell' && <button onClick={setMaxAmount} disabled={!form.coin} className="max-amount-btn">
+                                                    max
+                                                </button>
+                                                }
+                                            </>
+
+                                        ),
                                     }}
                                 />
 
                             </div>
+                            {
+                                form.coin && action == 'sell' &&
+                                <div className="form-coin-wallet-balance">
+                                    <div className="balance-header">{form.coinAsset?.label} balance</div>
+                                    <div className="content">
+                                        <div className="fiat-balance">
+                                            <div>
+                                                <div className="naira-balance">{form.coinAsset?.bal}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
 
                             {
                                 user && user.available_bal && usdBalance && action == 'buy' && (
