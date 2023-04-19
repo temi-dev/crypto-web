@@ -1,12 +1,13 @@
 import styles from './dashboard-transaction-card.module.css';
+import { format } from 'date-fns'
 
-const DashboardTransactionCard = ({ description, direction, amount, asset }: { description: string, direction: string, amount: string, asset: string }) => {
+const DashboardTransactionCard = ({ description, direction, amount, asset, time }: { description: string, direction: string, amount: string, asset: string, time: string }) => {
     return (
         <div className={styles.dashboardTransactionCard}>
             <div className={styles.description}>
                 <div>
                     <div className={styles.title}>{description}</div>
-                    {/* <div className={styles.timestamp}>Jan 16, 2022</div> */}
+                    <div className={styles.timestamp}>{format(new Date(time), 'MMMM dd, yyyy H:mma')}</div>
                 </div>
             </div>
             <div className={styles.info}>

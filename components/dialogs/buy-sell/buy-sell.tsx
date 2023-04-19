@@ -356,31 +356,32 @@ const BuySell = () => {
                                         disableUnderline: true,
                                         inputComponent: NumberField,
                                         startAdornment: (
-                                            <Select
-                                                disableUnderline
-                                                displayEmpty
-                                                variant='standard'
-                                                onChange={
-                                                    (e) => {
-                                                        handleSetForm({ currency: e.target.value })
-                                                    }
-                                                }
-                                                value={form.currency}
-                                                className="currency-selector"
-                                                label="Currency">
-                                                <MenuItem value='NGN'>
-                                                    <span>NGN</span>
-                                                </MenuItem>
-                                                <MenuItem value='USD'>
-                                                    <span>USD</span>
-                                                </MenuItem>
-                                                {
-                                                    coin &&
-                                                    <MenuItem value={coin.asset}>
-                                                        <span>{coin.asset}</span>
-                                                    </MenuItem>
-                                                }
-                                            </Select>
+                                            <span className="amount-currency">NGN</span>
+                                            // <Select
+                                            //     disableUnderline
+                                            //     displayEmpty
+                                            //     variant='standard'
+                                            //     onChange={
+                                            //         (e) => {
+                                            //             handleSetForm({ currency: e.target.value })
+                                            //         }
+                                            //     }
+                                            //     value={form.currency}
+                                            //     className="currency-selector"
+                                            //     label="Currency">
+                                            //     <MenuItem value='NGN'>
+                                            //         <span>NGN</span>
+                                            //     </MenuItem>
+                                            //     <MenuItem value='USD'>
+                                            //         <span>USD</span>
+                                            //     </MenuItem>
+                                            //     {
+                                            //         coin &&
+                                            //         <MenuItem value={coin.asset}>
+                                            //             <span>{coin.asset}</span>
+                                            //         </MenuItem>
+                                            //     }
+                                            // </Select>
                                         ),
                                         endAdornment: (
                                             <>

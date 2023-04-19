@@ -10,16 +10,19 @@ import VerifyPhoneNumber from "../dialogs/settings/verify-phone-number/verify-ph
 import { useAppContext } from "../../shared/contexts/app.context";
 import InitVerification from "../dialogs/verifications/init/init";
 
-const VerificationCta = () => {
+const VerificationCta = ({ screen }: { screen: string }) => {
     const { user, setUser } = useAuth();
 
     const [appState, setAppState] = useAppContext();
-    
+
     const DialogsVisibilityInitState: IDialogs = {
     }
 
-    useEffect(()=>{
-        if(user && (!user.account_verified || !user.pin_exists || !user.first_layer_verf_completed || !user.second_layer_verf_completed)){
+    useEffect(() => {
+        console.log(user && user.first_layer_verf_completed && screen == 'dashboard')
+        if(user && user.first_layer_verf_completed && screen == 'dashboard'){
+            setAppState({ ...appState, incompleteVerification: false })   
+        }else if (user && (!user.account_verified || !user.pin_exists || !user.first_layer_verf_completed || !user.second_layer_verf_completed)) {
             setAppState({ ...appState, incompleteVerification: true })
         }
     }, [user])
@@ -31,14 +34,14 @@ const VerificationCta = () => {
             <button className="verify-profile" onClick={() => setDialogVisibilityState({ initVerificationDialogDialogVisibility: true })}>
                 {
                     !user?.first_layer_verf_completed &&
-                    <span>Complete your profile</span>
+                    <span>Verify your profile</span>
                 }
                 {
-                    user?.first_layer_verf_completed &&
+                    user?.first_layer_verf_completed  &&
                     <span>Upgrade Limit</span>
                 }
             </button>
-    
+
             <InitVerification open={dialogsVisibilityState.initVerificationDialogDialogVisibility!} setVisibilityState={setDialogVisibilityState}></InitVerification>
         </div>
     )

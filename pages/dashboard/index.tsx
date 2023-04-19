@@ -102,14 +102,14 @@ const Dashboard: NextApplicationPage = (props) => {
                     ...user!,
                     transactions: request.data.data.slice(0, 5),
                     portfolios: request2.data.data.slice(0, 5)
-                }) 
-            }else{
+                })
+            } else {
                 setUser({
                     ...user!,
                     transactions: request.data.data.slice(0, 5)
-                }) 
+                })
             }
-             
+
             setData({
                 loadingTransactions: false
             })
@@ -141,8 +141,10 @@ const Dashboard: NextApplicationPage = (props) => {
                                 <div className="title">Crypto For Better</div>
                                 <div className="note">Experience kochure on mobile app</div>
                                 <div className="cta">
-
-                                    <VerificationCta />
+                                    {
+                                        user && appState && appState.incompleteVerification &&
+                                        <VerificationCta screen="dashboard" />
+                                    }
                                     {
                                         user && appState && !appState.incompleteVerification &&
                                         <div>
@@ -307,7 +309,7 @@ const Dashboard: NextApplicationPage = (props) => {
                                 {
                                     user?.portfolios?.map((element) => {
                                         return (
-                                            <DashboardPortfolioBalance key={element.id} coinName={element.coin} percentageChange={element._24hrs} coinBalance={element.bal}  price={element.price}></DashboardPortfolioBalance>
+                                            <DashboardPortfolioBalance key={element.id} coinName={element.coin} percentageChange={element._24hrs} coinBalance={element.bal} price={element.price}></DashboardPortfolioBalance>
                                         )
                                     })
                                 }

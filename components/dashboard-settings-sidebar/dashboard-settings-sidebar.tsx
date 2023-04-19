@@ -28,7 +28,7 @@ const DashboardSettingsSidebar = ({isMobile, setVisibility }: { isMobile?: boole
                     </div>
                 </div>
                 <div className="bottom">
-                    <VerificationCta />
+                    <VerificationCta screen="settings"/>
                 </div>
             </div>
 

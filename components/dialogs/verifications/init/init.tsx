@@ -36,6 +36,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
         sendingPhoneVerificationCode?: boolean,
         step?: number
         activeIdentityTab?: number,
+        activeIdentityVerificationTab?: number,
         open?: boolean
         idFrontPicture?: any
         _idFrontPicture?: any
@@ -57,7 +58,8 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
         sendingVerificationEmail: false,
         sendingPhoneVerificationCode: false,
         step: 1,
-        activeIdentityTab: (user && user.first_layer_verf_completed && !user.second_layer_verf_completed) ? 1: 0,
+        activeIdentityTab: (user && user.first_layer_verf_completed && !user.second_layer_verf_completed) ? 1 : 0,
+        activeIdentityVerificationTab: 0,
         options: [
             ''
         ]
@@ -167,9 +169,9 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
     }
 
     useEffect(() => {
-       
+
         getData()
-        
+
     }, [appState?.dialogStates?.initVerificationDialogDialogVisibility])
 
     return (
@@ -191,50 +193,156 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                 {
                                     componentData.step == 2 && (
                                         <div>
-                                            {user && !user.pin_exists && (
-                                                <button className="verification-list" onClick={() => setDialogVisibilityState({ profilePinVisibility: true })}>
-                                                    <div className="title">Setup pin</div>
-                                                    <div className="description">Setup your profile pin</div>
-                                                </button>
-                                            )}
+                                            <div className="verifications-tab mb-3">
+                                                <button onClick={() => setData({ activeIdentityVerificationTab: 0 })} className={componentData.activeIdentityVerificationTab == 0 ? 'active' : ''}>Instant Verification</button>
+                                                <button onClick={() => setData({ activeIdentityVerificationTab: 1 })} className={componentData.activeIdentityVerificationTab == 1 ? 'active' : ''}>Non-Instant Verification</button>
+                                            </div>
 
+                                            {componentData.activeIdentityVerificationTab == 0 &&
+                                                <div>
 
+                                                    {user && !user.pin_exists && (
+                                                        <button className="verification-list" onClick={() => setDialogVisibilityState({ profilePinVisibility: true })}>
+                                                            <div className="title">Setup pin</div>
+                                                            <div className="description">Setup your profile pin</div>
+                                                        </button>
+                                                    )}
 
-                                            {user && !user.bvn_verified_at && (
-                                                <button className="verification-list" onClick={() => setUpNINBVN('BVN')}>
-                                                    <div className="title">Verify BVN</div>
-                                                    <div className="description">Click here to verify your BVN</div>
-                                                </button>
-                                            )}
-                                            {user && user.bvn_verified_at && (
-                                                <button disabled className="verification-list done">
-                                                    <div className="title">BVN Verification</div>
-                                                    <div className="description">Your BVN is verified</div>
-                                                </button>
-                                            )}
+                                                    {user && !user.bvn_verified_at && (
+                                                        <button className="verification-list" onClick={() => setUpNINBVN('BVN')}>
+                                                            <div className="title">Verify BVN</div>
+                                                            <div className="description">Click here to verify your BVN</div>
+                                                        </button>
+                                                    )}
 
-                                            {user && !user.nin_verified_at && (
-                                                <button className="verification-list" onClick={() => setUpNINBVN('NIN')}>
-                                                    <div className="title">Verify NIN</div>
-                                                    <div className="description">Click here to verify your NIN</div>
-                                                </button>
-                                            )}
-                                            {user && user.nin_verified_at && (
-                                                <button disabled className="verification-list done">
-                                                    <div className="title">NIN Verification</div>
-                                                    <div className="description">Your NIN is verified</div>
-                                                </button>
-                                            )}
+                                                    {user && user.bvn_verified_at && (
+                                                        <button disabled className="verification-list done">
+                                                            <div className="title">BVN Verification</div>
+                                                            <div className="description">Your BVN is verified</div>
+                                                        </button>
+                                                    )}
+
+                                                    {user && !user.nin_verified_at && (
+                                                        <button className="verification-list" onClick={() => setUpNINBVN('NIN')}>
+                                                            <div className="title">Verify NIN</div>
+                                                            <div className="description">Click here to verify your NIN</div>
+                                                        </button>
+                                                    )}
+
+                                                    {user && user.nin_verified_at && (
+                                                        <button disabled className="verification-list done">
+                                                            <div className="title">NIN Verification</div>
+                                                            <div className="description">Your NIN is verified</div>
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            }
+
+                                            {user && componentData.activeIdentityVerificationTab == 1 &&
+                                                <div>
+                                                    {!user.idc_uploaded_at && (
+                                                        <div >
+                                                            <div className="">
+                                                                <label className="form-label">I.D Type</label>
+                                                                <Select
+                                                                    className={`form-control ${(!componentData.idType && componentData.formSubmitted ? 'error' : '')} `}
+                                                                    disableUnderline
+                                                                    displayEmpty
+                                                                    variant='standard'
+                                                                    value={componentData.idType || ''}
+                                                                    onChange={(event) => setData({ idType: event.target.value })}>
+                                                                    <MenuItem value="" className="ui-select-menu">
+                                                                        <em>Select an option</em>
+                                                                    </MenuItem>
+                                                                    {
+                                                                        componentData.options?.map(element => {
+                                                                            return (
+                                                                                <MenuItem key={element} value={element} className="ui-select-menu">
+                                                                                    {element}
+                                                                                </MenuItem>
+                                                                            )
+                                                                        })
+                                                                    }
+                                                                </Select>
+                                                                {
+                                                                    (!componentData.idType && componentData.formSubmitted &&
+                                                                        <div className='error-message'>Select an option</div>
+                                                                    )
+                                                                }
+                                                            </div>
+                                                            <div className="mt-3">
+                                                                <label className="form-label">I.D Number</label>
+                                                                <TextField
+                                                                    className={`form-control ${(!componentData.idNumber && componentData.formSubmitted ? 'error' : '')} `}
+                                                                    variant="standard"
+                                                                    placeholder="I.D Number"
+                                                                    fullWidth
+                                                                    value={componentData.idNumber || ''}
+                                                                    onChange={(e) => setData({ idNumber: e.target.value })}
+                                                                    InputProps={{
+                                                                        disableUnderline: true,
+                                                                    }}
+                                                                />
+                                                                {
+                                                                    (!componentData.idNumber && componentData.formSubmitted &&
+                                                                        <div className='error-message'>Enter your I.D number</div>
+                                                                    )
+                                                                }
+                                                            </div>
+                                                            <div className="d-flex mt-3 doc-files-con">
+                                                                <div className="flex-grow-1 text-center">
+                                                                    <div className="id-image-placeholder" >
+                                                                        <div style={{ backgroundImage: "url(" + componentData.idFrontPicture + ")" }}></div>
+                                                                    </div>
+                                                                    <label className="avatar-btn" htmlFor="fileInput1">Front picture
+                                                                        <input value={componentData._idFrontPicture} className="custom-file-input" id="fileInput1" type="file" accept="image/png,image/jpg,image/jpeg" onChange={(e) => encodeImageFileAsURL(e, 'front')} />
+                                                                    </label>
+                                                                </div>
+                                                                <div className="flex-grow-1 text-center">
+                                                                    <div className="id-image-placeholder" >
+                                                                        <div style={{ backgroundImage: "url(" + componentData.idBackPicture + ")" }}></div>
+                                                                    </div>
+                                                                    <label className="avatar-btn" htmlFor="fileInput">Back picture
+                                                                        <input value={componentData._idBackPicture} className="custom-file-input" id="fileInput" type="file" accept="image/png,image/jpg,image/jpeg" onChange={(e) => encodeImageFileAsURL(e, 'back')} />
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div className="mt-4 mb-4">
+                                                                <button disabled={
+                                                                    componentData.processingRequest || !componentData.idType || !componentData.idNumber || !componentData.idFrontPicture || !componentData.idBackPicture
+                                                                } onClick={submitDocs} className='btn btn-radius w-100 btn-primary'>Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                    }
+                                                    {user.idc_uploaded_at && !user.idc_verified_at && (
+                                                        <button disabled className="verification-list done">
+                                                            <div className="title">Doc Uploaded</div>
+                                                            <div className="description">Your upload is under review    .</div>
+                                                        </button>
+                                                    )}
+                                                    {user.idc_verified_at && (
+                                                        <button disabled className="verification-list done">
+                                                            <div className="title">Doc Verified</div>
+                                                            <div className="description">Your upload is verified   .</div>
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            }
                                         </div>
+
                                     )
                                 }
 
                                 {componentData.step == 1 && (
                                     <div>
-                                        <div className="verifications-tab mb-3">
-                                            <button onClick={() => setData({ activeIdentityTab: 0 })} className={componentData.activeIdentityTab == 0 ? 'active' : ''}>First Layer Verification</button>
-                                            <button onClick={() => setData({ activeIdentityTab: 1 })} className={componentData.activeIdentityTab == 1 ? 'active' : ''}>Second Layer Verification</button>
-                                        </div>
+                                        {
+                                            user && user.first_layer_verf_completed &&
+                                            <div className="verifications-tab mb-3">
+                                                <button onClick={() => setData({ activeIdentityTab: 0 })} className={componentData.activeIdentityTab == 0 ? 'active' : ''}>First Layer Verification</button>
+                                                <button onClick={() => setData({ activeIdentityTab: 1 })} className={componentData.activeIdentityTab == 1 ? 'active' : ''}>Second Layer Verification</button>
+                                            </div>
+                                        }
 
                                         {
                                             user && componentData.activeIdentityTab == 0 && (
@@ -266,7 +374,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                                         </button>
                                                     )}
 
-                                                    {!user.dp_verified_at && !user.dp_uploaded_at && (
+                                                    {!user.dp_verified_at && !user.dp_uploaded_at && user.first_layer_verf_completed && (
                                                         <Link href='/dashboard/settings'>
                                                             <button className="verification-list">
                                                                 <div className="title">Selfie Verification</div>

@@ -34,6 +34,18 @@ a {
   box-sizing: border-box;
 }
 
+.amount-currency{
+  font-size: 14px;
+  display: inline-block;
+  padding: 0 5px;
+}
+
+.tx-time{
+  font-size: 13px;
+  opacity: 0.8;
+  color: #718096;
+  font-size: 13px;
+}
 
 .custom-number{
   outline: none;

@@ -432,31 +432,34 @@ const SendReceive = () => {
                                                     inputComponent: NumberField,
                                                     disableUnderline: true,
                                                     startAdornment: (
-                                                        <Select
-                                                            disableUnderline
-                                                            displayEmpty
-                                                            variant='standard'
-                                                            onChange={
-                                                                (e) => {
-                                                                    handleSetForm({ currency: e.target.value })
-                                                                }
-                                                            }
-                                                            value={form.currency}
-                                                            className="currency-selector"
-                                                            label="Currency">
-                                                            <MenuItem value='NGN'>
-                                                                <span>NGN</span>
-                                                            </MenuItem>
-                                                            <MenuItem value='USD'>
-                                                                <span>USD</span>
-                                                            </MenuItem>
-                                                            {
-                                                                coin &&
-                                                                <MenuItem value={coin.asset}>
-                                                                    <span>{coin.asset}</span>
-                                                                </MenuItem>
-                                                            }
-                                                        </Select>
+                                                        <div>
+                                                           
+                                                        </div>
+                                                        // <Select
+                                                        //     disableUnderline
+                                                        //     displayEmpty
+                                                        //     variant='standard'
+                                                        //     onChange={
+                                                        //         (e) => {
+                                                        //             handleSetForm({ currency: e.target.value })
+                                                        //         }
+                                                        //     }
+                                                        //     value={form.currency}
+                                                        //     className="currency-selector"
+                                                        //     label="Currency">
+                                                        //     <MenuItem value='NGN'>
+                                                        //         <span>NGN</span>
+                                                        //     </MenuItem>
+                                                        //     <MenuItem value='USD'>
+                                                        //         <span>USD</span>
+                                                        //     </MenuItem>
+                                                        //     {
+                                                        //         coin &&
+                                                        //         <MenuItem value={coin.asset}>
+                                                        //             <span>{coin.asset}</span>
+                                                        //         </MenuItem>
+                                                        //     }
+                                                        // </Select>
                                                     ),
                                                     endAdornment: (
                                                         <button onClick={setMaxAmount} disabled={!form.coinShort} className="max-amount-btn">
@@ -554,7 +557,7 @@ const SendReceive = () => {
                                                             Amount Spent
                                                         </div>
                                                         <div className="value">
-                                                            {form.amount} {form.currency}
+                                                            {form.amount} {form.coin.asset}
                                                         </div>
 
                                                     </div>
@@ -671,7 +674,7 @@ const SendReceive = () => {
                                                 disablePortal
                                                 className="mt-2 w-100"
                                                 options={form.coins || []}
-                                               
+
                                                 filterOptions={filterOptions}
                                                 value={coin}
                                                 onChange={(event: any, value: any) => {
