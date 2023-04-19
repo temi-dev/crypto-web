@@ -382,13 +382,13 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                                             </button>
                                                         </Link>
                                                     )}
-                                                    {user.dp_verified_at && user.dp_uploaded_at && (
+                                                    {user.dp_verified_at && user.dp_uploaded_at && user.first_layer_verf_completed &&(
                                                         <button disabled className="verification-list done">
                                                             <div className="title">Selfie Verification</div>
                                                             <div className="description">Your selfie verification is completed</div>
                                                         </button>
                                                     )}
-                                                    {!user.dp_verified_at && user.dp_uploaded_at && (
+                                                    {!user.dp_verified_at && user.dp_uploaded_at && user.first_layer_verf_completed &&(
                                                         <button disabled className="verification-list done">
                                                             <div className="title">Selfie Verification</div>
                                                             <div className="description">Your selfie verification is beng reviewed</div>
