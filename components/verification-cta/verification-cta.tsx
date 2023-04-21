@@ -19,8 +19,7 @@ const VerificationCta = ({ screen }: { screen: string }) => {
     }
 
     useEffect(() => {
-        console.log(user && user.first_layer_verf_completed && screen == 'dashboard')
-        if(user && user.first_layer_verf_completed && screen == 'dashboard'){
+        if(user && !user.email_verified_at && screen == 'dashboard'){
             setAppState({ ...appState, incompleteVerification: false })   
         }else if (user && (!user.account_verified || !user.pin_exists || !user.first_layer_verf_completed || !user.second_layer_verf_completed)) {
             setAppState({ ...appState, incompleteVerification: true })
@@ -33,11 +32,11 @@ const VerificationCta = ({ screen }: { screen: string }) => {
         <div>
             <button className="verify-profile" onClick={() => setDialogVisibilityState({ initVerificationDialogDialogVisibility: true })}>
                 {
-                    !user?.first_layer_verf_completed &&
+                    !user?.email_verified_at &&
                     <span>Verify your profile</span>
                 }
                 {
-                    user?.first_layer_verf_completed  &&
+                    user?.email_verified_at  &&
                     <span>Upgrade Limit</span>
                 }
             </button>
