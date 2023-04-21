@@ -337,7 +337,7 @@ const InitVerification = ({ open, setVisibilityState }: { open: boolean, setVisi
                                 {componentData.step == 1 && (
                                     <div>
                                         {
-                                            user && user.first_layer_verf_completed &&
+                                            user && user.account_verified &&
                                             <div className="verifications-tab mb-3">
                                                 <button onClick={() => setData({ activeIdentityTab: 0 })} className={componentData.activeIdentityTab == 0 ? 'active' : ''}>First Layer Verification</button>
                                                 <button onClick={() => setData({ activeIdentityTab: 1 })} className={componentData.activeIdentityTab == 1 ? 'active' : ''}>Second Layer Verification</button>
